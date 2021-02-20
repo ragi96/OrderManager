@@ -13,3 +13,18 @@ C:\Users\Claudius Rünger\source\repos\OrderManagement\OrderManagement.Core\obj\
 C:\Users\Claudius Rünger\source\repos\OrderManagement\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Data.dll
 C:\Users\Claudius Rünger\source\repos\OrderManagement\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Data.pdb
 C:\Users\Claudius Rünger\source\repos\OrderManagement\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.csproj.CopyComplete
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Core.deps.json
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Core.runtimeconfig.json
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Core.runtimeconfig.dev.json
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Core.dll
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Core.pdb
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Data.dll
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\bin\Debug\netcoreapp3.1\OrderManagement.Data.pdb
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.csprojAssemblyReference.cache
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.csproj.CoreCompileInputs.cache
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.AssemblyInfoInputs.cache
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.AssemblyInfo.cs
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.csproj.CopyComplete
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.dll
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.pdb
+C:\Users\rgiez\Documents\OrderManager\OrderManagement.Core\obj\Debug\netcoreapp3.1\OrderManagement.Core.genruntimeconfig.cache

@@ -2,10 +2,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrderManagement.Core;
 using OrderManagement.Data.Model;
-using OrderManagment.View;
 using Smartive.Core.Database.Repositories;
 using System;
 using System.Windows.Forms;
+using OrderManagement.View;
 
 namespace OrderManagement
 {
@@ -20,7 +20,7 @@ namespace OrderManagement
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            Application.Run(new StartView());
 
             var builder = new HostBuilder()
                 .ConfigureServices((hostContext, services) => {
@@ -29,7 +29,7 @@ namespace OrderManagement
                     services = Extensions.AddCoreLogic(services);
 
                     var provider = services.BuildServiceProvider();
-                    var mainForm = provider.GetRequiredService<StartView>();
+                    var mainForm = provider.GetRequiredService<OrderManagement>();
                     Application.Run(mainForm);
                 });
 

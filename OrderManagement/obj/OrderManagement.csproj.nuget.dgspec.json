@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement\\OrderManagement.csproj": {}
+    "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement\\OrderManagement.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\OrderManagement.Core.csproj": {
+    "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\OrderManagement.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\OrderManagement.Core.csproj",
+        "projectUniqueName": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\OrderManagement.Core.csproj",
         "projectName": "OrderManagement.Core",
-        "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\OrderManagement.Core.csproj",
-        "packagesPath": "C:\\Users\\Claudius Rünger\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\obj\\",
+        "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\OrderManagement.Core.csproj",
+        "packagesPath": "C:\\Users\\rgiez\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Claudius Rünger\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rgiez\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj": {
-                "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj"
+              "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj": {
+                "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj"
               }
             }
           }
@@ -86,17 +86,17 @@
         }
       }
     },
-    "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj": {
+    "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj",
+        "projectUniqueName": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj",
         "projectName": "OrderManagement.Data",
-        "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj",
-        "packagesPath": "C:\\Users\\Claudius Rünger\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\obj\\",
+        "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj",
+        "packagesPath": "C:\\Users\\rgiez\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Claudius Rünger\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rgiez\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -172,17 +172,74 @@
         }
       }
     },
-    "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement\\OrderManagement.csproj": {
+    "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.View\\OrderManagement.View.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement\\OrderManagement.csproj",
-        "projectName": "OrderManagement",
-        "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement\\OrderManagement.csproj",
-        "packagesPath": "C:\\Users\\Claudius Rünger\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement\\obj\\",
+        "projectUniqueName": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.View\\OrderManagement.View.csproj",
+        "projectName": "OrderManagement.View",
+        "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.View\\OrderManagement.View.csproj",
+        "packagesPath": "C:\\Users\\rgiez\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.View\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Claudius Rünger\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rgiez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement\\OrderManagement.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement\\OrderManagement.csproj",
+        "projectName": "OrderManagement",
+        "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement\\OrderManagement.csproj",
+        "packagesPath": "C:\\Users\\rgiez\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rgiez\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -196,11 +253,14 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\OrderManagement.Core.csproj": {
-                "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\OrderManagement.Core.csproj"
+              "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\OrderManagement.Core.csproj": {
+                "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\OrderManagement.Core.csproj"
               },
-              "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj": {
-                "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj"
+              "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj": {
+                "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj"
+              },
+              "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.View\\OrderManagement.View.csproj": {
+                "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.View\\OrderManagement.View.csproj"
               }
             }
           }
@@ -252,12 +312,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.12, 3.1.12]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"

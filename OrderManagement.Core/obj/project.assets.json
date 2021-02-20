@@ -5956,19 +5956,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Claudius Rünger\\.nuget\\packages\\": {}
+    "C:\\Users\\rgiez\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\OrderManagement.Core.csproj",
+      "projectUniqueName": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\OrderManagement.Core.csproj",
       "projectName": "OrderManagement.Core",
-      "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\OrderManagement.Core.csproj",
-      "packagesPath": "C:\\Users\\Claudius Rünger\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Core\\obj\\",
+      "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\OrderManagement.Core.csproj",
+      "packagesPath": "C:\\Users\\rgiez\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Claudius Rünger\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rgiez\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5982,8 +5982,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj": {
-              "projectPath": "C:\\Users\\Claudius Rünger\\source\\repos\\OrderManagement\\OrderManagement.Data\\OrderManagement.Data.csproj"
+            "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj": {
+              "projectPath": "C:\\Users\\rgiez\\Documents\\OrderManager\\OrderManagement.Data\\OrderManagement.Data.csproj"
             }
           }
         }
