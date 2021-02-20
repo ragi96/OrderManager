@@ -24,12 +24,12 @@ namespace OrderManagement
 
             var builder = new HostBuilder()
                 .ConfigureServices((hostContext, services) => {
-                    services.AddScoped<OrderManagement>();
+                    services.AddScoped<StartView>();
 
                     services = Extensions.AddCoreLogic(services);
 
                     var provider = services.BuildServiceProvider();
-                    var mainForm = provider.GetRequiredService<OrderManagement>();
+                    var mainForm = provider.GetRequiredService<StartView>();
                     Application.Run(mainForm);
                 });
 

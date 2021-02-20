@@ -13,6 +13,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Core", "OrderManagement.Core\OrderManagement.Core.csproj", "{32DFB8CD-CA6F-4985-9218-4B6AB5BAA02B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.View", "OrderManagement.View\OrderManagement.View.csproj", "{BE0B3408-B613-4B82-A39B-38ABA4C8CCDB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32DFB8CD-CA6F-4985-9218-4B6AB5BAA02B} = {32DFB8CD-CA6F-4985-9218-4B6AB5BAA02B}
+		{50DB59CF-7D4B-4FFC-8CED-A51B83315C12} = {50DB59CF-7D4B-4FFC-8CED-A51B83315C12}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

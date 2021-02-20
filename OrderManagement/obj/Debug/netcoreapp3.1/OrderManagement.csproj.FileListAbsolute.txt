@@ -176,7 +176,5 @@ C:\Users\rgiez\Documents\OrderManager\OrderManagement\obj\Debug\netcoreapp3.1\Or
 C:\Users\rgiez\Documents\OrderManager\OrderManagement\obj\Debug\netcoreapp3.1\OrderManagement.AssemblyInfo.cs
 C:\Users\rgiez\Documents\OrderManager\OrderManagement\obj\Debug\netcoreapp3.1\OrderManagement.csproj.CopyComplete
 C:\Users\rgiez\Documents\OrderManager\OrderManagement\obj\Debug\netcoreapp3.1\OrderManagement.genruntimeconfig.cache
-C:\Users\rgiez\Documents\OrderManager\OrderManagement\obj\Debug\netcoreapp3.1\OrderManagement.csproj.GenerateResource.cache
 C:\Users\rgiez\Documents\OrderManager\OrderManagement\bin\Debug\netcoreapp3.1\OrderManagement.View.dll
 C:\Users\rgiez\Documents\OrderManager\OrderManagement\bin\Debug\netcoreapp3.1\OrderManagement.View.pdb
-C:\Users\rgiez\Documents\OrderManager\OrderManagement\obj\Debug\netcoreapp3.1\OrderManagement.OrderManagement.resources
