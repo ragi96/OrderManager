@@ -19,7 +19,11 @@ namespace OrderManagement.Data.Context
                     .Build();
                  optionsBuilder.UseInMemoryDatabase("TestInMemory");
              }*/
-            optionsBuilder.UseSqlServer("Data Source=.\\symas;Database=OrderManagement; Trusted_Connection=True");
+
+
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-TC55N4H;Database=OrderManager; Trusted_Connection=True; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            
+            
             /*var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("appsettings.json")
