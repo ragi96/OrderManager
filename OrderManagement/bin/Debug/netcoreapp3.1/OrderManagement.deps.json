@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "OrderManagement/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore": "5.0.3",
           "Microsoft.EntityFrameworkCore.InMemory": "5.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.3",
@@ -1412,6 +1413,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.3",
           "Microsoft.Extensions.Configuration": "5.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",
+          "Microsoft.Extensions.Configuration.FileExtensions": "5.0.0",
+          "Microsoft.Extensions.Configuration.Json": "5.0.0",
           "Smartive.Core": "4.2.0",
           "Smartive.Core.Database": "4.2.0"
         },
