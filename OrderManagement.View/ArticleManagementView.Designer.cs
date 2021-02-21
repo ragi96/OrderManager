@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.DirectoryServices.SortOption sortOption1 = new System.DirectoryServices.SortOption();
+            System.DirectoryServices.SortOption sortOption3 = new System.DirectoryServices.SortOption();
             this.TabArticle = new System.Windows.Forms.TabControl();
             this.TbpArticle = new System.Windows.Forms.TabPage();
             this.GrdArticle = new System.Windows.Forms.DataGridView();
@@ -39,7 +39,7 @@
             this.TbpArticleGroupe = new System.Windows.Forms.TabPage();
             this.TxtArticleGroupSearch = new System.Windows.Forms.TextBox();
             this.CmdArticleGroupSearch = new System.Windows.Forms.Button();
-            this.GridArticleGroups = new System.Windows.Forms.DataGridView();
+            this.GrdArticleGroups = new System.Windows.Forms.DataGridView();
             this.TrvArticlegroups = new System.Windows.Forms.TreeView();
             this.CmdSaveArticleGroups = new System.Windows.Forms.Button();
             this.LblArticlegroups = new System.Windows.Forms.Label();
@@ -48,7 +48,7 @@
             this.TbpArticle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GrdArticle)).BeginInit();
             this.TbpArticleGroupe.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GridArticleGroups)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GrdArticleGroups)).BeginInit();
             this.SuspendLayout();
             // 
             // TabArticle
@@ -131,7 +131,7 @@
             // 
             this.TbpArticleGroupe.Controls.Add(this.TxtArticleGroupSearch);
             this.TbpArticleGroupe.Controls.Add(this.CmdArticleGroupSearch);
-            this.TbpArticleGroupe.Controls.Add(this.GridArticleGroups);
+            this.TbpArticleGroupe.Controls.Add(this.GrdArticleGroups);
             this.TbpArticleGroupe.Controls.Add(this.TrvArticlegroups);
             this.TbpArticleGroupe.Controls.Add(this.CmdSaveArticleGroups);
             this.TbpArticleGroupe.Controls.Add(this.LblArticlegroups);
@@ -162,14 +162,14 @@
             this.CmdArticleGroupSearch.Text = "Suchen";
             this.CmdArticleGroupSearch.UseVisualStyleBackColor = true;
             // 
-            // GridArticleGroups
+            // GrdArticleGroups
             // 
-            this.GridArticleGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridArticleGroups.Location = new System.Drawing.Point(9, 100);
-            this.GridArticleGroups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.GridArticleGroups.Name = "GridArticleGroups";
-            this.GridArticleGroups.Size = new System.Drawing.Size(447, 384);
-            this.GridArticleGroups.TabIndex = 7;
+            this.GrdArticleGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GrdArticleGroups.Location = new System.Drawing.Point(9, 100);
+            this.GrdArticleGroups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.GrdArticleGroups.Name = "GrdArticleGroups";
+            this.GrdArticleGroups.Size = new System.Drawing.Size(447, 384);
+            this.GrdArticleGroups.TabIndex = 7;
             // 
             // TrvArticlegroups
             // 
@@ -205,7 +205,7 @@
             this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.Sort = sortOption1;
+            this.directorySearcher1.Sort = sortOption3;
             // 
             // ArticleManagementView
             // 
@@ -222,7 +222,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GrdArticle)).EndInit();
             this.TbpArticleGroupe.ResumeLayout(false);
             this.TbpArticleGroupe.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GridArticleGroups)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GrdArticleGroups)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -237,7 +237,7 @@
         private System.Windows.Forms.Button CmdSaveArticleGroups;
         private System.Windows.Forms.Label LblArticlegroups;
         private System.Windows.Forms.TreeView TrvArticlegroups;
-        private System.Windows.Forms.DataGridView GridArticleGroups;
+        private System.Windows.Forms.DataGridView GrdArticleGroups;
         private System.Windows.Forms.Button CmdSearchArticle;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;
         private System.Windows.Forms.TextBox TxtSearchArticle;

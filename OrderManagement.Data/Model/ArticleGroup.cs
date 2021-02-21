@@ -5,10 +5,10 @@ namespace OrderManagement.Data.Model
 {
     public class ArticleGroup : Base
     {
-        public string Name { get; set; } = string.Empty;
+        [Required]
+        public string Name { get; set; }
         public int? SuperiorArticleId { get; set; }
-
         [ForeignKey("SuperiorArticleId")]
-        public virtual ArticleGroup SuperiorArticleGroup { get; set; } = new ArticleGroup();
+        public virtual ArticleGroup SuperiorArticleGroup { get; set; }
     }
 }
