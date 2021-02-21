@@ -13,6 +13,6 @@ namespace OrderManagement.Data.Model
 
         public double Mwst { get; set; }
 
-        public ArticleGroup ArticleGroup { get; set; } = new ArticleGroup();
+        public virtual ArticleGroup ArticleGroup { get; set; } = new ArticleGroup();
     }
 }
