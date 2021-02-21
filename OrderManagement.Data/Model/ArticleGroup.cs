@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Smartive.Core.Database.Models;
-
+﻿using Smartive.Core.Database.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace OrderManagement.Data.Model
 {
     public class ArticleGroup : Base
