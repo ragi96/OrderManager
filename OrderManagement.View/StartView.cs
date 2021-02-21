@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using OrderManagment.View;
+using OrderManagement.View;
 
 namespace OrderManagement.View
 {
