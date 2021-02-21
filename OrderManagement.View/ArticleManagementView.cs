@@ -39,8 +39,32 @@ namespace OrderManagement.View
 
             //GrdArticleGroup
             _context.ArticleGroup.Load();
+            SetArticleGridColumns(GrdArticleGroups);
+            GrdArticleGroups.AutoGenerateColumns = false;
             GrdArticleGroups.DataSource = _context.ArticleGroup.Local.ToBindingList();
-            GrdArticleGroups.Columns["Id"].Visible = false;
+        }
+
+        private void SetArticleGridColumns(DataGridView dgv)
+        {
+            // create new
+            var col1 = new DataGridViewTextBoxColumn();
+            var list = this._context.ArticleGroup.Local.ToList();
+            // create fake articlegroup
+            list.Insert(0, new ArticleGroup());
+            col1.HeaderText = "name";
+            col1.Name = "name";
+            col1.DataPropertyName = "name";
+            dgv.Columns.Add(col1);
+            var combo = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Überkategorie",
+                Name = "superiorArticleId",
+                DataPropertyName = "superiorArticleId",
+                DataSource = list,
+                DisplayMember = "name",
+                ValueMember = "id"
+            };
+            dgv.Columns.Add(combo);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -54,6 +78,13 @@ namespace OrderManagement.View
             this.Validate();
             this._context.SaveChanges();
             this.GrdArticle.Refresh();
+        }
+
+        private void CmdSaveArticleGroups_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this._context.SaveChanges();
+            this.GrdArticleGroups.Refresh();
         }
     }
 }

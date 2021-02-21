@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.DirectoryServices.SortOption sortOption3 = new System.DirectoryServices.SortOption();
             this.TabArticle = new System.Windows.Forms.TabControl();
             this.TbpArticle = new System.Windows.Forms.TabPage();
             this.GrdArticle = new System.Windows.Forms.DataGridView();
@@ -43,7 +42,6 @@
             this.TrvArticlegroups = new System.Windows.Forms.TreeView();
             this.CmdSaveArticleGroups = new System.Windows.Forms.Button();
             this.LblArticlegroups = new System.Windows.Forms.Label();
-            this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.TabArticle.SuspendLayout();
             this.TbpArticle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GrdArticle)).BeginInit();
@@ -164,6 +162,7 @@
             // 
             // GrdArticleGroups
             // 
+            this.GrdArticleGroups.AllowUserToOrderColumns = true;
             this.GrdArticleGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GrdArticleGroups.Location = new System.Drawing.Point(9, 100);
             this.GrdArticleGroups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -188,6 +187,7 @@
             this.CmdSaveArticleGroups.TabIndex = 5;
             this.CmdSaveArticleGroups.Text = "Speichern";
             this.CmdSaveArticleGroups.UseVisualStyleBackColor = true;
+            this.CmdSaveArticleGroups.Click += new System.EventHandler(this.CmdSaveArticleGroups_Click);
             // 
             // LblArticlegroups
             // 
@@ -199,13 +199,6 @@
             this.LblArticlegroups.Size = new System.Drawing.Size(189, 31);
             this.LblArticlegroups.TabIndex = 4;
             this.LblArticlegroups.Text = "Artikelgruppen";
-            // 
-            // directorySearcher1
-            // 
-            this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.Sort = sortOption3;
             // 
             // ArticleManagementView
             // 
@@ -239,7 +232,6 @@
         private System.Windows.Forms.TreeView TrvArticlegroups;
         private System.Windows.Forms.DataGridView GrdArticleGroups;
         private System.Windows.Forms.Button CmdSearchArticle;
-        private System.DirectoryServices.DirectorySearcher directorySearcher1;
         private System.Windows.Forms.TextBox TxtSearchArticle;
         private System.Windows.Forms.TextBox TxtArticleGroupSearch;
         private System.Windows.Forms.Button CmdArticleGroupSearch;
