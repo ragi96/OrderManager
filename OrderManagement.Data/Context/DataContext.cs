@@ -24,7 +24,7 @@ namespace OrderManagement.Data.Context
               }*/
 
 
-            //optionsBuilder.UseSqlServer("Data Source=DESKTOP-TC55N4H;Database=OrderManager; Trusted_Connection=True; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-TC55N4H;Database=OrderManager; Trusted_Connection=True; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
 
            /* var configuration = new ConfigurationBuilder()

@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.DirectoryServices.SortOption sortOption1 = new System.DirectoryServices.SortOption();
+            System.DirectoryServices.SortOption sortOption4 = new System.DirectoryServices.SortOption();
             this.TabArticle = new System.Windows.Forms.TabControl();
             this.TbpArticle = new System.Windows.Forms.TabPage();
+            this.GrdArticle = new System.Windows.Forms.DataGridView();
             this.TxtSearchArticle = new System.Windows.Forms.TextBox();
             this.CmdSearchArticle = new System.Windows.Forms.Button();
             this.CmdSaveArticle = new System.Windows.Forms.Button();
             this.LblArticle = new System.Windows.Forms.Label();
-            this.GrdArticle = new System.Windows.Forms.DataGridView();
             this.TbpArticleGroupe = new System.Windows.Forms.TabPage();
             this.TxtArticleGroupSearch = new System.Windows.Forms.TextBox();
             this.CmdArticleGroupSearch = new System.Windows.Forms.Button();
@@ -59,24 +59,33 @@
             this.TabArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TabArticle.Name = "TabArticle";
             this.TabArticle.SelectedIndex = 0;
-            this.TabArticle.Size = new System.Drawing.Size(936, 548);
+            this.TabArticle.Size = new System.Drawing.Size(936, 550);
             this.TabArticle.TabIndex = 0;
             // 
             // TbpArticle
             // 
+            this.TbpArticle.Controls.Add(this.GrdArticle);
             this.TbpArticle.Controls.Add(this.TxtSearchArticle);
             this.TbpArticle.Controls.Add(this.CmdSearchArticle);
             this.TbpArticle.Controls.Add(this.CmdSaveArticle);
             this.TbpArticle.Controls.Add(this.LblArticle);
-            this.TbpArticle.Controls.Add(this.GrdArticle);
             this.TbpArticle.Location = new System.Drawing.Point(4, 24);
             this.TbpArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TbpArticle.Name = "TbpArticle";
             this.TbpArticle.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TbpArticle.Size = new System.Drawing.Size(928, 520);
+            this.TbpArticle.Size = new System.Drawing.Size(928, 522);
             this.TbpArticle.TabIndex = 0;
             this.TbpArticle.Text = "Artikel";
             this.TbpArticle.UseVisualStyleBackColor = true;
+            // 
+            // GrdArticle
+            // 
+            this.GrdArticle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GrdArticle.Location = new System.Drawing.Point(9, 103);
+            this.GrdArticle.Name = "GrdArticle";
+            this.GrdArticle.RowTemplate.Height = 25;
+            this.GrdArticle.Size = new System.Drawing.Size(906, 374);
+            this.GrdArticle.TabIndex = 6;
             // 
             // TxtSearchArticle
             // 
@@ -117,16 +126,6 @@
             this.LblArticle.TabIndex = 1;
             this.LblArticle.Text = "Artikel";
             // 
-            // GrdArticle
-            // 
-            this.GrdArticle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdArticle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrdArticle.Location = new System.Drawing.Point(4, 3);
-            this.GrdArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.GrdArticle.Name = "GrdArticle";
-            this.GrdArticle.Size = new System.Drawing.Size(920, 514);
-            this.GrdArticle.TabIndex = 0;
-            // 
             // TbpArticleGroupe
             // 
             this.TbpArticleGroupe.Controls.Add(this.TxtArticleGroupSearch);
@@ -139,7 +138,7 @@
             this.TbpArticleGroupe.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TbpArticleGroupe.Name = "TbpArticleGroupe";
             this.TbpArticleGroupe.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TbpArticleGroupe.Size = new System.Drawing.Size(928, 520);
+            this.TbpArticleGroupe.Size = new System.Drawing.Size(928, 522);
             this.TbpArticleGroupe.TabIndex = 1;
             this.TbpArticleGroupe.Text = "Artikelgruppen";
             this.TbpArticleGroupe.UseVisualStyleBackColor = true;
@@ -205,17 +204,18 @@
             this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.Sort = sortOption1;
+            this.directorySearcher1.Sort = sortOption4;
             // 
             // ArticleManagementView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(933, 549);
+            this.ClientSize = new System.Drawing.Size(933, 548);
             this.Controls.Add(this.TabArticle);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ArticleManagementView";
             this.Text = "ArticleManagment";
+            this.Load += new System.EventHandler(this.OnLoad);
             this.TabArticle.ResumeLayout(false);
             this.TbpArticle.ResumeLayout(false);
             this.TbpArticle.PerformLayout();
@@ -232,7 +232,6 @@
         private System.Windows.Forms.TabControl TabArticle;
         private System.Windows.Forms.TabPage TbpArticle;
         private System.Windows.Forms.TabPage TbpArticleGroupe;
-        private System.Windows.Forms.DataGridView GrdArticle;
         private System.Windows.Forms.Button CmdSaveArticle;
         private System.Windows.Forms.Label LblArticle;
         private System.Windows.Forms.Button CmdSaveArticleGroups;
@@ -244,5 +243,6 @@
         private System.Windows.Forms.TextBox TxtSearchArticle;
         private System.Windows.Forms.TextBox TxtArticleGroupSearch;
         private System.Windows.Forms.Button CmdArticleGroupSearch;
+        private System.Windows.Forms.DataGridView GrdArticle;
     }
 }
