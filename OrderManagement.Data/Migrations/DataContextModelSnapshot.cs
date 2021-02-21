@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrderManagement.Data.Context;
 
 namespace OrderManagement.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210221093949_InitialCreate")]
-    partial class InitialCreate
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,6 +25,9 @@ namespace OrderManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ArticleGroupId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Mwst")
                         .HasColumnType("float");
@@ -44,6 +45,8 @@ namespace OrderManagement.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArticleGroupId");
 
                     b.ToTable("Article");
                 });
@@ -170,6 +173,15 @@ namespace OrderManagement.Data.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("Position");
+                });
+
+            modelBuilder.Entity("OrderManagement.Data.Model.Article", b =>
+                {
+                    b.HasOne("OrderManagement.Data.Model.ArticleGroup", "ArticleGroup")
+                        .WithMany()
+                        .HasForeignKey("ArticleGroupId");
+
+                    b.Navigation("ArticleGroup");
                 });
 
             modelBuilder.Entity("OrderManagement.Data.Model.ArticleGroup", b =>

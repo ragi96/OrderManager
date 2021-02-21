@@ -3,27 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OrderManagement.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Article",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ValidFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Mwst = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Article", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "ArticleGroup",
                 columns: table => new
@@ -62,6 +45,30 @@ namespace OrderManagement.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customer", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Article",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ValidFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Mwst = table.Column<double>(type: "float", nullable: false),
+                    ArticleGroupId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Article", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Article_ArticleGroup_ArticleGroupId",
+                        column: x => x.ArticleGroupId,
+                        principalTable: "ArticleGroup",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,6 +140,11 @@ namespace OrderManagement.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Article_ArticleGroupId",
+                table: "Article",
+                column: "ArticleGroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ArticleGroup_SuperiorArticleGroupId",
                 table: "ArticleGroup",
                 column: "SuperiorArticleGroupId");
@@ -161,9 +173,6 @@ namespace OrderManagement.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArticleGroup");
-
-            migrationBuilder.DropTable(
                 name: "Invoice");
 
             migrationBuilder.DropTable(
@@ -174,6 +183,9 @@ namespace OrderManagement.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "ArticleGroup");
 
             migrationBuilder.DropTable(
                 name: "Customer");

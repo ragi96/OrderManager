@@ -14,5 +14,7 @@ namespace OrderManagement.Data.Model
         public double Price { get; set; }
 
         public double Mwst { get; set; }
+
+        public ArticleGroup ArticleGroup { get; set; } = new ArticleGroup();
     }
 }

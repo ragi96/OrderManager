@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.DirectoryServices.SortOption sortOption4 = new System.DirectoryServices.SortOption();
+            System.DirectoryServices.SortOption sortOption1 = new System.DirectoryServices.SortOption();
             this.TabArticle = new System.Windows.Forms.TabControl();
             this.TbpArticle = new System.Windows.Forms.TabPage();
             this.GrdArticle = new System.Windows.Forms.DataGridView();
@@ -114,6 +114,7 @@
             this.CmdSaveArticle.TabIndex = 2;
             this.CmdSaveArticle.Text = "Speichern";
             this.CmdSaveArticle.UseVisualStyleBackColor = true;
+            this.CmdSaveArticle.Click += new System.EventHandler(this.CmdSaveArticle_Click);
             // 
             // LblArticle
             // 
@@ -204,7 +205,7 @@
             this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.Sort = sortOption4;
+            this.directorySearcher1.Sort = sortOption1;
             // 
             // ArticleManagementView
             // 
@@ -215,7 +216,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ArticleManagementView";
             this.Text = "ArticleManagment";
-            this.Load += new System.EventHandler(this.OnLoad);
             this.TabArticle.ResumeLayout(false);
             this.TbpArticle.ResumeLayout(false);
             this.TbpArticle.PerformLayout();

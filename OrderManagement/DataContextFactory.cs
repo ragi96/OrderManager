@@ -22,7 +22,7 @@ namespace OrderManagement
             var builder = new DbContextOptionsBuilder<DataContext>();
             var connectionString = configuration.GetConnectionString("SqlConnectionString");
 
-            builder.UseSqlServer(connectionString);
+            builder.UseSqlServer(connectionString, b => b.MigrationsAssembly("OrderManagement.Data"));
 
             return new DataContext(builder.Options);
         }
