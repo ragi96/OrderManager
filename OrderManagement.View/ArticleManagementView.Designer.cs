@@ -159,6 +159,7 @@
             this.CmdArticleGroupSearch.TabIndex = 8;
             this.CmdArticleGroupSearch.Text = "Suchen";
             this.CmdArticleGroupSearch.UseVisualStyleBackColor = true;
+            this.CmdArticleGroupSearch.Click += new System.EventHandler(this.CmdArticleGroupSearch_Click);
             // 
             // GrdArticleGroups
             // 
@@ -172,10 +173,10 @@
             // 
             // TrvArticlegroups
             // 
-            this.TrvArticlegroups.Location = new System.Drawing.Point(505, 100);
+            this.TrvArticlegroups.Location = new System.Drawing.Point(496, 100);
             this.TrvArticlegroups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TrvArticlegroups.Name = "TrvArticlegroups";
-            this.TrvArticlegroups.Size = new System.Drawing.Size(409, 384);
+            this.TrvArticlegroups.Size = new System.Drawing.Size(418, 384);
             this.TrvArticlegroups.TabIndex = 6;
             // 
             // CmdSaveArticleGroups
