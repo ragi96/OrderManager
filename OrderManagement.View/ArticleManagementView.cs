@@ -48,6 +48,7 @@ namespace OrderManagement.View
 
         private void SetArticleGroupGridColumns()
         {
+            this._context.ArticleGroup.Load();
             // create new
             var col1 = new DataGridViewTextBoxColumn();
             var list = this._context.ArticleGroup.Local.ToList();
@@ -61,10 +62,10 @@ namespace OrderManagement.View
             {
                 HeaderText = "Überkategorie",
                 Name = "superiorArticleId",
-                DataPropertyName = "superiorArticleId",
+                DataPropertyName = "SuperiorArticleId",
                 DataSource = list,
                 DisplayMember = "name",
-                ValueMember = "id"
+                ValueMember = "Id"
             };
             GrdArticleGroups.Columns.Add(combo);
             GrdArticleGroups.AutoGenerateColumns = false;
