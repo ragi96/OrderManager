@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrderManagement.Data\OrderManagement.Data.csproj" />
+    <ProjectReference Include="..\OrderManagement.View\OrderManagement.View.csproj" />
   </ItemGroup>
 
 </Project>

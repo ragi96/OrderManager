@@ -1,19 +1,23 @@
-﻿using System;
+﻿using OrderManagement.Data.Model;
+using Smartive.Core.Database.Repositories;
+using System;
 using System.Windows.Forms;
-using OrderManagement.View;
 
 namespace OrderManagement.View
 {
     public partial class StartView : Form
     {
-        public StartView()
+        private readonly EfCrudRepository<Customer> _customerRepo;
+
+        public StartView(EfCrudRepository<Customer> customerRepo)
         {
             InitializeComponent();
+            _customerRepo = customerRepo;
         }
 
         private void CmdCustomerManagement_Click(object sender, EventArgs e)
         {
-            var view = new CustomerManagementView();
+            var view = new CustomerManagementView(_customerRepo);
             view.Show();
         }
 
