@@ -165,17 +165,16 @@ namespace OrderManagement.View
         private async void GrdArticleGroup_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var currentRow = e.RowIndex;
-
             var selectedArticleGroup = GrdArticleGroups.Rows[currentRow].Cells;
             var currentArticleGroup = _articlesGroups[currentRow];
-
-            if (currentArticleGroup.Id == 0)
-            {
-                await _articleGroupRepo.Create(currentArticleGroup);
+            if (currentArticleGroup.SuperiorArticleGroup == null && currentArticleGroup.SuperiorArticleId != null) {
+                var articleGroup = await _articleGroupRepo.GetById((int)currentArticleGroup.SuperiorArticleId);
+                currentArticleGroup.SuperiorArticleGroup = articleGroup;
             }
-            else
-            {
-                await _articleGroupRepo.Update(_articlesGroups);
+            if (currentArticleGroup.Id == 0) {
+                await _articleGroupRepo.Create(currentArticleGroup);
+            } else {
+                await _articleGroupRepo.Update(currentArticleGroup);
             }
         }
     }
