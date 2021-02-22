@@ -10,32 +10,96 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using OrderManagement.Data.Context;
 using OrderManagement.Data.Model;
+using Smartive.Core.Database.Repositories;
 
 namespace OrderManagement.View
 {
     public partial class ArticleManagementView : Form
     {
-        private DataContext _context;
-        private String articleGroupSearch = "";
-        public ArticleManagementView()
+        private readonly EfCrudRepository<ArticleGroup> _articleGroupRepo;
+        private IList<ArticleGroup> _articlesGroups;
+
+        private readonly EfCrudRepository<Article> _articleRepo;
+        private IList<Article> _articles;
+        
+
+        public ArticleManagementView(EfCrudRepository<ArticleGroup> articleGroupRepo, EfCrudRepository<Article> articleRepo)
         {
             InitializeComponent();
+            _articleGroupRepo = articleGroupRepo;
+            _articleRepo = articleRepo;
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected async override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            _context = new DataContext();
-            _context.Article.Load();
+            _articles = new List<Article>();
+            _articles = await _articleRepo.GetAll();
+            _articlesGroups = new List<ArticleGroup>();
+            _articlesGroups = await _articleGroupRepo.GetAll();
 
             //GrdArticle
-            GrdArticle.DataSource = _context.Article.Local.ToBindingList();
+            GrdArticle.DataSource = new BindingList<Article>(_articles);
             GrdArticle.Columns["Id"].Visible = false;
 
             //GrdArticleGroup
             SetArticleGroupGridColumns();
+
+            // Show the user something
+            //TrvArticlegroups.Nodes.Add("Loading...");
+            // Run the tree load in the background
+            //Task.Run(() => LoadTree());
+            //GrdArticleGroups.DataSource = _articlesGroups;
+            //GrdArticleGroups.Refresh();
+        }
+
+        private void LoadTree()
+        {
+            
+          /*  var treeView = this._context.ArticleGroupView.FromSqlRaw("Exec getArticleGroupTree;").ToList();
+            TrvArticlegroups.BeginUpdate();
+
+            TreeNode treeviewNode = new TreeNode();
+            string[] levels;
+            foreach (var Node in treeView)
+            {
+                levels = Node.TreePath.Split(".");
+                if (Node.TreeLevel == 0)
+                {
+                    treeviewNode.Nodes.Add(new TreeNode(Node.Name));
+                }
+                else
+                {
+                    var i = 0;
+                    TreeNode node = null;
+                    foreach (var level in levels)
+                    {
+                        if (i == 0)
+                        {
+                            node = treeviewNode.Nodes[Int32.Parse(level) - 1];
+                        }
+                        else
+                        {
+                            if (Int32.Parse(level) != Node.Id)
+                            {
+                                node = node?.Nodes[Int32.Parse(level) - 1];
+                            }
+                            else
+                            {
+                                node.Nodes.Add(new TreeNode(Node.Name));
+                            }
+                        }
+                        i++;
+                    }
+                    //treeviewNode.Nodes[(int) Node.SuperiorArticleId - 1].Nodes.Add(new TreeNode(Node.Name));
+                }
+            }
+            TrvArticlegroups.Nodes.Clear();
+            TrvArticlegroups.Nodes.Add(treeviewNode);
+            TrvArticlegroups.EndUpdate();*/
         }
 
         private void ClearArticleGroupGrid()
@@ -48,10 +112,9 @@ namespace OrderManagement.View
 
         private void SetArticleGroupGridColumns()
         {
-            this._context.ArticleGroup.Load();
             // create new
             var col1 = new DataGridViewTextBoxColumn();
-            var list = this._context.ArticleGroup.Local.ToList();
+            var list = _articlesGroups;
             // create fake articlegroup
             list.Insert(0, new ArticleGroup());
             col1.HeaderText = "Name";
@@ -65,41 +128,26 @@ namespace OrderManagement.View
                 DataPropertyName = "SuperiorArticleId",
                 DataSource = list,
                 DisplayMember = "name",
-                ValueMember = "Id"
+                ValueMember = "id"
             };
             GrdArticleGroups.Columns.Add(combo);
             GrdArticleGroups.AutoGenerateColumns = false;
-            _context.ArticleGroup.Load();
-            if (articleGroupSearch == "")
-            {
-                GrdArticleGroups.DataSource = _context.ArticleGroup.Local.ToBindingList();
-            }
-            else
-            {
-                var results = _context.ArticleGroup.Where(x => EF.Functions.FreeText(x.Name, articleGroupSearch))
-                    .ToList();
-                GrdArticleGroups.DataSource = new BindingList<ArticleGroup>(results);
-            }
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            this._context.Dispose();
+            GrdArticleGroups.DataSource = new BindingList<ArticleGroup>(_articlesGroups);
         }
 
         private void CmdSaveArticle_Click(object sender, EventArgs e)
         {
             this.Validate();
-            this._context.SaveChanges();
+           // this._context.SaveChanges();
             this.GrdArticle.Refresh();
         }
 
-        private void CmdSaveArticleGroups_Click(object sender, EventArgs e)
+        private async void CmdSaveArticleGroups_Click(object sender, EventArgs e)
         {
             this.Validate();
-            this._context.SaveChanges();
-            this.GrdArticleGroups.Refresh();
+
+            //await _articleGroupRepo.U;
+
             ClearArticleGroupGrid();
             SetArticleGroupGridColumns();
         }
@@ -108,9 +156,26 @@ namespace OrderManagement.View
         {
             if (TxtArticleGroupSearch.ToString() != "")
             {
-                articleGroupSearch = TxtArticleGroupSearch.ToString();
+                //articleGroupSearch = TxtArticleGroupSearch.ToString();
                 ClearArticleGroupGrid();
                 SetArticleGroupGridColumns();
+            }
+        }
+
+        private async void GrdArticleGroup_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentRow = e.RowIndex;
+
+            var selectedArticleGroup = GrdArticleGroups.Rows[currentRow].Cells;
+            var currentArticleGroup = _articlesGroups[currentRow];
+
+            if (currentArticleGroup.Id == 0)
+            {
+                await _articleGroupRepo.Create(currentArticleGroup);
+            }
+            else
+            {
+                await _articleGroupRepo.Update(_articlesGroups);
             }
         }
     }

@@ -11,4 +11,13 @@ namespace OrderManagement.Data.Model
         [ForeignKey("SuperiorArticleId")]
         public virtual ArticleGroup SuperiorArticleGroup { get; set; }
     }
+
+    public class ArticleGroupView : Base
+    {
+        public string Name { get; set; }
+        public int? SuperiorArticleId { get; set; }
+        public int? TreeLevel { get; set; }
+
+        public string TreePath { get; set; }
+    }
 }

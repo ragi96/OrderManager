@@ -8,11 +8,15 @@ namespace OrderManagement.View
     public partial class StartView : Form
     {
         private readonly EfCrudRepository<Customer> _customerRepo;
+        private readonly EfCrudRepository<Article> _articleRepo;
+        private readonly EfCrudRepository<ArticleGroup> _articleGroupRepo;
 
-        public StartView(EfCrudRepository<Customer> customerRepo)
+        public StartView(EfCrudRepository<Customer> customerRepo, EfCrudRepository<Article> articleRepo, EfCrudRepository<ArticleGroup> articleGroup)
         {
             InitializeComponent();
             _customerRepo = customerRepo;
+            _articleRepo = articleRepo;
+            _articleGroupRepo = articleGroup;
         }
 
         private void CmdCustomerManagement_Click(object sender, EventArgs e)
@@ -28,7 +32,7 @@ namespace OrderManagement.View
         }
         private void CmdArticleManagement_Click(object sender, EventArgs e)
         {
-            var view = new ArticleManagementView();
+            var view = new ArticleManagementView(_articleGroupRepo, _articleRepo);
             view.Show();
         }
 

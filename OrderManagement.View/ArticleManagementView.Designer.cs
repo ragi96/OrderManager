@@ -170,6 +170,7 @@
             this.GrdArticleGroups.Name = "GrdArticleGroups";
             this.GrdArticleGroups.Size = new System.Drawing.Size(447, 384);
             this.GrdArticleGroups.TabIndex = 7;
+            this.GrdArticleGroups.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdArticleGroup_CellEndEdit);
             // 
             // TrvArticlegroups
             // 
