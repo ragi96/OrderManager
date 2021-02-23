@@ -1,17 +1,7 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using OrderManagement.Data.Context;
 using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
 
@@ -21,6 +11,7 @@ namespace OrderManagement.View
     {
         private readonly EfCrudRepository<ArticleGroup> _articleGroupRepo;
         private IList<ArticleGroup> _articlesGroups;
+        private IList<ArticleGroup> _articlesGroupsList;
 
         private readonly EfCrudRepository<Article> _articleRepo;
         private IList<Article> _articles;
@@ -40,8 +31,10 @@ namespace OrderManagement.View
             _articles = await _articleRepo.GetAll();
             _articlesGroups = new List<ArticleGroup>();
             _articlesGroups = await _articleGroupRepo.GetAll();
+            _articlesGroupsList = await _articleGroupRepo.GetAll();
 
             //GrdArticle
+            SetArticleGridColumns();
             GrdArticle.DataSource = new BindingList<Article>(_articles);
             GrdArticle.Columns["Id"].Visible = false;
 
@@ -54,6 +47,11 @@ namespace OrderManagement.View
             //Task.Run(() => LoadTree());
             //GrdArticleGroups.DataSource = _articlesGroups;
             //GrdArticleGroups.Refresh();
+        }
+
+        private void SetArticleGridColumns()
+        {
+            throw new NotImplementedException();
         }
 
         private void LoadTree()
@@ -112,11 +110,11 @@ namespace OrderManagement.View
 
         private void SetArticleGroupGridColumns()
         {
+           
             // create new
             var col1 = new DataGridViewTextBoxColumn();
-            var list = _articlesGroups;
             // create fake articlegroup
-            list.Insert(0, new ArticleGroup());
+            _articlesGroupsList.Insert(0, new ArticleGroup());
             col1.HeaderText = "Name";
             col1.Name = "name";
             col1.DataPropertyName = "name";
@@ -126,30 +124,13 @@ namespace OrderManagement.View
                 HeaderText = "Überkategorie",
                 Name = "superiorArticleId",
                 DataPropertyName = "SuperiorArticleId",
-                DataSource = list,
+                DataSource = _articlesGroupsList,
                 DisplayMember = "name",
-                ValueMember = "id"
+                ValueMember = "id",
             };
             GrdArticleGroups.Columns.Add(combo);
             GrdArticleGroups.AutoGenerateColumns = false;
             GrdArticleGroups.DataSource = new BindingList<ArticleGroup>(_articlesGroups);
-        }
-
-        private void CmdSaveArticle_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-           // this._context.SaveChanges();
-            this.GrdArticle.Refresh();
-        }
-
-        private async void CmdSaveArticleGroups_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-
-            //await _articleGroupRepo.U;
-
-            ClearArticleGroupGrid();
-            SetArticleGroupGridColumns();
         }
 
         private void CmdArticleGroupSearch_Click(object sender, EventArgs e)
@@ -165,7 +146,6 @@ namespace OrderManagement.View
         private async void GrdArticleGroup_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var currentRow = e.RowIndex;
-            var selectedArticleGroup = GrdArticleGroups.Rows[currentRow].Cells;
             var currentArticleGroup = _articlesGroups[currentRow];
             if (currentArticleGroup.SuperiorArticleGroup == null && currentArticleGroup.SuperiorArticleId != null) {
                 var articleGroup = await _articleGroupRepo.GetById((int)currentArticleGroup.SuperiorArticleId);

@@ -112,7 +112,6 @@
             this.CmdSaveArticle.TabIndex = 2;
             this.CmdSaveArticle.Text = "Speichern";
             this.CmdSaveArticle.UseVisualStyleBackColor = true;
-            this.CmdSaveArticle.Click += new System.EventHandler(this.CmdSaveArticle_Click);
             // 
             // LblArticle
             // 
@@ -163,6 +162,7 @@
             // 
             // GrdArticleGroups
             // 
+            this.GrdArticleGroups.AllowUserToDeleteRows = false;
             this.GrdArticleGroups.AllowUserToOrderColumns = true;
             this.GrdArticleGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GrdArticleGroups.Location = new System.Drawing.Point(9, 100);
@@ -189,7 +189,6 @@
             this.CmdSaveArticleGroups.TabIndex = 5;
             this.CmdSaveArticleGroups.Text = "Speichern";
             this.CmdSaveArticleGroups.UseVisualStyleBackColor = true;
-            this.CmdSaveArticleGroups.Click += new System.EventHandler(this.CmdSaveArticleGroups_Click);
             // 
             // LblArticlegroups
             // 
