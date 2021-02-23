@@ -37,10 +37,8 @@
             this.LblArticle = new System.Windows.Forms.Label();
             this.TbpArticleGroupe = new System.Windows.Forms.TabPage();
             this.TxtArticleGroupSearch = new System.Windows.Forms.TextBox();
-            this.CmdArticleGroupSearch = new System.Windows.Forms.Button();
             this.GrdArticleGroups = new System.Windows.Forms.DataGridView();
             this.TrvArticlegroups = new System.Windows.Forms.TreeView();
-            this.CmdSaveArticleGroups = new System.Windows.Forms.Button();
             this.LblArticlegroups = new System.Windows.Forms.Label();
             this.TabArticle.SuspendLayout();
             this.TbpArticle.SuspendLayout();
@@ -127,10 +125,8 @@
             // TbpArticleGroupe
             // 
             this.TbpArticleGroupe.Controls.Add(this.TxtArticleGroupSearch);
-            this.TbpArticleGroupe.Controls.Add(this.CmdArticleGroupSearch);
             this.TbpArticleGroupe.Controls.Add(this.GrdArticleGroups);
             this.TbpArticleGroupe.Controls.Add(this.TrvArticlegroups);
-            this.TbpArticleGroupe.Controls.Add(this.CmdSaveArticleGroups);
             this.TbpArticleGroupe.Controls.Add(this.LblArticlegroups);
             this.TbpArticleGroupe.Location = new System.Drawing.Point(4, 24);
             this.TbpArticleGroupe.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -148,21 +144,10 @@
             this.TxtArticleGroupSearch.Name = "TxtArticleGroupSearch";
             this.TxtArticleGroupSearch.Size = new System.Drawing.Size(206, 23);
             this.TxtArticleGroupSearch.TabIndex = 9;
-            // 
-            // CmdArticleGroupSearch
-            // 
-            this.CmdArticleGroupSearch.Location = new System.Drawing.Point(230, 68);
-            this.CmdArticleGroupSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CmdArticleGroupSearch.Name = "CmdArticleGroupSearch";
-            this.CmdArticleGroupSearch.Size = new System.Drawing.Size(88, 27);
-            this.CmdArticleGroupSearch.TabIndex = 8;
-            this.CmdArticleGroupSearch.Text = "Suchen";
-            this.CmdArticleGroupSearch.UseVisualStyleBackColor = true;
-            this.CmdArticleGroupSearch.Click += new System.EventHandler(this.CmdArticleGroupSearch_Click);
+            this.TxtArticleGroupSearch.TextChanged += new System.EventHandler(this.TxtArticleGroupSearch_TextChanged);
             // 
             // GrdArticleGroups
             // 
-            this.GrdArticleGroups.AllowUserToDeleteRows = false;
             this.GrdArticleGroups.AllowUserToOrderColumns = true;
             this.GrdArticleGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GrdArticleGroups.Location = new System.Drawing.Point(9, 100);
@@ -171,6 +156,7 @@
             this.GrdArticleGroups.Size = new System.Drawing.Size(447, 384);
             this.GrdArticleGroups.TabIndex = 7;
             this.GrdArticleGroups.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdArticleGroup_CellEndEdit);
+            this.GrdArticleGroups.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.GrdArticleGroups_UserDeletingRow);
             // 
             // TrvArticlegroups
             // 
@@ -179,16 +165,6 @@
             this.TrvArticlegroups.Name = "TrvArticlegroups";
             this.TrvArticlegroups.Size = new System.Drawing.Size(418, 384);
             this.TrvArticlegroups.TabIndex = 6;
-            // 
-            // CmdSaveArticleGroups
-            // 
-            this.CmdSaveArticleGroups.Location = new System.Drawing.Point(827, 492);
-            this.CmdSaveArticleGroups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CmdSaveArticleGroups.Name = "CmdSaveArticleGroups";
-            this.CmdSaveArticleGroups.Size = new System.Drawing.Size(88, 27);
-            this.CmdSaveArticleGroups.TabIndex = 5;
-            this.CmdSaveArticleGroups.Text = "Speichern";
-            this.CmdSaveArticleGroups.UseVisualStyleBackColor = true;
             // 
             // LblArticlegroups
             // 
@@ -228,14 +204,12 @@
         private System.Windows.Forms.TabPage TbpArticleGroupe;
         private System.Windows.Forms.Button CmdSaveArticle;
         private System.Windows.Forms.Label LblArticle;
-        private System.Windows.Forms.Button CmdSaveArticleGroups;
         private System.Windows.Forms.Label LblArticlegroups;
         private System.Windows.Forms.TreeView TrvArticlegroups;
         private System.Windows.Forms.DataGridView GrdArticleGroups;
         private System.Windows.Forms.Button CmdSearchArticle;
         private System.Windows.Forms.TextBox TxtSearchArticle;
         private System.Windows.Forms.TextBox TxtArticleGroupSearch;
-        private System.Windows.Forms.Button CmdArticleGroupSearch;
         private System.Windows.Forms.DataGridView GrdArticle;
     }
 }

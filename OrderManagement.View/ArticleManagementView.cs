@@ -11,7 +11,6 @@ namespace OrderManagement.View
     {
         private readonly EfCrudRepository<ArticleGroup> _articleGroupRepo;
         private IList<ArticleGroup> _articlesGroups;
-        private IList<ArticleGroup> _articlesGroupsList;
 
         private readonly EfCrudRepository<Article> _articleRepo;
         private IList<Article> _articles;
@@ -31,10 +30,9 @@ namespace OrderManagement.View
             _articles = await _articleRepo.GetAll();
             _articlesGroups = new List<ArticleGroup>();
             _articlesGroups = await _articleGroupRepo.GetAll();
-            _articlesGroupsList = await _articleGroupRepo.GetAll();
 
             //GrdArticle
-            SetArticleGridColumns();
+           // SetArticleGridColumns();
             GrdArticle.DataSource = new BindingList<Article>(_articles);
             GrdArticle.Columns["Id"].Visible = false;
 
@@ -51,7 +49,7 @@ namespace OrderManagement.View
 
         private void SetArticleGridColumns()
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
         }
 
         private void LoadTree()
@@ -110,27 +108,37 @@ namespace OrderManagement.View
 
         private void SetArticleGroupGridColumns()
         {
-           
-            // create new
             var col1 = new DataGridViewTextBoxColumn();
-            // create fake articlegroup
-            _articlesGroupsList.Insert(0, new ArticleGroup());
-            col1.HeaderText = "Name";
-            col1.Name = "name";
-            col1.DataPropertyName = "name";
+            col1.Name = "id";
+            col1.DataPropertyName = "id";
+            col1.Visible = false;
             GrdArticleGroups.Columns.Add(col1);
+            // create new
+            var col2 = new DataGridViewTextBoxColumn();
+            // create fake articlegroup
+            col2.HeaderText = "Name";
+            col2.Name = "name";
+            col2.DataPropertyName = "name";
+            GrdArticleGroups.Columns.Add(col2);
+            addArticleGroupCombo();
+            GrdArticleGroups.AutoGenerateColumns = false;
+            GrdArticleGroups.DataSource = new BindingList<ArticleGroup>(_articlesGroups);
+        }
+
+        private async void addArticleGroupCombo()
+        {
+            var list = await _articleGroupRepo.GetAll();
+            list.Insert(0, new ArticleGroup());
             var combo = new DataGridViewComboBoxColumn
             {
                 HeaderText = "Überkategorie",
                 Name = "superiorArticleId",
                 DataPropertyName = "SuperiorArticleId",
-                DataSource = _articlesGroupsList,
+                DataSource = list,
                 DisplayMember = "name",
                 ValueMember = "id",
             };
             GrdArticleGroups.Columns.Add(combo);
-            GrdArticleGroups.AutoGenerateColumns = false;
-            GrdArticleGroups.DataSource = new BindingList<ArticleGroup>(_articlesGroups);
         }
 
         private void CmdArticleGroupSearch_Click(object sender, EventArgs e)
@@ -156,6 +164,30 @@ namespace OrderManagement.View
             } else {
                 await _articleGroupRepo.Update(currentArticleGroup);
             }
+        }
+
+        private void GrdArticleGroups_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            _articleGroupRepo.DeleteById((int)e.Row.Cells["id"].Value);
+        }
+
+        private async void TxtArticleGroupSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtArticleGroupSearch.Text))
+            {
+                GrdArticleGroups.DataSource = await _articleGroupRepo.GetAll();
+                return;
+            }
+            var foundArticleGroups = new List<ArticleGroup>();
+            var searchString = TxtArticleGroupSearch.Text;
+            foreach (var articleGroup in _articlesGroups)
+            {
+                if (articleGroup.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    foundArticleGroups.Add(articleGroup);
+                }
+            }
+            GrdArticleGroups.DataSource = foundArticleGroups;
         }
     }
 }
