@@ -39,6 +39,8 @@ namespace OrderManagement.View
             //GrdArticleGroup
             SetArticleGroupGridColumns();
 
+
+            /** Treeeee Stuff **/
             // Show the user something
             //TrvArticlegroups.Nodes.Add("Loading...");
             // Run the tree load in the background
@@ -98,14 +100,6 @@ namespace OrderManagement.View
             TrvArticlegroups.EndUpdate();*/
         }
 
-        private void ClearArticleGroupGrid()
-        {
-            GrdArticleGroups.CancelEdit();
-            GrdArticleGroups.Columns.Clear();
-            GrdArticleGroups.DataSource = null;
-            GrdArticleGroups.Refresh();
-        }
-
         private void SetArticleGroupGridColumns()
         {
             var col1 = new DataGridViewTextBoxColumn();
@@ -139,16 +133,6 @@ namespace OrderManagement.View
                 ValueMember = "id",
             };
             GrdArticleGroups.Columns.Add(combo);
-        }
-
-        private void CmdArticleGroupSearch_Click(object sender, EventArgs e)
-        {
-            if (TxtArticleGroupSearch.ToString() != "")
-            {
-                //articleGroupSearch = TxtArticleGroupSearch.ToString();
-                ClearArticleGroupGrid();
-                SetArticleGroupGridColumns();
-            }
         }
 
         private async void GrdArticleGroup_CellEndEdit(object sender, DataGridViewCellEventArgs e)
