@@ -82,6 +82,9 @@
             this.GrdArticle.RowTemplate.Height = 25;
             this.GrdArticle.Size = new System.Drawing.Size(906, 374);
             this.GrdArticle.TabIndex = 6;
+            this.GrdArticle.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdArticle_CellEndEdit);
+            this.GrdArticle.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.GrdArticle_CellValidating);
+            this.GrdArticle.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.GrdArticle_UserDeletingRow);
             // 
             // TxtSearchArticle
             // 
@@ -90,6 +93,7 @@
             this.TxtSearchArticle.Name = "TxtSearchArticle";
             this.TxtSearchArticle.Size = new System.Drawing.Size(206, 23);
             this.TxtSearchArticle.TabIndex = 5;
+            this.TxtSearchArticle.TextChanged += new System.EventHandler(this.TxtSearchArticle_TextChanged);
             // 
             // CmdSearchArticle
             // 

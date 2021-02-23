@@ -14,6 +14,8 @@ namespace OrderManagement.View
 
         private readonly EfCrudRepository<Article> _articleRepo;
         private IList<Article> _articles;
+
+        private IList<ArticleGroup> _groupListCombo;
         
 
         public ArticleManagementView(EfCrudRepository<ArticleGroup> articleGroupRepo, EfCrudRepository<Article> articleRepo)
@@ -30,11 +32,13 @@ namespace OrderManagement.View
             _articles = await _articleRepo.GetAll();
             _articlesGroups = new List<ArticleGroup>();
             _articlesGroups = await _articleGroupRepo.GetAll();
+           
+            // GroupListCombo
+            _groupListCombo = await _articleGroupRepo.GetAll();
+            _groupListCombo.Insert(0, new ArticleGroup());
 
             //GrdArticle
-           // SetArticleGridColumns();
-            GrdArticle.DataSource = new BindingList<Article>(_articles);
-            GrdArticle.Columns["Id"].Visible = false;
+            SetArticleGridColumns();
 
             //GrdArticleGroup
             SetArticleGroupGridColumns();
@@ -56,6 +60,20 @@ namespace OrderManagement.View
             col1.DataPropertyName = "id";
             col1.Visible = false;
             GrdArticle.Columns.Add(col1);
+            var col2 = new DataGridViewTextBoxColumn();
+            col2.HeaderText = "Name";
+            col2.Name = "name";
+            col2.DataPropertyName = "name";
+            GrdArticle.Columns.Add(col2);
+            addArticleArticleGroupCombo();
+            var col3 = new DataGridViewTextBoxColumn();
+            col3.HeaderText = "Preis";
+            col3.Name = "price";
+            col3.DataPropertyName = "price";
+            col3.DefaultCellStyle.Format = "N2";
+            GrdArticle.Columns.Add(col3);
+            GrdArticle.AutoGenerateColumns = false;
+            GrdArticle.DataSource = new BindingList<Article>(_articles);
         }
 
         private void LoadTree()
@@ -123,20 +141,32 @@ namespace OrderManagement.View
             GrdArticleGroups.DataSource = new BindingList<ArticleGroup>(_articlesGroups);
         }
 
-        private async void addArticleGroupCombo()
+        private void addArticleGroupCombo()
         {
-            var list = await _articleGroupRepo.GetAll();
-            list.Insert(0, new ArticleGroup());
             var combo = new DataGridViewComboBoxColumn
             {
                 HeaderText = "Überkategorie",
                 Name = "superiorArticleId",
                 DataPropertyName = "SuperiorArticleId",
-                DataSource = list,
+                DataSource = _groupListCombo,
                 DisplayMember = "name",
                 ValueMember = "id",
             };
             GrdArticleGroups.Columns.Add(combo);
+        }
+
+        private void addArticleArticleGroupCombo()
+        {
+            var combo = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Artikel Gruppe",
+                Name = "ArticleGroupId",
+                DataPropertyName = "ArticleGroupId",
+                DataSource = _groupListCombo,
+                DisplayMember = "name",
+                ValueMember = "id",
+            };
+            GrdArticle.Columns.Add(combo);
         }
 
         private async void GrdArticleGroup_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -176,6 +206,77 @@ namespace OrderManagement.View
                 }
             }
             GrdArticleGroups.DataSource = foundArticleGroups;
+        }
+
+        private async void GrdArticle_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentRow = e.RowIndex;
+            GrdArticle.Rows[currentRow].ErrorText = String.Empty;
+            var currentArticle = _articles[currentRow];
+            if (currentArticle.ArticleGroup == null && currentArticle.ArticleGroupId != null)
+            {
+                var articleGroup = await _articleGroupRepo.GetById((int)currentArticle.ArticleGroupId);
+                currentArticle.ArticleGroup = articleGroup;
+            }
+
+            if (currentArticle.Id == 0)
+            {
+                await _articleRepo.Create(currentArticle);
+            }
+            else
+            {
+                await _articleRepo.Update(currentArticle);
+            }
+        }
+
+        private void GrdArticle_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            string headerText = GrdArticle.Columns[e.ColumnIndex].HeaderText;
+
+            if (headerText == "Preis") {
+                if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
+                {
+                    GrdArticle.Rows[e.RowIndex].ErrorText = "Preis darf nicht leer sein!";
+                    e.Cancel = true;
+                }
+                if (!Double.TryParse(e.FormattedValue.ToString(), out double number))
+                {
+                    GrdArticle.Rows[e.RowIndex].ErrorText = "Preis muss als Zahl eingeben sein";
+                    e.Cancel = true;
+                }
+
+            } else if (headerText == "Name") {
+                if (string.IsNullOrEmpty(e.FormattedValue.ToString())) {
+                    GrdArticle.Rows[e.RowIndex].ErrorText = "Name darf nicht leer sein!";
+                    e.Cancel = true;
+                }
+            } else {
+                return;
+            }
+        }
+
+        private void GrdArticle_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            _articleRepo.DeleteById((int)e.Row.Cells["id"].Value);
+        }
+
+        private async void TxtSearchArticle_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtSearchArticle.Text))
+            {
+                GrdArticle.DataSource = await _articleRepo.GetAll();
+                return;
+            }
+            var foundArticle = new List<Article>();
+            var searchString = TxtSearchArticle.Text;
+            foreach (var article in _articles)
+            {
+                if (article.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    foundArticle.Add(article);
+                }
+            }
+            GrdArticle.DataSource = foundArticle;
         }
     }
 }
