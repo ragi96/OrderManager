@@ -51,7 +51,11 @@ namespace OrderManagement.View
 
         private void SetArticleGridColumns()
         {
-           // throw new NotImplementedException();
+            var col1 = new DataGridViewTextBoxColumn();
+            col1.Name = "id";
+            col1.DataPropertyName = "id";
+            col1.Visible = false;
+            GrdArticle.Columns.Add(col1);
         }
 
         private void LoadTree()
