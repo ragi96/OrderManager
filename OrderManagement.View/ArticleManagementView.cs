@@ -48,9 +48,7 @@ namespace OrderManagement.View
             SetArticleGroupGridColumns();
 
 
-            /** Treeeee Stuff **/
-            // Show the user something
-            TrvArticlegroups.Nodes.Add("Loading...");
+            
             // Run the tree load in the background
             await Task.Run(() => LoadTree());
         }
@@ -83,18 +81,22 @@ namespace OrderManagement.View
                   treeView = db.ArticleGroupView.FromSqlRaw("Exec getArticleGroupTree;").ToList();
              }
 
-            TrvArticlegroups.BeginUpdate();
-            TrvArticlegroups.Nodes.Clear();
-            var mainNodes = treeView.Where(node => node.SuperiorArticleId == null).ToList();
-             foreach (var mainNode in mainNodes)
-             {
-                var actualNodeId = mainNode.Id;
-                var newlevel = mainNode.TreeLevel + 1;
-                TreeNode treeviewNode = new TreeNode(mainNode.Name);
-                var subNodes = treeView.Where(node => node.SuperiorArticleId.Equals(actualNodeId)).ToList();
-                TrvArticlegroups.Nodes.Add(CreateRecursiveTreeview(treeView, subNodes, treeviewNode));
-             }
-             TrvArticlegroups.EndUpdate();
+            TrvArticlegroups.Invoke(new Action(() =>
+            {
+                TrvArticlegroups.BeginUpdate();
+                TrvArticlegroups.Nodes.Clear();
+                var mainNodes = treeView.Where(node => node.SuperiorArticleId == null).ToList();
+                foreach (var mainNode in mainNodes)
+                {
+                    var actualNodeId = mainNode.Id;
+                    var newlevel = mainNode.TreeLevel + 1;
+                    TreeNode treeviewNode = new TreeNode(mainNode.Name);
+                    var subNodes = treeView.Where(node => node.SuperiorArticleId.Equals(actualNodeId)).ToList();
+                    TrvArticlegroups.Nodes.Add(CreateRecursiveTreeview(treeView, subNodes, treeviewNode));
+                }
+                TrvArticlegroups.ExpandAll();
+                TrvArticlegroups.EndUpdate();
+            }));
         }
 
         private TreeNode CreateRecursiveTreeview(List<ArticleGroupView> completeList, List<ArticleGroupView> articleGroupList, TreeNode mainNode)
@@ -172,11 +174,15 @@ namespace OrderManagement.View
             } else {
                 await _articleGroupRepo.Update(currentArticleGroup);
             }
+            // Run the tree load in the background
+            await Task.Run(() => LoadTree());
         }
 
-        private void GrdArticleGroups_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        private async void GrdArticleGroups_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            _articleGroupRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            await _articleGroupRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            // Run the tree load in the background
+            await Task.Run(() => LoadTree());
         }
 
         private async void TxtArticleGroupSearch_TextChanged(object sender, EventArgs e)
@@ -215,7 +221,6 @@ namespace OrderManagement.View
                 {
                     valid = false;
                     // error number
-
                     GrdArticle.Rows[1].ErrorText = "Nummer darf nicht 0 sein!";
                 }
 
@@ -269,9 +274,11 @@ namespace OrderManagement.View
             }
         }
 
-        private void GrdArticle_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        private async void GrdArticle_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            _articleRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            await _articleRepo.DeleteById((int)e.Row.Cells["id"].Value);
+
+            
         }
 
         private async void TxtSearchArticle_TextChanged(object sender, EventArgs e)
