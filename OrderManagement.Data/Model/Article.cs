@@ -14,5 +14,6 @@ namespace OrderManagement.Data.Model
         public int? ArticleGroupId { get; set; }
         [ForeignKey("ArticleGroupId")]
         public virtual ArticleGroup ArticleGroup { get; set; } = new ArticleGroup();
+
     }
 }
