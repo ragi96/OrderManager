@@ -32,7 +32,6 @@
             this.TbpArticle = new System.Windows.Forms.TabPage();
             this.GrdArticle = new System.Windows.Forms.DataGridView();
             this.TxtSearchArticle = new System.Windows.Forms.TextBox();
-            this.CmdSearchArticle = new System.Windows.Forms.Button();
             this.CmdSaveArticle = new System.Windows.Forms.Button();
             this.LblArticle = new System.Windows.Forms.Label();
             this.TbpArticleGroupe = new System.Windows.Forms.TabPage();
@@ -62,7 +61,6 @@
             // 
             this.TbpArticle.Controls.Add(this.GrdArticle);
             this.TbpArticle.Controls.Add(this.TxtSearchArticle);
-            this.TbpArticle.Controls.Add(this.CmdSearchArticle);
             this.TbpArticle.Controls.Add(this.CmdSaveArticle);
             this.TbpArticle.Controls.Add(this.LblArticle);
             this.TbpArticle.Location = new System.Drawing.Point(4, 24);
@@ -91,19 +89,10 @@
             this.TxtSearchArticle.Location = new System.Drawing.Point(16, 73);
             this.TxtSearchArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtSearchArticle.Name = "TxtSearchArticle";
+            this.TxtSearchArticle.PlaceholderText = "Suche...";
             this.TxtSearchArticle.Size = new System.Drawing.Size(206, 23);
             this.TxtSearchArticle.TabIndex = 5;
             this.TxtSearchArticle.TextChanged += new System.EventHandler(this.TxtSearchArticle_TextChanged);
-            // 
-            // CmdSearchArticle
-            // 
-            this.CmdSearchArticle.Location = new System.Drawing.Point(230, 70);
-            this.CmdSearchArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CmdSearchArticle.Name = "CmdSearchArticle";
-            this.CmdSearchArticle.Size = new System.Drawing.Size(88, 27);
-            this.CmdSearchArticle.TabIndex = 4;
-            this.CmdSearchArticle.Text = "Suchen";
-            this.CmdSearchArticle.UseVisualStyleBackColor = true;
             // 
             // CmdSaveArticle
             // 
@@ -146,6 +135,7 @@
             this.TxtArticleGroupSearch.Location = new System.Drawing.Point(16, 70);
             this.TxtArticleGroupSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TxtArticleGroupSearch.Name = "TxtArticleGroupSearch";
+            this.TxtArticleGroupSearch.PlaceholderText = "Suche...";
             this.TxtArticleGroupSearch.Size = new System.Drawing.Size(206, 23);
             this.TxtArticleGroupSearch.TabIndex = 9;
             this.TxtArticleGroupSearch.TextChanged += new System.EventHandler(this.TxtArticleGroupSearch_TextChanged);
@@ -211,7 +201,6 @@
         private System.Windows.Forms.Label LblArticlegroups;
         private System.Windows.Forms.TreeView TrvArticlegroups;
         private System.Windows.Forms.DataGridView GrdArticleGroups;
-        private System.Windows.Forms.Button CmdSearchArticle;
         private System.Windows.Forms.TextBox TxtSearchArticle;
         private System.Windows.Forms.TextBox TxtArticleGroupSearch;
         private System.Windows.Forms.DataGridView GrdArticle;
