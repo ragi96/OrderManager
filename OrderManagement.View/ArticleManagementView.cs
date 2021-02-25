@@ -192,15 +192,9 @@ namespace OrderManagement.View
                 GrdArticleGroups.DataSource = await _articleGroupRepo.GetAll();
                 return;
             }
-            var foundArticleGroups = new List<ArticleGroup>();
+
             var searchString = TxtArticleGroupSearch.Text;
-            foreach (var articleGroup in _articlesGroups)
-            {
-                if (articleGroup.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    foundArticleGroups.Add(articleGroup);
-                }
-            }
+            var foundArticleGroups = _articlesGroups.Where(articleGroup => articleGroup.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)).ToList();
             GrdArticleGroups.DataSource = foundArticleGroups;
         }
 
@@ -250,7 +244,7 @@ namespace OrderManagement.View
 
         private void GrdArticle_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            string headerText = GrdArticle.Columns[e.ColumnIndex].HeaderText;
+            var headerText = GrdArticle.Columns[e.ColumnIndex].HeaderText;
 
             if (headerText == "Preis") {
                 if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
@@ -288,15 +282,9 @@ namespace OrderManagement.View
                 GrdArticle.DataSource = await _articleRepo.GetAll();
                 return;
             }
-            var foundArticle = new List<Article>();
+
             var searchString = TxtSearchArticle.Text;
-            foreach (var article in _articles)
-            {
-                if (article.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    foundArticle.Add(article);
-                }
-            }
+            var foundArticle = _articles.Where(article => article.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)).ToList();
             GrdArticle.DataSource = foundArticle;
         }
     }
