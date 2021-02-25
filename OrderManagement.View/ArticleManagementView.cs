@@ -36,19 +36,13 @@ namespace OrderManagement.View
             _articles = await _articleRepo.GetAll();
             _articlesGroups = new List<ArticleGroup>();
             _articlesGroups = await _articleGroupRepo.GetAll();
-           
             // GroupListCombo
             _groupListCombo = await _articleGroupRepo.GetAll();
             _groupListCombo.Insert(0, new ArticleGroup());
-
             //GrdArticle
             SetArticleGridColumns();
-
             //GrdArticleGroup
             SetArticleGroupGridColumns();
-
-
-            
             // Run the tree load in the background
             await Task.Run(() => LoadTree());
         }
@@ -56,12 +50,8 @@ namespace OrderManagement.View
         private void SetArticleGridColumns()
         {
             var colId = new DataGridViewTextBoxColumn {Name = "id", DataPropertyName = "id", Visible = false};
-
             var colNum = new DataGridViewTextBoxColumn { HeaderText = "Nummer", Name = "number", DataPropertyName = "number" };
-
             var colName = new DataGridViewTextBoxColumn {HeaderText = "Name", Name = "name", DataPropertyName = "name"};
-
-
             var colPrice = new DataGridViewTextBoxColumn {HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = {Format = "N2"}};
 
             GrdArticle.Columns.Add(colId);
@@ -89,7 +79,6 @@ namespace OrderManagement.View
                 foreach (var mainNode in mainNodes)
                 {
                     var actualNodeId = mainNode.Id;
-                    var newlevel = mainNode.TreeLevel + 1;
                     TreeNode treeviewNode = new TreeNode(mainNode.Name);
                     var subNodes = treeView.Where(node => node.SuperiorArticleId.Equals(actualNodeId)).ToList();
                     TrvArticlegroups.Nodes.Add(CreateRecursiveTreeview(treeView, subNodes, treeviewNode));
@@ -104,7 +93,6 @@ namespace OrderManagement.View
             foreach (var articleGroup in articleGroupList)
             {
                 var actualNodeId = articleGroup.Id;
-                var newlevel = articleGroup.TreeLevel + 1;
                 TreeNode treeviewNode = new TreeNode(articleGroup.Name);
                 var subNodes = completeList.Where(node => node.SuperiorArticleId.Equals(actualNodeId)).ToList();
                 if (subNodes.Count() > 0)
@@ -192,15 +180,9 @@ namespace OrderManagement.View
                 GrdArticleGroups.DataSource = await _articleGroupRepo.GetAll();
                 return;
             }
-            var foundArticleGroups = new List<ArticleGroup>();
+
             var searchString = TxtArticleGroupSearch.Text;
-            foreach (var articleGroup in _articlesGroups)
-            {
-                if (articleGroup.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    foundArticleGroups.Add(articleGroup);
-                }
-            }
+            var foundArticleGroups = _articlesGroups.Where(articleGroup => articleGroup.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)).ToList();
             GrdArticleGroups.DataSource = foundArticleGroups;
         }
 
@@ -250,7 +232,7 @@ namespace OrderManagement.View
 
         private void GrdArticle_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            string headerText = GrdArticle.Columns[e.ColumnIndex].HeaderText;
+            var headerText = GrdArticle.Columns[e.ColumnIndex].HeaderText;
 
             if (headerText == "Preis") {
                 if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
@@ -277,8 +259,6 @@ namespace OrderManagement.View
         private async void GrdArticle_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             await _articleRepo.DeleteById((int)e.Row.Cells["id"].Value);
-
-            
         }
 
         private async void TxtSearchArticle_TextChanged(object sender, EventArgs e)
@@ -288,15 +268,9 @@ namespace OrderManagement.View
                 GrdArticle.DataSource = await _articleRepo.GetAll();
                 return;
             }
-            var foundArticle = new List<Article>();
+
             var searchString = TxtSearchArticle.Text;
-            foreach (var article in _articles)
-            {
-                if (article.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    foundArticle.Add(article);
-                }
-            }
+            var foundArticle = _articles.Where(article => article.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)).ToList();
             GrdArticle.DataSource = foundArticle;
         }
     }
