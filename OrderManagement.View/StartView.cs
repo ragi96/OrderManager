@@ -10,13 +10,17 @@ namespace OrderManagement.View
         private readonly EfCrudRepository<Customer> _customerRepo;
         private readonly EfCrudRepository<Article> _articleRepo;
         private readonly EfCrudRepository<ArticleGroup> _articleGroupRepo;
+        private readonly EfCrudRepository<Order> _orderRepo;
+        private readonly EfCrudRepository<Position> _positionRepo;
 
-        public StartView(EfCrudRepository<Customer> customerRepo, EfCrudRepository<Article> articleRepo, EfCrudRepository<ArticleGroup> articleGroup)
+        public StartView(EfCrudRepository<Customer> customerRepo, EfCrudRepository<Article> articleRepo, EfCrudRepository<ArticleGroup> articleGroupRepo, EfCrudRepository<Order> orderRepo, EfCrudRepository<Position> positionRepo)
         {
             InitializeComponent();
             _customerRepo = customerRepo;
             _articleRepo = articleRepo;
-            _articleGroupRepo = articleGroup;
+            _articleGroupRepo = articleGroupRepo;
+            _orderRepo = orderRepo;
+            _positionRepo = positionRepo;
         }
 
         private void CmdCustomerManagement_Click(object sender, EventArgs e)
@@ -27,7 +31,7 @@ namespace OrderManagement.View
 
         private void CmdOrderManagement_Click(object sender, EventArgs e)
         {
-            var view = new OrderManagementView();
+            var view = new OrderManagementView(_orderRepo, _positionRepo, _customerRepo);
             view.Show();
         }
         private void CmdArticleManagement_Click(object sender, EventArgs e)

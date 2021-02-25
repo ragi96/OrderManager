@@ -30,6 +30,8 @@
         {
             this.TabArticle = new System.Windows.Forms.TabControl();
             this.TbpOrders = new System.Windows.Forms.TabPage();
+            this.TxtSearchOrder = new System.Windows.Forms.TextBox();
+            this.CmdSearchOrder = new System.Windows.Forms.Button();
             this.CmdCreateInvoice = new System.Windows.Forms.Button();
             this.CmdSaveOrder = new System.Windows.Forms.Button();
             this.LblPosition = new System.Windows.Forms.Label();
@@ -39,8 +41,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.LblOrder = new System.Windows.Forms.Label();
             this.GrdOrder = new System.Windows.Forms.DataGridView();
-            this.TxtSearchOrder = new System.Windows.Forms.TextBox();
-            this.CmdSearchOrder = new System.Windows.Forms.Button();
             this.TabArticle.SuspendLayout();
             this.TbpOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GrdPosition)).BeginInit();
@@ -52,9 +52,10 @@
             // 
             this.TabArticle.Controls.Add(this.TbpOrders);
             this.TabArticle.Location = new System.Drawing.Point(-1, 1);
+            this.TabArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TabArticle.Name = "TabArticle";
             this.TabArticle.SelectedIndex = 0;
-            this.TabArticle.Size = new System.Drawing.Size(803, 472);
+            this.TabArticle.Size = new System.Drawing.Size(937, 545);
             this.TabArticle.TabIndex = 1;
             // 
             // TbpOrders
@@ -68,28 +69,49 @@
             this.TbpOrders.Controls.Add(this.tabControl1);
             this.TbpOrders.Controls.Add(this.LblOrder);
             this.TbpOrders.Controls.Add(this.GrdOrder);
-            this.TbpOrders.Location = new System.Drawing.Point(4, 22);
+            this.TbpOrders.Location = new System.Drawing.Point(4, 24);
+            this.TbpOrders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TbpOrders.Name = "TbpOrders";
-            this.TbpOrders.Padding = new System.Windows.Forms.Padding(3);
-            this.TbpOrders.Size = new System.Drawing.Size(795, 446);
+            this.TbpOrders.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TbpOrders.Size = new System.Drawing.Size(929, 517);
             this.TbpOrders.TabIndex = 0;
             this.TbpOrders.Text = "Aufträge";
             this.TbpOrders.UseVisualStyleBackColor = true;
             // 
+            // TxtSearchOrder
+            // 
+            this.TxtSearchOrder.Location = new System.Drawing.Point(16, 62);
+            this.TxtSearchOrder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TxtSearchOrder.Name = "TxtSearchOrder";
+            this.TxtSearchOrder.Size = new System.Drawing.Size(206, 23);
+            this.TxtSearchOrder.TabIndex = 8;
+            // 
+            // CmdSearchOrder
+            // 
+            this.CmdSearchOrder.Location = new System.Drawing.Point(230, 60);
+            this.CmdSearchOrder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.CmdSearchOrder.Name = "CmdSearchOrder";
+            this.CmdSearchOrder.Size = new System.Drawing.Size(88, 27);
+            this.CmdSearchOrder.TabIndex = 7;
+            this.CmdSearchOrder.Text = "Suchen";
+            this.CmdSearchOrder.UseVisualStyleBackColor = true;
+            // 
             // CmdCreateInvoice
             // 
-            this.CmdCreateInvoice.Location = new System.Drawing.Point(9, 417);
+            this.CmdCreateInvoice.Location = new System.Drawing.Point(10, 481);
+            this.CmdCreateInvoice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CmdCreateInvoice.Name = "CmdCreateInvoice";
-            this.CmdCreateInvoice.Size = new System.Drawing.Size(117, 23);
+            this.CmdCreateInvoice.Size = new System.Drawing.Size(136, 27);
             this.CmdCreateInvoice.TabIndex = 6;
             this.CmdCreateInvoice.Text = "Rechnung erstellen";
             this.CmdCreateInvoice.UseVisualStyleBackColor = true;
             // 
             // CmdSaveOrder
             // 
-            this.CmdSaveOrder.Location = new System.Drawing.Point(709, 420);
+            this.CmdSaveOrder.Location = new System.Drawing.Point(827, 485);
+            this.CmdSaveOrder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CmdSaveOrder.Name = "CmdSaveOrder";
-            this.CmdSaveOrder.Size = new System.Drawing.Size(75, 23);
+            this.CmdSaveOrder.Size = new System.Drawing.Size(88, 27);
             this.CmdSaveOrder.TabIndex = 3;
             this.CmdSaveOrder.Text = "Speichern";
             this.CmdSaveOrder.UseVisualStyleBackColor = true;
@@ -97,8 +119,9 @@
             // LblPosition
             // 
             this.LblPosition.AutoSize = true;
-            this.LblPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblPosition.Location = new System.Drawing.Point(8, 224);
+            this.LblPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LblPosition.Location = new System.Drawing.Point(9, 258);
+            this.LblPosition.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LblPosition.Name = "LblPosition";
             this.LblPosition.Size = new System.Drawing.Size(248, 31);
             this.LblPosition.TabIndex = 5;
@@ -107,37 +130,41 @@
             // GrdPosition
             // 
             this.GrdPosition.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdPosition.Location = new System.Drawing.Point(8, 261);
+            this.GrdPosition.Location = new System.Drawing.Point(9, 301);
+            this.GrdPosition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GrdPosition.Name = "GrdPosition";
-            this.GrdPosition.Size = new System.Drawing.Size(776, 150);
+            this.GrdPosition.Size = new System.Drawing.Size(905, 173);
             this.GrdPosition.TabIndex = 4;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(520, 260);
+            this.tabControl1.Location = new System.Drawing.Point(607, 300);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(8, 8);
+            this.tabControl1.Size = new System.Drawing.Size(9, 9);
             this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(0, 0);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage1.Size = new System.Drawing.Size(1, 0);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(0, 0);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPage2.Size = new System.Drawing.Size(1, -19);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -145,8 +172,9 @@
             // LblOrder
             // 
             this.LblOrder.AutoSize = true;
-            this.LblOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblOrder.Location = new System.Drawing.Point(8, 20);
+            this.LblOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LblOrder.Location = new System.Drawing.Point(9, 23);
+            this.LblOrder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LblOrder.Name = "LblOrder";
             this.LblOrder.Size = new System.Drawing.Size(117, 31);
             this.LblOrder.TabIndex = 1;
@@ -155,34 +183,20 @@
             // GrdOrder
             // 
             this.GrdOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdOrder.Location = new System.Drawing.Point(8, 79);
+            this.GrdOrder.Location = new System.Drawing.Point(9, 91);
+            this.GrdOrder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GrdOrder.Name = "GrdOrder";
-            this.GrdOrder.Size = new System.Drawing.Size(776, 141);
+            this.GrdOrder.Size = new System.Drawing.Size(905, 163);
             this.GrdOrder.TabIndex = 0;
             // 
-            // TxtSearchOrder
+            // OrderManagementView
             // 
-            this.TxtSearchOrder.Location = new System.Drawing.Point(14, 54);
-            this.TxtSearchOrder.Name = "TxtSearchOrder";
-            this.TxtSearchOrder.Size = new System.Drawing.Size(177, 20);
-            this.TxtSearchOrder.TabIndex = 8;
-            // 
-            // CmdSearchOrder
-            // 
-            this.CmdSearchOrder.Location = new System.Drawing.Point(197, 52);
-            this.CmdSearchOrder.Name = "CmdSearchOrder";
-            this.CmdSearchOrder.Size = new System.Drawing.Size(75, 23);
-            this.CmdSearchOrder.TabIndex = 7;
-            this.CmdSearchOrder.Text = "Suchen";
-            this.CmdSearchOrder.UseVisualStyleBackColor = true;
-            // 
-            // OrderManagmentView
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 476);
+            this.ClientSize = new System.Drawing.Size(933, 549);
             this.Controls.Add(this.TabArticle);
-            this.Name = "OrderManagmentView";
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Name = "OrderManagementView";
             this.Text = "OrderManagmentView";
             this.TabArticle.ResumeLayout(false);
             this.TbpOrders.ResumeLayout(false);
