@@ -225,20 +225,20 @@ namespace OrderManagement.View
                 {
                     valid = false;
                     // error number
-                    GrdArticle.Rows[1].ErrorText = "Nummer darf nicht 0 sein!";
+                    GrdArticle.Rows[e.RowIndex].ErrorText = "Nummer darf nicht 0 sein!";
                 }
 
                 if (currentArticle.Name == "")
                 {
                     valid = false;
-                    GrdArticle.Rows[1].ErrorText = "Name darf nicht leer sein!";
+                    GrdArticle.Rows[e.RowIndex].ErrorText = "Name darf nicht leer sein!";
                 }
 
 
                 if (currentArticle.Price == 0)
                 {
                     valid = false;
-                    GrdArticle.Rows[1].ErrorText = "Preis darf nicht 0.00 sein!";
+                    GrdArticle.Rows[e.RowIndex].ErrorText = "Preis darf nicht 0.00 sein!";
                 }
 
                 if (valid)

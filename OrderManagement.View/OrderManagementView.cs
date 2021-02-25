@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OrderManagement.Data.Model;
@@ -19,12 +20,18 @@ namespace OrderManagement.View
         private readonly EfCrudRepository<Customer> _customerRepo;
         private IList<Customer> _customers;
 
-        public OrderManagementView(EfCrudRepository<Order> orderRepo, EfCrudRepository<Position> positionRepo, EfCrudRepository<Customer> customerRepo)
+        private readonly EfCrudRepository<Article> _articleRepo;
+        private IList<Article> _articles;
+
+        private int _selectedOrderId = 0;
+
+        public OrderManagementView(EfCrudRepository<Order> orderRepo, EfCrudRepository<Position> positionRepo, EfCrudRepository<Customer> customerRepo, EfCrudRepository<Article> articleRepo)
         {
             InitializeComponent();
             _orderRepo = orderRepo;
             _positionRepo = positionRepo;
             _customerRepo = customerRepo;
+            _articleRepo = articleRepo;
         }
 
         protected async override void OnLoad(EventArgs e)
@@ -36,10 +43,13 @@ namespace OrderManagement.View
             _positions = await _positionRepo.GetAll();
             _customers = new List<Customer>();
             _customers = await _customerRepo.GetAll();
+            _articles = new List<Article>();
+            _articles = await _articleRepo.GetAll();
             //GrdArticle
             SetOrderGridColumns();
-            //GrdArticleGroup
-            //SetArticleGroupGridColumns();
+
+            // GrdPositions
+            SetPositionGridColumns();
         }
 
         private void SetOrderGridColumns()
@@ -51,6 +61,22 @@ namespace OrderManagement.View
             AddCustomerCombo();
             GrdOrder.AutoGenerateColumns = false;
             GrdOrder.DataSource = new BindingList<Order>(_orders);
+        }
+
+        private void SetPositionGridColumns()
+        {
+            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
+            var colOId = new DataGridViewTextBoxColumn { Name = "orderId", DataPropertyName = "orderId", Visible = false };
+            var colAmount = new DataGridViewTextBoxColumn { HeaderText = "Menge", Name = "amount", DataPropertyName = "amount", DefaultCellStyle = { Format = "N" } };
+            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = { Format = "N2" } };
+            GrdPosition.Columns.Add(colId);
+            GrdPosition.Columns.Add(colOId);
+            AddArticleCombo();
+            GrdPosition.Columns.Add(colAmount);
+            GrdPosition.Columns.Add(colPrice);
+            GrdPosition.AutoGenerateColumns = false;
+            GrdPosition.Enabled = false;
+            GrdPosition.DataSource = new BindingList<Position>(_positions);
         }
 
         private void AddCustomerCombo()
@@ -65,6 +91,20 @@ namespace OrderManagement.View
                 ValueMember = "id",
             };
             GrdOrder.Columns.Add(combo);
+        }
+
+        private void AddArticleCombo()
+        {
+            var combo = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Artikel",
+                Name = "ArticelId",
+                DataPropertyName = "ArticelId",
+                DataSource = _articles,
+                DisplayMember = "Name",
+                ValueMember = "id",
+            };
+            GrdPosition.Columns.Add(combo);
         }
 
         private async void GrdOrder_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -84,7 +124,7 @@ namespace OrderManagement.View
                 if (currentOrder.Customer == null)
                 {
                     valid = false;
-                    GrdOrder.Rows[1].ErrorText = "Kunde darf nicht leer sein!";
+                    GrdOrder.Rows[e.RowIndex].ErrorText = "Kunde darf nicht leer sein!";
                 }
 
                 if (valid)
@@ -96,8 +136,33 @@ namespace OrderManagement.View
             {
                 await _orderRepo.Update(currentOrder);
             }
+        }
 
-            GrdOrder.Rows[currentRow].ErrorText = String.Empty;
+        private async void GrdOrder_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            await _customerRepo.DeleteById((int)e.Row.Cells["id"].Value);
+        }
+
+        private async void GrdOrder_SelectionChanged(object sender, EventArgs e)
+        {
+            _selectedOrderId = (int)GrdOrder.CurrentRow.Cells["id"].Value;
+            if (_selectedOrderId != 0) { 
+                var allPos = await _positionRepo.GetAll();
+                if (allPos.Count() == 0) { 
+                    var selectedPos = allPos.Where(p => p.OrderId == _selectedOrderId).ToList();
+                    GrdPosition.Enabled = true;
+                    GrdPosition.DataSource = new BindingList<Position>(selectedPos);
+                }
+            }
+            else
+            {
+                GrdPosition.DataSource = new BindingList<Position>(_positions);
+            }
+        }
+
+        private async void GrdPosition_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            
         }
     }
 }

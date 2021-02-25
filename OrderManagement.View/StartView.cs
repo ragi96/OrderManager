@@ -31,7 +31,7 @@ namespace OrderManagement.View
 
         private void CmdOrderManagement_Click(object sender, EventArgs e)
         {
-            var view = new OrderManagementView(_orderRepo, _positionRepo, _customerRepo);
+            var view = new OrderManagementView(_orderRepo, _positionRepo, _customerRepo, _articleRepo);
             view.Show();
         }
         private void CmdArticleManagement_Click(object sender, EventArgs e)

@@ -135,6 +135,7 @@
             this.GrdPosition.Name = "GrdPosition";
             this.GrdPosition.Size = new System.Drawing.Size(905, 173);
             this.GrdPosition.TabIndex = 4;
+            this.GrdPosition.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdPosition_CellEndEdit);
             // 
             // tabControl1
             // 
@@ -182,7 +183,6 @@
             // 
             // GrdOrder
             // 
-            this.GrdOrder.AllowUserToDeleteRows = false;
             this.GrdOrder.AllowUserToOrderColumns = true;
             this.GrdOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GrdOrder.Location = new System.Drawing.Point(9, 91);
@@ -191,6 +191,8 @@
             this.GrdOrder.Size = new System.Drawing.Size(905, 163);
             this.GrdOrder.TabIndex = 0;
             this.GrdOrder.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdOrder_CellEndEdit);
+            this.GrdOrder.SelectionChanged += new System.EventHandler(this.GrdOrder_SelectionChanged);
+            this.GrdOrder.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.GrdOrder_UserDeletingRow);
             // 
             // OrderManagementView
             // 
