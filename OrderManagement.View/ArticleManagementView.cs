@@ -20,7 +20,7 @@ namespace OrderManagement.View
         private IList<Article> _articles;
 
         private IList<ArticleGroup> _groupListCombo;
-        
+
 
         public ArticleManagementView(EfCrudRepository<ArticleGroup> articleGroupRepo, EfCrudRepository<Article> articleRepo)
         {
@@ -36,23 +36,33 @@ namespace OrderManagement.View
             _articles = await _articleRepo.GetAll();
             _articlesGroups = new List<ArticleGroup>();
             _articlesGroups = await _articleGroupRepo.GetAll();
+
             // GroupListCombo
             _groupListCombo = await _articleGroupRepo.GetAll();
             _groupListCombo.Insert(0, new ArticleGroup());
+
             //GrdArticle
             SetArticleGridColumns();
+
             //GrdArticleGroup
             SetArticleGroupGridColumns();
+
+
+
             // Run the tree load in the background
             await Task.Run(() => LoadTree());
         }
 
         private void SetArticleGridColumns()
         {
-            var colId = new DataGridViewTextBoxColumn {Name = "id", DataPropertyName = "id", Visible = false};
+            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
+
             var colNum = new DataGridViewTextBoxColumn { HeaderText = "Nummer", Name = "number", DataPropertyName = "number" };
-            var colName = new DataGridViewTextBoxColumn {HeaderText = "Name", Name = "name", DataPropertyName = "name"};
-            var colPrice = new DataGridViewTextBoxColumn {HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = {Format = "N2"}};
+
+            var colName = new DataGridViewTextBoxColumn { HeaderText = "Name", Name = "name", DataPropertyName = "name" };
+
+
+            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = { Format = "N2" } };
 
             GrdArticle.Columns.Add(colId);
             GrdArticle.Columns.Add(colNum);
@@ -66,10 +76,10 @@ namespace OrderManagement.View
         private void LoadTree()
         {
             List<ArticleGroupView> treeView;
-             using (var db = new DataContext())
-             {
-                  treeView = db.ArticleGroupView.FromSqlRaw("Exec getArticleGroupTree;").ToList();
-             }
+            using (var db = new DataContext())
+            {
+                treeView = db.ArticleGroupView.FromSqlRaw("Exec getArticleGroupTree;").ToList();
+            }
 
             TrvArticlegroups.Invoke(new Action(() =>
             {
@@ -79,6 +89,7 @@ namespace OrderManagement.View
                 foreach (var mainNode in mainNodes)
                 {
                     var actualNodeId = mainNode.Id;
+                    var newlevel = mainNode.TreeLevel + 1;
                     TreeNode treeviewNode = new TreeNode(mainNode.Name);
                     var subNodes = treeView.Where(node => node.SuperiorArticleId.Equals(actualNodeId)).ToList();
                     TrvArticlegroups.Nodes.Add(CreateRecursiveTreeview(treeView, subNodes, treeviewNode));
@@ -93,6 +104,7 @@ namespace OrderManagement.View
             foreach (var articleGroup in articleGroupList)
             {
                 var actualNodeId = articleGroup.Id;
+                var newlevel = articleGroup.TreeLevel + 1;
                 TreeNode treeviewNode = new TreeNode(articleGroup.Name);
                 var subNodes = completeList.Where(node => node.SuperiorArticleId.Equals(actualNodeId)).ToList();
                 if (subNodes.Count() > 0)
@@ -110,10 +122,10 @@ namespace OrderManagement.View
 
         private void SetArticleGroupGridColumns()
         {
-            var col1 = new DataGridViewTextBoxColumn {Name = "id", DataPropertyName = "id", Visible = false};
+            var col1 = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
             GrdArticleGroups.Columns.Add(col1);
             // create new
-            var col2 = new DataGridViewTextBoxColumn {HeaderText = "Name", Name = "name", DataPropertyName = "name"};
+            var col2 = new DataGridViewTextBoxColumn { HeaderText = "Name", Name = "name", DataPropertyName = "name" };
             // create fake articlegroup
             GrdArticleGroups.Columns.Add(col2);
             AddArticleGroupCombo();
@@ -153,13 +165,17 @@ namespace OrderManagement.View
         {
             var currentRow = e.RowIndex;
             var currentArticleGroup = _articlesGroups[currentRow];
-            if (currentArticleGroup.SuperiorArticleGroup == null && currentArticleGroup.SuperiorArticleId != null) {
+            if (currentArticleGroup.SuperiorArticleGroup == null && currentArticleGroup.SuperiorArticleId != null)
+            {
                 var articleGroup = await _articleGroupRepo.GetById((int)currentArticleGroup.SuperiorArticleId);
                 currentArticleGroup.SuperiorArticleGroup = articleGroup;
             }
-            if (currentArticleGroup.Id == 0) {
+            if (currentArticleGroup.Id == 0)
+            {
                 await _articleGroupRepo.Create(currentArticleGroup);
-            } else {
+            }
+            else
+            {
                 await _articleGroupRepo.Update(currentArticleGroup);
             }
             // Run the tree load in the background
@@ -180,9 +196,15 @@ namespace OrderManagement.View
                 GrdArticleGroups.DataSource = await _articleGroupRepo.GetAll();
                 return;
             }
-
+            var foundArticleGroups = new List<ArticleGroup>();
             var searchString = TxtArticleGroupSearch.Text;
-            var foundArticleGroups = _articlesGroups.Where(articleGroup => articleGroup.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            foreach (var articleGroup in _articlesGroups)
+            {
+                if (articleGroup.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    foundArticleGroups.Add(articleGroup);
+                }
+            }
             GrdArticleGroups.DataSource = foundArticleGroups;
         }
 
@@ -220,10 +242,12 @@ namespace OrderManagement.View
                 }
 
                 if (valid)
-                { 
+                {
                     await _articleRepo.Create(currentArticle);
                 }
-            } else {
+            }
+            else
+            {
                 await _articleRepo.Update(currentArticle);
             }
 
@@ -232,9 +256,10 @@ namespace OrderManagement.View
 
         private void GrdArticle_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            var headerText = GrdArticle.Columns[e.ColumnIndex].HeaderText;
+            string headerText = GrdArticle.Columns[e.ColumnIndex].HeaderText;
 
-            if (headerText == "Preis") {
+            if (headerText == "Preis")
+            {
                 if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
                 {
                     GrdArticle.Rows[e.RowIndex].ErrorText = "Preis darf nicht leer sein!";
@@ -246,12 +271,17 @@ namespace OrderManagement.View
                     e.Cancel = true;
                 }
 
-            } else if (headerText == "Name") {
-                if (string.IsNullOrEmpty(e.FormattedValue.ToString())) {
+            }
+            else if (headerText == "Name")
+            {
+                if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
+                {
                     GrdArticle.Rows[e.RowIndex].ErrorText = "Name darf nicht leer sein!";
                     e.Cancel = true;
                 }
-            } else {
+            }
+            else
+            {
                 return;
             }
         }

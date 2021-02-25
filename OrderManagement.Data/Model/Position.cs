@@ -1,12 +1,16 @@
-﻿using Smartive.Core.Database.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Smartive.Core.Database.Models;
 
 namespace OrderManagement.Data.Model
 {
     public class Position : Base
     {
-        public Article Article { get; set; } = new Article();
-
-        public Order Order { get; set; } = new Order();
+        public int? ArticleId { get; set; }
+        [ForeignKey("ArticleId")]
+        public virtual Article Article { get; set; }
+        public int? OrderId { get; set; }
+        [ForeignKey("OrderId")]
+        public Order Order { get; set; }
 
         public double ArticlePrice { get; set; }
 
