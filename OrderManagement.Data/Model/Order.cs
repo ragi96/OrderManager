@@ -6,9 +6,9 @@ namespace OrderManagement.Data.Model
 {
     public class Order : Base
     {
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; } 
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
     }

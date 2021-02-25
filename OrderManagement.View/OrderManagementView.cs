@@ -44,9 +44,8 @@ namespace OrderManagement.View
 
         private void SetOrderGridColumns()
         {
-            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", ReadOnly = true };
-            var colDate = new DataGridViewTextBoxColumn { HeaderText = "Datum", Name = "date", DataPropertyName = "Date", ReadOnly = true };
-
+            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
+            var colDate = new DataGridViewTextBoxColumn { HeaderText = "Datum", Name = "date", DataPropertyName = "Date", ReadOnly = true, DefaultCellStyle = {Format = "dd.MM.yyyy"}};
             GrdOrder.Columns.Add(colId);
             GrdOrder.Columns.Add(colDate);
             AddCustomerCombo();
@@ -58,14 +57,47 @@ namespace OrderManagement.View
         {
             var combo = new DataGridViewComboBoxColumn
             {
-                HeaderText = "Überkategorie",
-                Name = "superiorArticleId",
-                DataPropertyName = "SuperiorArticleId",
+                HeaderText = "Kunde",
+                Name = "CustomerId",
+                DataPropertyName = "CustomerId",
                 DataSource = _customers,
-                DisplayMember = "name",
+                DisplayMember = "Fullname",
                 ValueMember = "id",
             };
             GrdOrder.Columns.Add(combo);
+        }
+
+        private async void GrdOrder_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var currentRow = e.RowIndex;
+            var currentOrder = _orders[currentRow];
+            if (currentOrder.Customer == null && currentOrder.CustomerId != null)
+            {
+                var customer = await _customerRepo.GetById((int)currentOrder.CustomerId);
+                currentOrder.Customer = customer;
+            }
+
+            if (currentOrder.Id == 0)
+            {
+                var valid = true;
+
+                if (currentOrder.Customer == null)
+                {
+                    valid = false;
+                    GrdOrder.Rows[1].ErrorText = "Kunde darf nicht leer sein!";
+                }
+
+                if (valid)
+                {
+                    await _orderRepo.Create(currentOrder);
+                }
+            }
+            else
+            {
+                await _orderRepo.Update(currentOrder);
+            }
+
+            GrdOrder.Rows[currentRow].ErrorText = String.Empty;
         }
     }
 }

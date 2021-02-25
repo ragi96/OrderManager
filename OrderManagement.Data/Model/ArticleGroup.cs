@@ -12,6 +12,7 @@ namespace OrderManagement.Data.Model
         public virtual ArticleGroup SuperiorArticleGroup { get; set; }
     }
 
+    [Table("ArticleGroupView")]
     public class ArticleGroupView : Base
     {
         public string Name { get; set; }

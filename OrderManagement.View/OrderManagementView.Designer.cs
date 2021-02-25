@@ -182,12 +182,15 @@
             // 
             // GrdOrder
             // 
+            this.GrdOrder.AllowUserToDeleteRows = false;
+            this.GrdOrder.AllowUserToOrderColumns = true;
             this.GrdOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GrdOrder.Location = new System.Drawing.Point(9, 91);
             this.GrdOrder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GrdOrder.Name = "GrdOrder";
             this.GrdOrder.Size = new System.Drawing.Size(905, 163);
             this.GrdOrder.TabIndex = 0;
+            this.GrdOrder.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdOrder_CellEndEdit);
             // 
             // OrderManagementView
             // 

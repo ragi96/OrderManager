@@ -44,7 +44,7 @@ namespace OrderManagement.View
             currentCustomer.Lastname = (string)selectedCustomer["Lastname"].Value;
             currentCustomer.Street = (string)selectedCustomer["Street"].Value;
             currentCustomer.StreetNr = (string)selectedCustomer["StreetNr"].Value;
-            currentCustomer.ValidFrom = (DateTime)selectedCustomer["ValidFrom"].Value;
+            //currentCustomer.ValidFrom = (DateTime)selectedCustomer["ValidFrom"].Value;
             currentCustomer.Zip = (string)selectedCustomer["Zip"].Value;
             currentCustomer.CountryCode = (string)selectedCustomer["CountryCode"].Value;
             currentCustomer.City = (string)selectedCustomer["City"].Value;

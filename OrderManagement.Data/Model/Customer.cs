@@ -5,7 +5,6 @@ namespace OrderManagement.Data.Model
 {
     public class Customer : Base
     {
-        public DateTime ValidFrom { get; set; }
 
         public string Prename { get; set; } = string.Empty;
 
@@ -20,5 +19,12 @@ namespace OrderManagement.Data.Model
         public string City { get; set; } = string.Empty;
 
         public string CountryCode { get; set; } = string.Empty;
+
+        public string Fullname
+        {
+            get => this.Prename + " " + this.Lastname;
+        }
+
+
     }
 }
