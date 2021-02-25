@@ -280,10 +280,6 @@ namespace OrderManagement.View
                     e.Cancel = true;
                 }
             }
-            else
-            {
-                return;
-            }
         }
 
         private async void GrdArticle_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)

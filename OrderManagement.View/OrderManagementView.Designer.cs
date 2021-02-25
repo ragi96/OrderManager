@@ -130,12 +130,13 @@
             // GrdPosition
             // 
             this.GrdPosition.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdPosition.Location = new System.Drawing.Point(9, 301);
+            this.GrdPosition.Location = new System.Drawing.Point(12, 300);
             this.GrdPosition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GrdPosition.Name = "GrdPosition";
             this.GrdPosition.Size = new System.Drawing.Size(905, 173);
             this.GrdPosition.TabIndex = 4;
-            this.GrdPosition.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdPosition_CellEndEdit);
+            this.GrdPosition.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdPosition_CellValueChanged);
+            this.GrdPosition.CurrentCellDirtyStateChanged += new System.EventHandler(this.GrdPosition_CurrentCellDirtyStateChanged);
             // 
             // tabControl1
             // 

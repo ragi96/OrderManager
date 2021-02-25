@@ -45,6 +45,7 @@ namespace OrderManagement.View
             _customers = await _customerRepo.GetAll();
             _articles = new List<Article>();
             _articles = await _articleRepo.GetAll();
+
             //GrdArticle
             SetOrderGridColumns();
 
@@ -65,10 +66,10 @@ namespace OrderManagement.View
 
         private void SetPositionGridColumns()
         {
-            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
-            var colOId = new DataGridViewTextBoxColumn { Name = "orderId", DataPropertyName = "orderId", Visible = false };
-            var colAmount = new DataGridViewTextBoxColumn { HeaderText = "Menge", Name = "amount", DataPropertyName = "amount", DefaultCellStyle = { Format = "N" } };
-            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = { Format = "N2" } };
+            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false};
+            var colOId = new DataGridViewTextBoxColumn { Name = "orderId", DataPropertyName = "orderId"};
+            var colAmount = new DataGridViewTextBoxColumn { HeaderText = "Menge", Name = "amount", DataPropertyName = "amount", DefaultCellStyle = { Format = "N0" }};
+            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "articlePrice", DataPropertyName = "articlePrice" };
             GrdPosition.Columns.Add(colId);
             GrdPosition.Columns.Add(colOId);
             AddArticleCombo();
@@ -98,8 +99,8 @@ namespace OrderManagement.View
             var combo = new DataGridViewComboBoxColumn
             {
                 HeaderText = "Artikel",
-                Name = "ArticelId",
-                DataPropertyName = "ArticelId",
+                Name = "ArticleId",
+                DataPropertyName = "ArticleId",
                 DataSource = _articles,
                 DisplayMember = "Name",
                 ValueMember = "id",
@@ -109,6 +110,7 @@ namespace OrderManagement.View
 
         private async void GrdOrder_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+
             var currentRow = e.RowIndex;
             var currentOrder = _orders[currentRow];
             if (currentOrder.Customer == null && currentOrder.CustomerId != null)
@@ -129,6 +131,7 @@ namespace OrderManagement.View
 
                 if (valid)
                 {
+
                     await _orderRepo.Create(currentOrder);
                 }
             }
@@ -160,9 +163,25 @@ namespace OrderManagement.View
             }
         }
 
-        private async void GrdPosition_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private async void GrdPosition_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            
+            var name = GrdPosition.CurrentCell.OwningColumn.Name;
+            if (name == "ArticleId")
+            {
+                //load article stuff in to active grdposition table
+                var articleId = (int)GrdPosition.CurrentCell.Value;
+                var article = await _articleRepo.GetById(articleId);
+                GrdPosition.CurrentRow.Cells["articlePrice"].Value = article.Price;
+                GrdPosition.CurrentRow.Cells["amount"].Value = 1;
+            }
+        }
+
+        private void GrdPosition_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (GrdPosition.IsCurrentCellDirty)
+            {
+                GrdPosition.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
         }
     }
 }
