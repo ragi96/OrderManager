@@ -10,8 +10,8 @@ using OrderManagement.Data.Context;
 namespace OrderManagement.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210225191103_SeedCustomer")]
-    partial class SeedCustomer
+    [Migration("20210225194648_AddCustomers")]
+    partial class AddCustomers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,30 +71,6 @@ namespace OrderManagement.Data.Migrations
                     b.ToTable("ArticleGroup");
                 });
 
-            modelBuilder.Entity("OrderManagement.Data.Model.ArticleGroupView", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SuperiorArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TreeLevel")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TreePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ArticleGroupView");
-                });
-
             modelBuilder.Entity("OrderManagement.Data.Model.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -119,9 +95,6 @@ namespace OrderManagement.Data.Migrations
 
                     b.Property<string>("StreetNr")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ValidFrom")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Zip")
                         .HasColumnType("nvarchar(max)");
@@ -158,7 +131,7 @@ namespace OrderManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -230,7 +203,9 @@ namespace OrderManagement.Data.Migrations
                 {
                     b.HasOne("OrderManagement.Data.Model.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
                 });

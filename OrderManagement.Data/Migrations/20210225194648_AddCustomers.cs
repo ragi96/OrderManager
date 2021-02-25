@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace OrderManagement.Data.Migrations
 {
-    public partial class SeedCustomer : Migration
+    public partial class AddCustomers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,15 +14,16 @@ namespace OrderManagement.Data.Migrations
             string[] city = new string[] { "St. Gallen", "Bern", "Zürich", "Kreuzlingen", "Wil", "Wattwil", "Genf", "Lausanne" };
             string[] countryCode = new string[] { "CH", "CH", "CH", "CH", "CH", "CH", "CH", "CH" };
 
-            for(var i = 0; i < 8; i++)
+            for (var i = 0; i < 8; i++)
             {
-                migrationBuilder.Sql($"INSERT INTO Customer (ValidFrom, Prename, Lastname, Street, StreetNr, Zip, City, CountryCode)" +
-                $"VALUES ('{DateTime.Now}', '{prenames[i]}', '{lastnames[i]}', '{street[i]}', '{nr[i]}', '{zip[i]}', '{city[i]}', '{countryCode[i]}')");
-            }            
+                migrationBuilder.Sql($"INSERT INTO Customer (Prename, Lastname, Street, StreetNr, Zip, City, CountryCode)" +
+                                     $"VALUES ('{prenames[i]}', '{lastnames[i]}', '{street[i]}', '{nr[i]}', '{zip[i]}', '{city[i]}', '{countryCode[i]}')");
+            }
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DELETE FROM Customer DBCC CHECKIDENT('ArticleGroup',RESEED, 0)");
         }
     }
 }
