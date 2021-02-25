@@ -6,6 +6,7 @@ using Smartive.Core.Database.Repositories;
 using System;
 using System.Windows.Forms;
 using OrderManagement.View;
+using OrderManagement.Data.Migrations;
 
 namespace OrderManagement
 {
