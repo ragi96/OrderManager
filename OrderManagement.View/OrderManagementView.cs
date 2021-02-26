@@ -36,6 +36,7 @@ namespace OrderManagement.View
 
         protected async override void OnLoad(EventArgs e)
         {
+            GrdPosition.AutoGenerateColumns = false;
             base.OnLoad(e);
             _orders = new List<Order>();
             _orders = await _orderRepo.GetAll();
@@ -67,7 +68,7 @@ namespace OrderManagement.View
         private void SetPositionGridColumns()
         {
             var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false};
-            var colOId = new DataGridViewTextBoxColumn { Name = "orderId", DataPropertyName = "orderId"};
+            var colOId = new DataGridViewTextBoxColumn { Name = "orderId", DataPropertyName = "orderId", Visible = false};
             var colAmount = new DataGridViewTextBoxColumn { HeaderText = "Menge", Name = "amount", DataPropertyName = "amount", DefaultCellStyle = { Format = "N0" }};
             var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "articlePrice", DataPropertyName = "articlePrice" };
             GrdPosition.Columns.Add(colId);
@@ -75,8 +76,6 @@ namespace OrderManagement.View
             AddArticleCombo();
             GrdPosition.Columns.Add(colAmount);
             GrdPosition.Columns.Add(colPrice);
-            GrdPosition.AutoGenerateColumns = false;
-            GrdPosition.Enabled = false;
             GrdPosition.DataSource = new BindingList<Position>(_positions);
         }
 
@@ -148,14 +147,13 @@ namespace OrderManagement.View
 
         private async void GrdOrder_SelectionChanged(object sender, EventArgs e)
         {
-            _selectedOrderId = (int)GrdOrder.CurrentRow.Cells["id"].Value;
-            if (_selectedOrderId != 0) { 
-                var allPos = await _positionRepo.GetAll();
-                if (allPos.Count() == 0) { 
-                    var selectedPos = allPos.Where(p => p.OrderId == _selectedOrderId).ToList();
-                    GrdPosition.Enabled = true;
-                    GrdPosition.DataSource = new BindingList<Position>(selectedPos);
-                }
+            GrdPosition.DataSource = null;
+            var orderId = (int) GrdOrder.CurrentRow.Cells["id"].Value;
+            if (orderId != 0) {
+                var selectedPos = _positions.Where(p => p.OrderId == _selectedOrderId).ToList();
+               // GrdPosition.Re
+                GrdPosition.Enabled = true;
+                GrdPosition.DataSource = new BindingList<Position>(selectedPos);
             }
             else
             {
@@ -182,6 +180,18 @@ namespace OrderManagement.View
             {
                 GrdPosition.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
+        }
+
+        private async void GrdPosition_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var positionId = (int)GrdPosition.CurrentRow.Cells["id"].Value;
+            if (positionId == 0)
+            {
+                var position = GrdPosition.CurrentRow.DataBoundItem as Position;
+                position.OrderId = (int)GrdOrder.CurrentRow.Cells["id"].Value;
+                await _positionRepo.Create(position);
+            }
+            // Not finished need validate edits price not 0 and amount not 0
         }
     }
 }

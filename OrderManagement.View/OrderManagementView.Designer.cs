@@ -135,6 +135,7 @@
             this.GrdPosition.Name = "GrdPosition";
             this.GrdPosition.Size = new System.Drawing.Size(905, 173);
             this.GrdPosition.TabIndex = 4;
+            this.GrdPosition.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdPosition_CellEndEdit);
             this.GrdPosition.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdPosition_CellValueChanged);
             this.GrdPosition.CurrentCellDirtyStateChanged += new System.EventHandler(this.GrdPosition_CurrentCellDirtyStateChanged);
             // 
