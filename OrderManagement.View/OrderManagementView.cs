@@ -213,17 +213,26 @@ namespace OrderManagement.View
             if (currentOrder != null)
             {
                 var positions = await _positionRepo.GetAll();
-                if (positions.Where(p => p.OrderId == currentOrder.Id).Count() > 0)
+                if (positions.Any(p => p.OrderId == currentOrder.Id))
                 {
                     currentOrder.InvoiceDate = DateTime.Now;
                     await _orderRepo.Update(currentOrder);
-                    GrdOrder.Refresh();
+                    GrdOrderRefresh();
                 }
                 else
                 {
                     MessageBox.Show("Auftrage hat keine Auftragspositionen und kann deshalb nicht zu Rechnung werden!");
                 }
             }
+        }
+
+        private async void GrdOrderRefresh()
+        {
+            GrdPosition.Enabled = false;
+            GrdPosition.DataSource = null;
+            var orders = await _orderRepo.GetAll();
+            var activeOrders = orders.Where(o => o.InvoiceDate == null).ToList();
+            GrdOrder.DataSource = activeOrders;
         }
     }
 }
