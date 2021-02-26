@@ -31,9 +31,7 @@
             this.TabArticle = new System.Windows.Forms.TabControl();
             this.TbpOrders = new System.Windows.Forms.TabPage();
             this.TxtSearchOrder = new System.Windows.Forms.TextBox();
-            this.CmdSearchOrder = new System.Windows.Forms.Button();
             this.CmdCreateInvoice = new System.Windows.Forms.Button();
-            this.CmdSaveOrder = new System.Windows.Forms.Button();
             this.LblPosition = new System.Windows.Forms.Label();
             this.GrdPosition = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -61,9 +59,7 @@
             // TbpOrders
             // 
             this.TbpOrders.Controls.Add(this.TxtSearchOrder);
-            this.TbpOrders.Controls.Add(this.CmdSearchOrder);
             this.TbpOrders.Controls.Add(this.CmdCreateInvoice);
-            this.TbpOrders.Controls.Add(this.CmdSaveOrder);
             this.TbpOrders.Controls.Add(this.LblPosition);
             this.TbpOrders.Controls.Add(this.GrdPosition);
             this.TbpOrders.Controls.Add(this.tabControl1);
@@ -85,16 +81,7 @@
             this.TxtSearchOrder.Name = "TxtSearchOrder";
             this.TxtSearchOrder.Size = new System.Drawing.Size(206, 23);
             this.TxtSearchOrder.TabIndex = 8;
-            // 
-            // CmdSearchOrder
-            // 
-            this.CmdSearchOrder.Location = new System.Drawing.Point(230, 60);
-            this.CmdSearchOrder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CmdSearchOrder.Name = "CmdSearchOrder";
-            this.CmdSearchOrder.Size = new System.Drawing.Size(88, 27);
-            this.CmdSearchOrder.TabIndex = 7;
-            this.CmdSearchOrder.Text = "Suchen";
-            this.CmdSearchOrder.UseVisualStyleBackColor = true;
+            this.TxtSearchOrder.TextChanged += new System.EventHandler(this.TxtSearchOrder_TextChanged);
             // 
             // CmdCreateInvoice
             // 
@@ -105,16 +92,7 @@
             this.CmdCreateInvoice.TabIndex = 6;
             this.CmdCreateInvoice.Text = "Rechnung erstellen";
             this.CmdCreateInvoice.UseVisualStyleBackColor = true;
-            // 
-            // CmdSaveOrder
-            // 
-            this.CmdSaveOrder.Location = new System.Drawing.Point(827, 485);
-            this.CmdSaveOrder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CmdSaveOrder.Name = "CmdSaveOrder";
-            this.CmdSaveOrder.Size = new System.Drawing.Size(88, 27);
-            this.CmdSaveOrder.TabIndex = 3;
-            this.CmdSaveOrder.Text = "Speichern";
-            this.CmdSaveOrder.UseVisualStyleBackColor = true;
+            this.CmdCreateInvoice.Click += new System.EventHandler(this.CmdCreateInvoice_Click);
             // 
             // LblPosition
             // 
@@ -138,6 +116,7 @@
             this.GrdPosition.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdPosition_CellEndEdit);
             this.GrdPosition.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdPosition_CellValueChanged);
             this.GrdPosition.CurrentCellDirtyStateChanged += new System.EventHandler(this.GrdPosition_CurrentCellDirtyStateChanged);
+            this.GrdPosition.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.GrdPosition_UserDeletingRow);
             // 
             // tabControl1
             // 
@@ -227,8 +206,6 @@
         private System.Windows.Forms.Label LblPosition;
         private System.Windows.Forms.DataGridView GrdPosition;
         private System.Windows.Forms.Button CmdCreateInvoice;
-        private System.Windows.Forms.Button CmdSaveOrder;
         private System.Windows.Forms.TextBox TxtSearchOrder;
-        private System.Windows.Forms.Button CmdSearchOrder;
     }
 }

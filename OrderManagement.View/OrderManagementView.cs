@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OrderManagement.Data.Context;
 using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
 
@@ -51,7 +52,7 @@ namespace OrderManagement.View
             SetOrderGridColumns();
         }
 
-        private void SetOrderGridColumns()
+        private async void SetOrderGridColumns()
         {
             var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
             var colDate = new DataGridViewTextBoxColumn { HeaderText = "Datum", Name = "date", DataPropertyName = "Date", ReadOnly = true, DefaultCellStyle = {Format = "dd.MM.yyyy"}};
@@ -59,7 +60,9 @@ namespace OrderManagement.View
             GrdOrder.Columns.Add(colDate);
             AddCustomerCombo();
             GrdOrder.AutoGenerateColumns = false;
-            GrdOrder.DataSource = new BindingList<Order>(_orders);
+            var orders = await _orderRepo.GetAll();
+            var allOrders = orders.Where(o => o.InvoiceDate == null).ToList();
+            GrdOrder.DataSource = new BindingList<Order>(allOrders);
         }
 
         private void SetPositionGridColumns()
@@ -114,7 +117,7 @@ namespace OrderManagement.View
             }
             else
             {
-                if (currentOrder.CustomerId != 0) return;
+                if (currentOrder.Customer != null) return;
                 
                 await _orderRepo.Update(currentOrder);
             }
@@ -122,10 +125,13 @@ namespace OrderManagement.View
 
         private async void GrdOrder_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            await _orderRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            if ((int) e.Row.Cells["id"].Value > 0)
+            {
+                await _orderRepo.DeleteById((int) e.Row.Cells["id"].Value);
+            }
         }
 
-        private void GrdOrder_SelectionChanged(object sender, EventArgs e)
+        private async void GrdOrder_SelectionChanged(object sender, EventArgs e)
         {
             GrdPosition.Enabled = false;
             GrdPosition.DataSource = null;
@@ -133,7 +139,8 @@ namespace OrderManagement.View
             if (selectedOrder == null) return;
             if (selectedOrder.Id == 0) return;
 
-            var selectedPos = _positions.Where(p => p.OrderId == selectedOrder.Id).ToList();
+            var selectedPos = await _positionRepo.GetAll();
+            selectedPos = selectedPos.Where(p => p.OrderId == selectedOrder.Id).ToList();
             GrdPosition.Enabled = true;
             GrdPosition.DataSource = new BindingList<Position>(selectedPos);
         }
@@ -175,6 +182,47 @@ namespace OrderManagement.View
                 if (currentPosition.Amount == 0) return;
 
                 await _positionRepo.Update(currentPosition);
+            }
+        }
+
+        private async void TxtSearchOrder_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtSearchOrder.Text))
+            {
+                GrdOrder.DataSource = await _orderRepo.GetAll();
+            }
+            else { 
+                var searchString = TxtSearchOrder.Text;
+                // Prüfen auf Customer Fullname und All articles?
+                var foundArticle = _orders.Where(o => o.Id == 1).ToList();
+                GrdOrder.DataSource = foundArticle;
+            }
+        }
+
+        private async void GrdPosition_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if ((int) e.Row.Cells["id"].Value > 0)
+            {
+                await _positionRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            }
+        }
+
+        private async void CmdCreateInvoice_Click(object sender, EventArgs e)
+        {
+            var currentOrder = GrdOrder.CurrentRow.DataBoundItem as Order;
+            if (currentOrder != null)
+            {
+                var positions = await _positionRepo.GetAll();
+                if (positions.Where(p => p.OrderId == currentOrder.Id).Count() > 0)
+                {
+                    currentOrder.InvoiceDate = DateTime.Now;
+                    await _orderRepo.Update(currentOrder);
+                    GrdOrder.Refresh();
+                }
+                else
+                {
+                    MessageBox.Show("Auftrage hat keine Auftragspositionen und kann deshalb nicht zu Rechnung werden!");
+                }
             }
         }
     }
