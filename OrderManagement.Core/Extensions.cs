@@ -17,7 +17,7 @@ namespace OrderManagement.Core
             services.AddScoped<EfCrudRepository<Invoice>>();
             services.AddScoped<EfCrudRepository<Order>>();
             services.AddScoped<EfCrudRepository<Position>>();
-            services.AddDbContext<DbContext, DataContext>();
+            services.AddTransient<DbContext, DataContext>();
             return services;
         }
     }
