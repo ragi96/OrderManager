@@ -23,8 +23,6 @@ namespace OrderManagement.View
         private readonly EfCrudRepository<Article> _articleRepo;
         private IList<Article> _articles;
 
-        private int _selectedOrderId = 0;
-
         public OrderManagementView(EfCrudRepository<Order> orderRepo, EfCrudRepository<Position> positionRepo, EfCrudRepository<Customer> customerRepo, EfCrudRepository<Article> articleRepo)
         {
             InitializeComponent();
@@ -47,11 +45,10 @@ namespace OrderManagement.View
             _articles = new List<Article>();
             _articles = await _articleRepo.GetAll();
 
-            //GrdArticle
-            SetOrderGridColumns();
-
             // GrdPositions
             SetPositionGridColumns();
+            //GrdArticle
+            SetOrderGridColumns();
         }
 
         private void SetOrderGridColumns()
@@ -70,7 +67,7 @@ namespace OrderManagement.View
             var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false};
             var colOId = new DataGridViewTextBoxColumn { Name = "orderId", DataPropertyName = "orderId", Visible = false};
             var colAmount = new DataGridViewTextBoxColumn { HeaderText = "Menge", Name = "amount", DataPropertyName = "amount", DefaultCellStyle = { Format = "N0" }};
-            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "articlePrice", DataPropertyName = "articlePrice" };
+            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis pro Stück", Name = "articlePrice", DataPropertyName = "articlePrice" };
             GrdPosition.Columns.Add(colId);
             GrdPosition.Columns.Add(colOId);
             AddArticleCombo();
@@ -109,66 +106,46 @@ namespace OrderManagement.View
 
         private async void GrdOrder_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-
-            var currentRow = e.RowIndex;
-            var currentOrder = _orders[currentRow];
-            if (currentOrder.Customer == null && currentOrder.CustomerId != null)
-            {
-                var customer = await _customerRepo.GetById((int)currentOrder.CustomerId);
-                currentOrder.Customer = customer;
-            }
-
+            var currentOrder = GrdOrder.CurrentRow.DataBoundItem as Order;
+            if (currentOrder == null) return;
             if (currentOrder.Id == 0)
             {
-                var valid = true;
-
-                if (currentOrder.Customer == null)
-                {
-                    valid = false;
-                    GrdOrder.Rows[e.RowIndex].ErrorText = "Kunde darf nicht leer sein!";
-                }
-
-                if (valid)
-                {
-
-                    await _orderRepo.Create(currentOrder);
-                }
+                await _orderRepo.Create(currentOrder);
             }
             else
             {
+                if (currentOrder.CustomerId != 0) return;
+                
                 await _orderRepo.Update(currentOrder);
             }
         }
 
         private async void GrdOrder_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            await _customerRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            await _orderRepo.DeleteById((int)e.Row.Cells["id"].Value);
         }
 
-        private async void GrdOrder_SelectionChanged(object sender, EventArgs e)
+        private void GrdOrder_SelectionChanged(object sender, EventArgs e)
         {
+            GrdPosition.Enabled = false;
             GrdPosition.DataSource = null;
-            var orderId = (int) GrdOrder.CurrentRow.Cells["id"].Value;
-            if (orderId != 0) {
-                var selectedPos = _positions.Where(p => p.OrderId == _selectedOrderId).ToList();
-               // GrdPosition.Re
-                GrdPosition.Enabled = true;
-                GrdPosition.DataSource = new BindingList<Position>(selectedPos);
-            }
-            else
-            {
-                GrdPosition.DataSource = new BindingList<Position>(_positions);
-            }
+            var selectedOrder = GrdOrder.CurrentRow.DataBoundItem as Order; ;
+            if (selectedOrder == null) return;
+            if (selectedOrder.Id == 0) return;
+
+            var selectedPos = _positions.Where(p => p.OrderId == selectedOrder.Id).ToList();
+            GrdPosition.Enabled = true;
+            GrdPosition.DataSource = new BindingList<Position>(selectedPos);
         }
 
-        private async void GrdPosition_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void GrdPosition_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             var name = GrdPosition.CurrentCell.OwningColumn.Name;
             if (name == "ArticleId")
             {
                 //load article stuff in to active grdposition table
                 var articleId = (int)GrdPosition.CurrentCell.Value;
-                var article = await _articleRepo.GetById(articleId);
+                var article = _articles.Where(a => a.Id == articleId).ToList().First();
                 GrdPosition.CurrentRow.Cells["articlePrice"].Value = article.Price;
                 GrdPosition.CurrentRow.Cells["amount"].Value = 1;
             }
@@ -184,14 +161,21 @@ namespace OrderManagement.View
 
         private async void GrdPosition_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            var positionId = (int)GrdPosition.CurrentRow.Cells["id"].Value;
-            if (positionId == 0)
+            var currentPosition = GrdPosition.CurrentRow.DataBoundItem as Position;
+            if (currentPosition == null) return;
+            if (currentPosition.Id == 0)
             {
-                var position = GrdPosition.CurrentRow.DataBoundItem as Position;
-                position.OrderId = (int)GrdOrder.CurrentRow.Cells["id"].Value;
-                await _positionRepo.Create(position);
+                currentPosition.OrderId = (int)GrdOrder.CurrentRow.Cells["id"].Value;
+                await _positionRepo.Create(currentPosition);
             }
-            // Not finished need validate edits price not 0 and amount not 0
+            else
+            {
+                if (currentPosition.ArticlePrice == 0) return;
+
+                if (currentPosition.Amount == 0) return;
+
+                await _positionRepo.Update(currentPosition);
+            }
         }
     }
 }
