@@ -13,15 +13,15 @@ namespace OrderManagement.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SuperiorArticleGroupId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SuperiorArticleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArticleGroup", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArticleGroup_ArticleGroup_SuperiorArticleGroupId",
-                        column: x => x.SuperiorArticleGroupId,
+                        name: "FK_ArticleGroup_ArticleGroup_SuperiorArticleId",
+                        column: x => x.SuperiorArticleId,
                         principalTable: "ArticleGroup",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -33,7 +33,6 @@ namespace OrderManagement.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ValidFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Prename = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -53,7 +52,6 @@ namespace OrderManagement.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ValidFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -78,7 +76,8 @@ namespace OrderManagement.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: true)
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,27 +87,7 @@ namespace OrderManagement.Data.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Invoice",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Invoice", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Invoice_Order_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Order",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,14 +124,9 @@ namespace OrderManagement.Data.Migrations
                 column: "ArticleGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArticleGroup_SuperiorArticleGroupId",
+                name: "IX_ArticleGroup_SuperiorArticleId",
                 table: "ArticleGroup",
-                column: "SuperiorArticleGroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoice_OrderId",
-                table: "Invoice",
-                column: "OrderId");
+                column: "SuperiorArticleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_CustomerId",
@@ -168,16 +142,12 @@ namespace OrderManagement.Data.Migrations
                 name: "IX_Position_OrderId",
                 table: "Position",
                 column: "OrderId");
-
-            migrationBuilder.Sql("CREATE SCHEMA History");
-            migrationBuilder.AddTemporalTableSupport("Customer", "History");
-            migrationBuilder.AddTemporalTableSupport("Article", "History");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Invoice");
+                name: "ArticleGroupView");
 
             migrationBuilder.DropTable(
                 name: "Position");

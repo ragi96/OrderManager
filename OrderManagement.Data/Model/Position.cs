@@ -5,11 +5,12 @@ namespace OrderManagement.Data.Model
 {
     public class Position : Base
     {
+        [ForeignKey("Article")]
         public int? ArticleId { get; set; }
-        [ForeignKey("ArticleId")]
         public virtual Article Article { get; set; }
+
+        [ForeignKey("Order")]
         public int? OrderId { get; set; }
-        [ForeignKey("OrderId")]
         public Order Order { get; set; }
 
         public double ArticlePrice { get; set; }

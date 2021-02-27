@@ -1,6 +1,5 @@
-﻿using OrderManagement.Data.Model;
+﻿using OrderManagement.Data.Context;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace OrderManagement.View
@@ -15,6 +14,8 @@ namespace OrderManagement.View
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
+            using var db = new DataContext();
 
         }
     }

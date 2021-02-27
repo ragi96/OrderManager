@@ -117,9 +117,9 @@ namespace OrderManagement.View
             }
             else
             {
-                if (currentOrder.Customer != null) return;
+              /*  if (currentOrder.Customer != null) return;
                 
-                await _orderRepo.Update(currentOrder);
+                await _orderRepo.Update(currentOrder); */
             }
         }
 

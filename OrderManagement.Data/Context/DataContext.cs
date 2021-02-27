@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
+﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OrderManagement.Data.Model;
+using System.IO;
 
 namespace OrderManagement.Data.Context
 {
@@ -38,6 +37,12 @@ namespace OrderManagement.Data.Context
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("SqlConnectionString"));
           //  optionsBuilder.LogTo(Console.WriteLine);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
         }
 
         public DbSet<Customer> Customer { get; set; }

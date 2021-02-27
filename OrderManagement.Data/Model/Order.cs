@@ -10,8 +10,8 @@ namespace OrderManagement.Data.Model
         public DateTime Date { get; set; } = DateTime.Now;
 
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
+        public int CustomerId { get; set; }        
+        public Customer Customer { get; set; }
 
         public DateTime? InvoiceDate { get; set; } = null;
 

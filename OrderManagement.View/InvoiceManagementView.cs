@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using OrderManagement.Data.Context;
 using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
 
@@ -44,6 +45,9 @@ namespace OrderManagement.View
             GrdInvoice.Columns.Add(colId);
             GrdInvoice.Columns.Add(colDate);
             GrdInvoice.DataSource = new BindingList<Order>(_invoices);
+
+            var positions = _invoices.First().Positions;
+            var customer = _invoices.First().Customer;
         }
     }
 }

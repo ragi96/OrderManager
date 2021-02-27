@@ -10,7 +10,7 @@ using OrderManagement.Data.Context;
 namespace OrderManagement.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210221140036_Initial")]
+    [Migration("20210227204109_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,9 +43,6 @@ namespace OrderManagement.Data.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("ValidFrom")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleGroupId");
@@ -61,16 +58,41 @@ namespace OrderManagement.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SuperiorArticleGroupId")
+                    b.Property<int?>("SuperiorArticleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SuperiorArticleGroupId");
+                    b.HasIndex("SuperiorArticleId");
 
                     b.ToTable("ArticleGroup");
+                });
+
+            modelBuilder.Entity("OrderManagement.Data.Model.ArticleGroupView", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SuperiorArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TreeLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TreePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArticleGroupView");
                 });
 
             modelBuilder.Entity("OrderManagement.Data.Model.Customer", b =>
@@ -98,35 +120,12 @@ namespace OrderManagement.Data.Migrations
                     b.Property<string>("StreetNr")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ValidFrom")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Zip")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("OrderManagement.Data.Model.Invoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("OrderManagement.Data.Model.Order", b =>
@@ -136,10 +135,13 @@ namespace OrderManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("InvoiceDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -190,25 +192,18 @@ namespace OrderManagement.Data.Migrations
                 {
                     b.HasOne("OrderManagement.Data.Model.ArticleGroup", "SuperiorArticleGroup")
                         .WithMany()
-                        .HasForeignKey("SuperiorArticleGroupId");
+                        .HasForeignKey("SuperiorArticleId");
 
                     b.Navigation("SuperiorArticleGroup");
-                });
-
-            modelBuilder.Entity("OrderManagement.Data.Model.Invoice", b =>
-                {
-                    b.HasOne("OrderManagement.Data.Model.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("OrderManagement.Data.Model.Order", b =>
                 {
                     b.HasOne("OrderManagement.Data.Model.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
                 });
@@ -216,16 +211,31 @@ namespace OrderManagement.Data.Migrations
             modelBuilder.Entity("OrderManagement.Data.Model.Position", b =>
                 {
                     b.HasOne("OrderManagement.Data.Model.Article", "Article")
-                        .WithMany()
+                        .WithMany("Positions")
                         .HasForeignKey("ArticleId");
 
                     b.HasOne("OrderManagement.Data.Model.Order", "Order")
-                        .WithMany()
+                        .WithMany("Positions")
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Article");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("OrderManagement.Data.Model.Article", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("OrderManagement.Data.Model.Customer", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("OrderManagement.Data.Model.Order", b =>
+                {
+                    b.Navigation("Positions");
                 });
 #pragma warning restore 612, 618
         }

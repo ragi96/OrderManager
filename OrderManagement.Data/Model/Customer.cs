@@ -1,5 +1,6 @@
 ﻿using Smartive.Core.Database.Models;
 using System;
+using System.Collections.Generic;
 
 namespace OrderManagement.Data.Model
 {
@@ -25,6 +26,6 @@ namespace OrderManagement.Data.Model
             get => this.Prename + " " + this.Lastname;
         }
 
-
+        public ICollection<Order> Orders { get; set; }
     }
 }

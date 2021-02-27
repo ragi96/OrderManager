@@ -1,5 +1,6 @@
 ﻿using Smartive.Core.Database.Models;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OrderManagement.Data.Model
@@ -11,9 +12,10 @@ namespace OrderManagement.Data.Model
         public double Price { get; set; }
         public double Mwst { get; set; }
 
+        [ForeignKey("ArticleGroup")]
         public int? ArticleGroupId { get; set; }
-        [ForeignKey("ArticleGroupId")]
         public virtual ArticleGroup ArticleGroup { get; set; }
 
+        public ICollection<Position> Positions { get; set; }
     }
 }

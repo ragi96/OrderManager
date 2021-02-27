@@ -198,7 +198,7 @@ namespace OrderManagement.Data.Migrations
             modelBuilder.Entity("OrderManagement.Data.Model.Order", b =>
                 {
                     b.HasOne("OrderManagement.Data.Model.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -209,7 +209,7 @@ namespace OrderManagement.Data.Migrations
             modelBuilder.Entity("OrderManagement.Data.Model.Position", b =>
                 {
                     b.HasOne("OrderManagement.Data.Model.Article", "Article")
-                        .WithMany()
+                        .WithMany("Positions")
                         .HasForeignKey("ArticleId");
 
                     b.HasOne("OrderManagement.Data.Model.Order", "Order")
@@ -219,6 +219,16 @@ namespace OrderManagement.Data.Migrations
                     b.Navigation("Article");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("OrderManagement.Data.Model.Article", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("OrderManagement.Data.Model.Customer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("OrderManagement.Data.Model.Order", b =>
