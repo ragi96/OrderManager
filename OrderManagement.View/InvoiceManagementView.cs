@@ -21,6 +21,10 @@ namespace OrderManagement.View
         private readonly EfCrudRepository<Customer> _customerRepo;
         private IList<Customer> _customers;
 
+        private Customer _selectedCustomer;
+
+        private DateTime? _selectedDate;
+
         public InvoiceManagementView(EfCrudRepository<Order> orderRepo, EfCrudRepository<Customer> customerRepo)
         {
             InitializeComponent();
@@ -45,6 +49,9 @@ namespace OrderManagement.View
             SetInvoiceGridColumns();
             // Customer Combobox
             SetCustomerCombo();
+
+            // setup datetimepicker
+            DtpDate.Checked = false;
         }
 
         private void SetInvoiceGridColumns()
@@ -86,11 +93,37 @@ namespace OrderManagement.View
 
         private void cmbUser_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedCustomer = cmbUser.SelectedItem as Customer;
-            if (selectedCustomer.Id != 0)
+            _selectedCustomer = cmbUser.SelectedItem as Customer;
+            FilterInvoiceGrid();
+        }
+        private void DtpDate_ValueChanged(object sender, EventArgs e)
+        {
+            if (DtpDate.Checked)
             {
-                GrdInvoice.DataSource = _invoices.Where(o => o.CustomerId == selectedCustomer.Id).ToList();
+                _selectedDate = DtpDate.Value;
             }
+            else
+            {
+                _selectedDate = null;
+            }
+            FilterInvoiceGrid();
+        }
+
+
+        private void FilterInvoiceGrid()
+        {
+            var filteredList = _invoices;
+            if (_selectedCustomer.Id != 0)
+            {
+                filteredList = filteredList.Where(o => o.CustomerId == _selectedCustomer.Id).ToList();
+            }
+
+            if (_selectedDate != null)
+            {
+                filteredList = filteredList.Where(o => o.InvoiceDate?.ToString("d") == _selectedDate?.ToString("d")).ToList();
+            }
+
+            GrdInvoice.DataSource = filteredList;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace OrderManagement.View
         {
             this.TabInvoice = new System.Windows.Forms.TabControl();
             this.TbpYearlyCompare = new System.Windows.Forms.TabPage();
+            this.DtpDate = new System.Windows.Forms.DateTimePicker();
             this.cmbUser = new System.Windows.Forms.ComboBox();
             this.LblInvoice = new System.Windows.Forms.Label();
             this.GrdInvoice = new System.Windows.Forms.DataGridView();
@@ -51,6 +52,7 @@ namespace OrderManagement.View
             // 
             // TbpYearlyCompare
             // 
+            this.TbpYearlyCompare.Controls.Add(this.DtpDate);
             this.TbpYearlyCompare.Controls.Add(this.cmbUser);
             this.TbpYearlyCompare.Controls.Add(this.LblInvoice);
             this.TbpYearlyCompare.Controls.Add(this.GrdInvoice);
@@ -62,6 +64,16 @@ namespace OrderManagement.View
             this.TbpYearlyCompare.TabIndex = 0;
             this.TbpYearlyCompare.Text = "Rechnungen";
             this.TbpYearlyCompare.UseVisualStyleBackColor = true;
+            // 
+            // DtpDate
+            // 
+            this.DtpDate.Location = new System.Drawing.Point(155, 62);
+            this.DtpDate.Name = "DtpDate";
+            this.DtpDate.ShowCheckBox = true;
+            this.DtpDate.Size = new System.Drawing.Size(200, 23);
+            this.DtpDate.TabIndex = 3;
+            this.DtpDate.ValueChanged += new System.EventHandler(this.DtpDate_ValueChanged);
+            this.DtpDate.VisibleChanged += new System.EventHandler(this.DtpDate_VisibleChanged);
             // 
             // cmbUser
             // 
@@ -121,5 +133,6 @@ namespace OrderManagement.View
         private System.Windows.Forms.Label LblInvoice;
         private System.Windows.Forms.DataGridView GrdInvoice;
         private System.Windows.Forms.ComboBox cmbUser;
+        private System.Windows.Forms.DateTimePicker DtpDate;
     }
 }
