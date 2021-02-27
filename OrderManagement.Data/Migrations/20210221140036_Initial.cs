@@ -171,6 +171,7 @@ namespace OrderManagement.Data.Migrations
 
             migrationBuilder.Sql("CREATE SCHEMA History");
             migrationBuilder.AddTemporalTableSupport("Customer", "History");
+            migrationBuilder.AddTemporalTableSupport("Article", "History");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
