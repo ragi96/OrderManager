@@ -48,8 +48,6 @@ namespace OrderManagement.Data.Context
 
         public DbSet<ArticleGroupView> ArticleGroupView { get; set; }
 
-        public DbSet<Invoice> Invoice { get; set; }
-
         public DbSet<Order> Order { get; set; }
 
         public DbSet<Position> Position { get; set; }

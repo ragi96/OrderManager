@@ -10,7 +10,6 @@ namespace OrderManagement.Core
         private readonly EfCrudRepository<Customer> _customerRepo;
         private readonly EfCrudRepository<Article> _articleRepo;
         private readonly EfCrudRepository<ArticleGroup> _articleGroupRepo;
-        private readonly EfCrudRepository<Invoice> _invoiceRepo;
         private readonly EfCrudRepository<Order> _orderRepo;
         private readonly EfCrudRepository<Position> _positionRepo;
 
@@ -18,7 +17,6 @@ namespace OrderManagement.Core
             EfCrudRepository<Customer> customerRepo,
             EfCrudRepository<Article> articleRepo,
             EfCrudRepository<ArticleGroup> articleGroupRepo,
-            EfCrudRepository<Invoice> invoiceRepo,
             EfCrudRepository<Order> orderRepo,
             EfCrudRepository<Position> positionRepo
         )
@@ -26,7 +24,6 @@ namespace OrderManagement.Core
             _customerRepo = customerRepo;
             _articleRepo = articleRepo;
             _articleGroupRepo = articleGroupRepo;
-            _invoiceRepo = invoiceRepo;
             _orderRepo = orderRepo;
             _positionRepo = positionRepo;
         }
@@ -43,9 +40,6 @@ namespace OrderManagement.Core
                     break;
                 case Customer _:
                     await _customerRepo.Create((Customer)entity);
-                    break;
-                case Invoice _:
-                    await _invoiceRepo.Create((Invoice)entity);
                     break;
                 case Order _:
                     await _orderRepo.Create((Order)entity);
@@ -68,9 +62,6 @@ namespace OrderManagement.Core
                     break;
                 case Customer _:
                     await _customerRepo.Delete((Customer)entity);
-                    break;
-                case Invoice _:
-                    await _invoiceRepo.Delete((Invoice)entity);
                     break;
                 case Order _:
                     await _orderRepo.Delete((Order)entity);
@@ -96,9 +87,6 @@ namespace OrderManagement.Core
                 case Customer _:
                     var customers = await _customerRepo.GetAll();
                     return (Customer)customers.Where(elem => elem == (Customer)entity);
-                case Invoice _:
-                    var invoices = await _invoiceRepo.GetAll();
-                    return (Invoice)invoices.Where(elem => elem == (Invoice)entity); 
                 case Order _:
                     var orders = await _orderRepo.GetAll();
                     return (Order)orders.Where(elem => elem == (Order)entity);
@@ -122,9 +110,6 @@ namespace OrderManagement.Core
                     break;
                 case Customer _:
                     await _customerRepo.Update((Customer)entity);
-                    break;
-                case Invoice _:
-                    await _invoiceRepo.Update((Invoice)entity);
                     break;
                 case Order _:
                     await _orderRepo.Update((Order)entity);
