@@ -79,7 +79,6 @@ namespace OrderManagement.View
             this.GrdInvoice.AllowUserToResizeColumns = false;
             this.GrdInvoice.AllowUserToResizeRows = false;
             this.GrdInvoice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdInvoice.Enabled = false;
             this.GrdInvoice.Location = new System.Drawing.Point(9, 91);
             this.GrdInvoice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GrdInvoice.Name = "GrdInvoice";

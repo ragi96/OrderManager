@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.EntityFrameworkCore;
 using OrderManagement.Data.Context;
 using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
@@ -15,7 +16,6 @@ namespace OrderManagement.View
     public partial class InvoiceManagementView : Form
     {
         private readonly EfCrudRepository<Order> _orderRepo;
-        private IList<Order> _orders;
         private IList<Order> _invoices;
 
         public InvoiceManagementView(EfCrudRepository<Order> orderRepo)
@@ -28,10 +28,13 @@ namespace OrderManagement.View
         {
             GrdInvoice.AutoGenerateColumns = false;
             base.OnLoad(e);
-            _orders = new List<Order>();
             _invoices = new List<Order>();
-            _orders = await _orderRepo.GetAll();
-            _invoices = _orders.Where(o => o.InvoiceDate != null).ToList();
+
+            using (var context = new DataContext())
+            {
+                _invoices = context.Order.Include(o => o.Customer).Include(o => o.Positions).ToList();
+            }
+
 
             // GrdInvoice
             SetInvoiceGridColumns();
@@ -39,15 +42,27 @@ namespace OrderManagement.View
 
         private void SetInvoiceGridColumns()
         {
-            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false};
             var colDate = new DataGridViewTextBoxColumn { HeaderText = "Rechnungsdatum", Name = "invoiceDate", DataPropertyName = "InvoiceDate", DefaultCellStyle = { Format = "dd.MM.yyyy" } };
+            var colCustomerId = new DataGridViewTextBoxColumn { HeaderText = "Kunden ID", Name = "customerId", DataPropertyName = "CustomerId" };
 
-            GrdInvoice.Columns.Add(colId);
+            var colCustomerName = new DataGridViewTextBoxColumn { HeaderText = "Kunde", Name = "customerName", DataPropertyName = "CustomerName" };
+            var colCustomerStreet = new DataGridViewTextBoxColumn { HeaderText = "Strasse", Name = "customerStreet", DataPropertyName = "CustomerStreet" };
+            var colCustomerZip = new DataGridViewTextBoxColumn { HeaderText = "PLZ", Name = "customerZip", DataPropertyName = "CustomerZip" };
+            var colCustomerCity = new DataGridViewTextBoxColumn { HeaderText = "City", Name = "customerCity", DataPropertyName = "CustomerCity" };
+            var colCustomerCountry = new DataGridViewTextBoxColumn { HeaderText = "Land", Name = "customerCountry", DataPropertyName = "CustomerCountry" };
+            var colCustomerPriceNetto = new DataGridViewTextBoxColumn { HeaderText = "Netto", Name = "priceNetto", DataPropertyName = "PriceNetto", DefaultCellStyle = { Format = "N2" }};
+            var colCustomerPriceBrutto = new DataGridViewTextBoxColumn { HeaderText = "Brutto", Name = "priceBrutto", DataPropertyName = "PriceBrutto", DefaultCellStyle = { Format = "N2" } };
+
+            GrdInvoice.Columns.Add(colCustomerId);
+            GrdInvoice.Columns.Add(colCustomerName);
+            GrdInvoice.Columns.Add(colCustomerStreet);
+            GrdInvoice.Columns.Add(colCustomerZip);
+            GrdInvoice.Columns.Add(colCustomerCity);
+            GrdInvoice.Columns.Add(colCustomerCountry);
             GrdInvoice.Columns.Add(colDate);
-            GrdInvoice.DataSource = new BindingList<Order>(_invoices);
-
-            var positions = _invoices.First().Positions;
-            var customer = _invoices.First().Customer;
+            GrdInvoice.Columns.Add(colCustomerPriceNetto);
+            GrdInvoice.Columns.Add(colCustomerPriceBrutto);
+            GrdInvoice.DataSource = _invoices;
         }
     }
 }
