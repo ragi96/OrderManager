@@ -43,13 +43,8 @@ namespace OrderManagement.Data.Migrations
 
             foreach (var order in orders)
             {
-                migrationBuilder.Sql($"INSERT INTO [dbo].[Order] ([Date],[CustomerId],[InvoiceDate]) VALUES ('{order.Date}','{order.CustomerId}','{order.InvoiceDate}')");
+                migrationBuilder.Sql($"INSERT INTO [dbo].[Order] ([Date],[CustomerId],[InvoiceDate]) VALUES ('{order.Date.ToString("u")}','{order.CustomerId}', '{order.InvoiceDate?.ToString("u")}')");
             }
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
         }
     }
 }
