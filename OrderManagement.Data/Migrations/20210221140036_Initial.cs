@@ -168,6 +168,9 @@ namespace OrderManagement.Data.Migrations
                 name: "IX_Position_OrderId",
                 table: "Position",
                 column: "OrderId");
+
+            migrationBuilder.Sql("CREATE SCHEMA History");
+            migrationBuilder.AddTemporalTableSupport("Customer", "History");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
