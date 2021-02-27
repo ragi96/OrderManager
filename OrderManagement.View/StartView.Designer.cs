@@ -34,6 +34,7 @@
             this.CmdYearlyCompare = new System.Windows.Forms.Button();
             this.CmdArticleManagement = new System.Windows.Forms.Button();
             this.CmdClose = new System.Windows.Forms.Button();
+            this.CmdInvoice = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // CmdCustomerManagement
@@ -60,7 +61,7 @@
             // 
             // CmdYearlyCompare
             // 
-            this.CmdYearlyCompare.Location = new System.Drawing.Point(14, 108);
+            this.CmdYearlyCompare.Location = new System.Drawing.Point(13, 141);
             this.CmdYearlyCompare.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CmdYearlyCompare.Name = "CmdYearlyCompare";
             this.CmdYearlyCompare.Size = new System.Drawing.Size(206, 27);
@@ -91,11 +92,23 @@
             this.CmdClose.UseVisualStyleBackColor = true;
             this.CmdClose.Click += new System.EventHandler(this.CmdClose_Click);
             // 
+            // CmdInvoice
+            // 
+            this.CmdInvoice.Location = new System.Drawing.Point(14, 108);
+            this.CmdInvoice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.CmdInvoice.Name = "CmdInvoice";
+            this.CmdInvoice.Size = new System.Drawing.Size(206, 27);
+            this.CmdInvoice.TabIndex = 5;
+            this.CmdInvoice.Text = "Rechnungserwaltung";
+            this.CmdInvoice.UseVisualStyleBackColor = true;
+            this.CmdInvoice.Click += new System.EventHandler(this.CmdInvoice_Click);
+            // 
             // StartView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(247, 352);
+            this.Controls.Add(this.CmdInvoice);
             this.Controls.Add(this.CmdClose);
             this.Controls.Add(this.CmdArticleManagement);
             this.Controls.Add(this.CmdYearlyCompare);
@@ -116,5 +129,6 @@
         private System.Windows.Forms.Button CmdClose;
         private System.Windows.Forms.Button CmdOrderManagement;
         private System.Windows.Forms.Button CmdArticleManagement;
+        private System.Windows.Forms.Button CmdInvoice;
     }
 }

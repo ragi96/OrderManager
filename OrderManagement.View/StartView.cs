@@ -1,5 +1,4 @@
-﻿using OrderManagement.Data.Context;
-using OrderManagement.Data.Model;
+﻿using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
 using System;
 using System.Windows.Forms;
@@ -55,6 +54,12 @@ namespace OrderManagement.View
         private void CmdClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void CmdInvoice_Click(object sender, EventArgs e)
+        {
+            var view = new InvoiceManagementView(_orderRepo);
+            view.Show();
         }
     }
 }

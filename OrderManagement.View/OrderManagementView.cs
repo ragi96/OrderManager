@@ -33,7 +33,7 @@ namespace OrderManagement.View
             _articleRepo = articleRepo;
         }
 
-        protected async override void OnLoad(EventArgs e)
+        protected override async void OnLoad(EventArgs e)
         {
             GrdPosition.AutoGenerateColumns = false;
             base.OnLoad(e);
