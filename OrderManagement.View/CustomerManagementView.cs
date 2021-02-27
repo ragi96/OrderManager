@@ -37,23 +37,22 @@ namespace OrderManagement.View
             GrdCustomers.SelectionChanged += new EventHandler(GrdCustomers_SelectionChanged);
         }
 
-        private async void GrdCustomers_SelectionChanged(object sender, EventArgs e)
+        private void GrdCustomers_SelectionChanged(object sender, EventArgs e)
         {
             var selectedRows = GrdCustomers.SelectedRows;
             var currentCustomer = selectedRows[0].Cells[8].Value;
 
-            using (var db = new DataContext())
+            using var db = new DataContext();
+            var customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = {currentCustomer}").AsNoTracking().ToList();
+
+            if (customerHistory.Count > 0)
             {
-                var customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = {currentCustomer}").AsNoTracking().ToList();
-                
-                if(customerHistory.Count > 0)
-                {
-                    GrdAdressHistory.DataSource = customerHistory;
-                } 
-                else {
-                    GrdAdressHistory.DataSource = null;
-                }
-            }            
+                GrdAdressHistory.DataSource = customerHistory;
+            }
+            else
+            {
+                GrdAdressHistory.DataSource = null;
+            }
         }
 
         private async void GrdCustomers_CellEndEdit(object sender, DataGridViewCellEventArgs e)
