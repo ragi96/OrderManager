@@ -58,7 +58,7 @@ namespace OrderManagement.View
 
         private void CmdInvoice_Click(object sender, EventArgs e)
         {
-            var view = new InvoiceManagementView(_orderRepo);
+            var view = new InvoiceManagementView(_orderRepo, _customerRepo);
             view.Show();
         }
     }

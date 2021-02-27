@@ -31,6 +31,7 @@ namespace OrderManagement.View
         {
             this.TabInvoice = new System.Windows.Forms.TabControl();
             this.TbpYearlyCompare = new System.Windows.Forms.TabPage();
+            this.cmbUser = new System.Windows.Forms.ComboBox();
             this.LblInvoice = new System.Windows.Forms.Label();
             this.GrdInvoice = new System.Windows.Forms.DataGridView();
             this.TabInvoice.SuspendLayout();
@@ -50,6 +51,7 @@ namespace OrderManagement.View
             // 
             // TbpYearlyCompare
             // 
+            this.TbpYearlyCompare.Controls.Add(this.cmbUser);
             this.TbpYearlyCompare.Controls.Add(this.LblInvoice);
             this.TbpYearlyCompare.Controls.Add(this.GrdInvoice);
             this.TbpYearlyCompare.Location = new System.Drawing.Point(4, 24);
@@ -60,6 +62,16 @@ namespace OrderManagement.View
             this.TbpYearlyCompare.TabIndex = 0;
             this.TbpYearlyCompare.Text = "Rechnungen";
             this.TbpYearlyCompare.UseVisualStyleBackColor = true;
+            // 
+            // cmbUser
+            // 
+            this.cmbUser.FormattingEnabled = true;
+            this.cmbUser.Location = new System.Drawing.Point(13, 62);
+            this.cmbUser.Name = "cmbUser";
+            this.cmbUser.Size = new System.Drawing.Size(136, 23);
+            this.cmbUser.TabIndex = 2;
+            this.cmbUser.Text = "Bitte wählen Sie einen Kunden aus";
+            this.cmbUser.SelectedIndexChanged += new System.EventHandler(this.cmbUser_SelectedIndexChanged);
             // 
             // LblInvoice
             // 
@@ -108,5 +120,6 @@ namespace OrderManagement.View
         private System.Windows.Forms.TabPage TbpYearlyCompare;
         private System.Windows.Forms.Label LblInvoice;
         private System.Windows.Forms.DataGridView GrdInvoice;
+        private System.Windows.Forms.ComboBox cmbUser;
     }
 }

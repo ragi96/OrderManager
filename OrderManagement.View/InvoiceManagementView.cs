@@ -18,10 +18,14 @@ namespace OrderManagement.View
         private readonly EfCrudRepository<Order> _orderRepo;
         private IList<Order> _invoices;
 
-        public InvoiceManagementView(EfCrudRepository<Order> orderRepo)
+        private readonly EfCrudRepository<Customer> _customerRepo;
+        private IList<Customer> _customers;
+
+        public InvoiceManagementView(EfCrudRepository<Order> orderRepo, EfCrudRepository<Customer> customerRepo)
         {
             InitializeComponent();
             _orderRepo = orderRepo;
+            _customerRepo = customerRepo;
         }
 
         protected override async void OnLoad(EventArgs e)
@@ -29,15 +33,18 @@ namespace OrderManagement.View
             GrdInvoice.AutoGenerateColumns = false;
             base.OnLoad(e);
             _invoices = new List<Order>();
-
-            using (var context = new DataContext())
+            await using (var context = new DataContext())
             {
                 _invoices = context.Order.Include(o => o.Customer).Include(o => o.Positions).ToList();
             }
 
+            _customers = new List<Customer>();
+            _customers = await _customerRepo.GetAll();
 
             // GrdInvoice
             SetInvoiceGridColumns();
+            // Customer Combobox
+            SetCustomerCombo();
         }
 
         private void SetInvoiceGridColumns()
@@ -62,7 +69,28 @@ namespace OrderManagement.View
             GrdInvoice.Columns.Add(colDate);
             GrdInvoice.Columns.Add(colCustomerPriceNetto);
             GrdInvoice.Columns.Add(colCustomerPriceBrutto);
+
             GrdInvoice.DataSource = _invoices;
+        }
+
+        private void SetCustomerCombo()
+        {
+            var customerList = _customers;
+            customerList.Insert(0, new Customer());
+            cmbUser.Text = "";
+            cmbUser.DataSource = customerList;
+            cmbUser.ValueMember = "id";
+            cmbUser.DisplayMember = "fullname";
+            cmbUser.SelectedIndex = 0;
+        }
+
+        private void cmbUser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedCustomer = cmbUser.SelectedItem as Customer;
+            if (selectedCustomer.Id != 0)
+            {
+                GrdInvoice.DataSource = _invoices.Where(o => o.CustomerId == selectedCustomer.Id).ToList();
+            }
         }
     }
 }
