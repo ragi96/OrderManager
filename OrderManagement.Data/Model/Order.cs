@@ -9,11 +9,12 @@ namespace OrderManagement.Data.Model
     {
         public DateTime Date { get; set; } = DateTime.Now;
 
-        public int? CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public DateTime? InvoiceDate { get; set; } = null;
 
-        public List<Position> Positions { get; set; }
+        public virtual List<Position> Positions { get; set; } = null;
     }
 }
