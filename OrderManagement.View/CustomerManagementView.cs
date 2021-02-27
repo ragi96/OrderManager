@@ -1,7 +1,10 @@
-﻿using OrderManagement.Data.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderManagement.Data.Context;
+using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace OrderManagement.View
@@ -12,7 +15,7 @@ namespace OrderManagement.View
         private IList<Customer> _customers;
 
         public CustomerManagementView(
-            EfCrudRepository<Customer> customerRepo    
+            EfCrudRepository<Customer> customerRepo
         )
         {
             InitializeComponent();
@@ -27,10 +30,30 @@ namespace OrderManagement.View
             _customers = await _customerRepo.GetAll();
 
             GrdCustomers.DataSource = _customers;
-            GrdCustomers.Columns["Id"].Visible = false;
+            //GrdCustomers.Columns["Id"].Visible = false;
 
             GrdCustomers.CellEndEdit += new DataGridViewCellEventHandler(GrdCustomers_CellEndEdit);
             TxtSearchCustomer.TextChanged += new EventHandler(TxtSearchCustomer_TextChanged);
+            GrdCustomers.SelectionChanged += new EventHandler(GrdCustomers_SelectionChanged);
+        }
+
+        private async void GrdCustomers_SelectionChanged(object sender, EventArgs e)
+        {
+            var selectedRows = GrdCustomers.SelectedRows;
+            var currentCustomer = selectedRows[0].Cells[8].Value;
+
+            using (var db = new DataContext())
+            {
+                var customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = {currentCustomer}").AsNoTracking().ToList();
+                
+                if(customerHistory.Count > 0)
+                {
+                    GrdAdressHistory.DataSource = customerHistory;
+                } 
+                else {
+                    GrdAdressHistory.DataSource = null;
+                }
+            }            
         }
 
         private async void GrdCustomers_CellEndEdit(object sender, DataGridViewCellEventArgs e)

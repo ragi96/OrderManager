@@ -1,4 +1,5 @@
-﻿using OrderManagement.Data.Model;
+﻿using OrderManagement.Data.Context;
+using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
 using System;
 using System.Windows.Forms;
@@ -13,7 +14,12 @@ namespace OrderManagement.View
         private readonly EfCrudRepository<Order> _orderRepo;
         private readonly EfCrudRepository<Position> _positionRepo;
 
-        public StartView(EfCrudRepository<Customer> customerRepo, EfCrudRepository<Article> articleRepo, EfCrudRepository<ArticleGroup> articleGroupRepo, EfCrudRepository<Order> orderRepo, EfCrudRepository<Position> positionRepo)
+        public StartView(
+            EfCrudRepository<Customer> customerRepo, 
+            EfCrudRepository<Article> articleRepo, 
+            EfCrudRepository<ArticleGroup> articleGroupRepo, 
+            EfCrudRepository<Order> orderRepo, 
+            EfCrudRepository<Position> positionRepo)
         {
             InitializeComponent();
             _customerRepo = customerRepo;
