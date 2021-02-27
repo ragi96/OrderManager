@@ -228,6 +228,7 @@ namespace OrderManagement.View
 
         private async void GrdOrderRefresh()
         {
+            GrdOrder.ClearSelection();
             GrdPosition.Enabled = false;
             GrdPosition.DataSource = null;
             var orders = await _orderRepo.GetAll();
