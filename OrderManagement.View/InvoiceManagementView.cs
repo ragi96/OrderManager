@@ -15,7 +15,6 @@ namespace OrderManagement.View
 {
     public partial class InvoiceManagementView : Form
     {
-        private readonly EfCrudRepository<Order> _orderRepo;
         private IList<Order> _invoices;
 
         private readonly EfCrudRepository<Customer> _customerRepo;
@@ -25,10 +24,9 @@ namespace OrderManagement.View
 
         private DateTime? _selectedDate;
 
-        public InvoiceManagementView(EfCrudRepository<Order> orderRepo, EfCrudRepository<Customer> customerRepo)
+        public InvoiceManagementView(EfCrudRepository<Customer> customerRepo)
         {
             InitializeComponent();
-            _orderRepo = orderRepo;
             _customerRepo = customerRepo;
         }
 
@@ -84,16 +82,16 @@ namespace OrderManagement.View
         {
             var customerList = _customers;
             customerList.Insert(0, new Customer());
-            cmbUser.Text = "";
-            cmbUser.DataSource = customerList;
-            cmbUser.ValueMember = "id";
-            cmbUser.DisplayMember = "fullname";
-            cmbUser.SelectedIndex = 0;
+            CmbUser.Text = "";
+            CmbUser.DataSource = customerList;
+            CmbUser.ValueMember = "id";
+            CmbUser.DisplayMember = "fullname";
+            CmbUser.SelectedIndex = 0;
         }
 
-        private void cmbUser_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbUser_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _selectedCustomer = cmbUser.SelectedItem as Customer;
+            _selectedCustomer = CmbUser.SelectedItem as Customer;
             FilterInvoiceGrid();
         }
         private void DtpDate_ValueChanged(object sender, EventArgs e)
@@ -125,5 +123,7 @@ namespace OrderManagement.View
 
             GrdInvoice.DataSource = filteredList;
         }
+
+
     }
 }

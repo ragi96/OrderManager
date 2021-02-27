@@ -7,7 +7,7 @@ namespace OrderManagement.Data.Model
 {
     public class Order : Base
     {
-        private double _tax = 1.079;
+        private readonly double _tax = 1.079;
         public DateTime Date { get; set; } = DateTime.Now;
 
         [ForeignKey("Customer")]
