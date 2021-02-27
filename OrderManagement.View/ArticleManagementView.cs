@@ -243,6 +243,7 @@ namespace OrderManagement.View
 
                 if (valid)
                 {
+                    currentArticle.ArticleGroup = null;
                     await _articleRepo.Create(currentArticle);
                 }
             }
