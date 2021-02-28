@@ -61,14 +61,15 @@ namespace OrderManagement.View
 
             var colName = new DataGridViewTextBoxColumn { HeaderText = "Name", Name = "name", DataPropertyName = "name" };
 
-
             var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = { Format = "N2" } };
+            var colMwst = new DataGridViewTextBoxColumn { HeaderText = "Mehrwertsteuer", Name = "mwst", DataPropertyName = "mwst", DefaultCellStyle = { Format = "N2" } };
 
             GrdArticle.Columns.Add(colId);
             GrdArticle.Columns.Add(colNum);
             GrdArticle.Columns.Add(colName);
             AddArticleArticleGroupCombo();
             GrdArticle.Columns.Add(colPrice);
+            GrdArticle.Columns.Add(colMwst);
             GrdArticle.AutoGenerateColumns = false;
             GrdArticle.DataSource = new BindingList<Article>(_articles);
         }

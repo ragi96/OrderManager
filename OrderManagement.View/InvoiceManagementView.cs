@@ -37,7 +37,7 @@ namespace OrderManagement.View
             _invoices = new List<Order>();
             await using (var context = new DataContext())
             {
-                _invoices = context.Order.Include(o => o.Customer).Include(o => o.Positions).ToList();
+                _invoices = context.Order.Include(o => o.Customer).Include(o => o.Positions).ThenInclude(p => p.Article).ToList();
             }
 
             _customers = new List<Customer>();

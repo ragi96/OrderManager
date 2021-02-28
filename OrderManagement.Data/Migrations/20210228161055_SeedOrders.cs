@@ -43,7 +43,7 @@ namespace OrderManagement.Data.Migrations
 
             foreach (var order in orders)
             {
-                migrationBuilder.Sql($"INSERT INTO [dbo].[Order] ([Date],[CustomerId],[InvoiceDate]) VALUES ('{order.Date:u}','{order.CustomerId}', '{order.InvoiceDate}')");
+                migrationBuilder.Sql($"INSERT INTO [dbo].[Order] ([Date],[CustomerId],[InvoiceDate]) VALUES ('{order.Date:u}','{order.CustomerId}', '{order.InvoiceDate?.ToString("u")}')");
             }
         }
 

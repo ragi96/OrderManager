@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace OrderManagement.Data.Model
 {
     public class Order : Base
     {
-        private readonly double _tax = 1.079;
         public DateTime Date { get; set; }
 
         [ForeignKey("Customer")] 
@@ -46,12 +46,7 @@ namespace OrderManagement.Data.Model
         {
             get
             {
-                var price = 0.0;
-                foreach (var pos in Positions)
-                {
-                    price += pos.ArticlePrice * pos.Amount;
-                }
-                return price;
+                return Positions.Sum(pos => pos.ArticlePrice * pos.Amount);
             }
         }
 
@@ -59,12 +54,7 @@ namespace OrderManagement.Data.Model
         {
             get
             {
-                var price = 0.0;
-                foreach (var pos in Positions)
-                {
-                    price += (pos.ArticlePrice * pos.Amount) * (pos.Article.Mwst + 100);
-                }
-                return price;
+                return Positions.Sum(pos => (pos.ArticlePrice * pos.Amount) * ((pos.Article.Mwst / 100) + 1));
             }
         }
     }
