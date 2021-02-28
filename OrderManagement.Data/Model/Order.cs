@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace OrderManagement.Data.Model
 {
@@ -45,12 +46,7 @@ namespace OrderManagement.Data.Model
         {
             get
             {
-                var price = 0.0;
-                foreach (var pos in Positions)
-                {
-                    price += pos.ArticlePrice * pos.Amount;
-                }
-                return price;
+                return Positions.Sum(pos => pos.ArticlePrice * pos.Amount);
             }
         }
 
@@ -58,12 +54,7 @@ namespace OrderManagement.Data.Model
         {
             get
             {
-                var price = 0.0;
-                foreach (var pos in Positions)
-                {
-                    price += (pos.ArticlePrice * pos.Amount) * ((pos.Article.Mwst / 100) + 1);
-                }
-                return price;
+                return Positions.Sum(pos => (pos.ArticlePrice * pos.Amount) * ((pos.Article.Mwst / 100) + 1));
             }
         }
     }
