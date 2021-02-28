@@ -63,7 +63,7 @@ namespace OrderManagement.Data.Model
                 var price = 0.0;
                 foreach (var pos in Positions)
                 {
-                    price += (pos.ArticlePrice * pos.Amount) * _tax;
+                    price += (pos.ArticlePrice * pos.Amount) * (pos.Article.Mwst + 100);
                 }
                 return price;
             }
