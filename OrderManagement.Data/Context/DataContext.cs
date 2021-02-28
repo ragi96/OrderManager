@@ -19,30 +19,12 @@ namespace OrderManagement.Data.Context
         {
              base.OnConfiguring(optionsBuilder);
 
-             /* if (!optionsBuilder.IsConfigured)
-              {
-                  IConfigurationRoot configuration = new ConfigurationBuilder()
-                     .Build();
-                  optionsBuilder.UseInMemoryDatabase("TestInMemory");
-              }*/
-
-
-           // optionsBuilder.UseSqlServer("Data Source=DESKTOP-TC55N4H;Database=OrderManager; Trusted_Connection=True; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-
-
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("SqlConnectionString"));
-          //  optionsBuilder.LogTo(Console.WriteLine);
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
         }
 
         public DbSet<Customer> Customer { get; set; }
