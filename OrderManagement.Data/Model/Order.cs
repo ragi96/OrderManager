@@ -7,7 +7,6 @@ namespace OrderManagement.Data.Model
 {
     public class Order : Base
     {
-        private readonly double _tax = 1.079;
         public DateTime Date { get; set; }
 
         [ForeignKey("Customer")] 
@@ -62,7 +61,7 @@ namespace OrderManagement.Data.Model
                 var price = 0.0;
                 foreach (var pos in Positions)
                 {
-                    price += (pos.ArticlePrice * pos.Amount) * (pos.Article.Mwst + 100);
+                    price += (pos.ArticlePrice * pos.Amount) * ((pos.Article.Mwst / 100) + 1);
                 }
                 return price;
             }
