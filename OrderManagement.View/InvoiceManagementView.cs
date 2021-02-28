@@ -42,13 +42,20 @@ namespace OrderManagement.View
 
 
             // set temporal stuff (Customer & Article)
-            /*foreach (var invoice in _invoices)
+            foreach (var invoice in _invoices)
             {
                 var invoiceDate = invoice.InvoiceDate;
+                invoiceDate = invoiceDate?.AddHours(-1);
                 var customerId = invoice.Customer.Id;
                 await using (var context = new DataContext())
                 {
-                    invoice.Customer = context.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME AS OF '{invoiceDate?.ToString("u")}' WHERE Id = {customerId}").AsNoTracking().First();
+                    var temporalCustomer = context.Customer
+                        .FromSqlRaw(
+                            $"SELECT * FROM [Customer] FOR SYSTEM_TIME AS OF '{invoiceDate?.ToString("u")}' WHERE Id = {customerId}")
+                        .AsNoTracking().FirstOrDefault();
+                    if (temporalCustomer != null) {
+                        invoice.Customer = temporalCustomer;
+                    }
                 }
 
                 foreach (var position in invoice.Positions)
@@ -56,11 +63,16 @@ namespace OrderManagement.View
                     var positionId = position.Article.Id;
                     await using (var context = new DataContext())
                     {
-                        position.Article = context.Article.FromSqlRaw($"SELECT * FROM [Article] FOR SYSTEM_TIME AS OF '{invoiceDate?.ToString("u")}' WHERE Id = {positionId}").AsNoTracking().First();
+                        var temporalArticle = context.Article.FromSqlRaw($"SELECT * FROM [Article] FOR SYSTEM_TIME AS OF '{invoiceDate?.ToString("u")}' WHERE Id = {positionId}").AsNoTracking().FirstOrDefault();
+
+                        if (temporalArticle != null)
+                        {
+                            position.Article = temporalArticle;
+                        }
                     }
                 }
 
-            }*/
+            }
 
 
             _customers = new List<Customer>();
