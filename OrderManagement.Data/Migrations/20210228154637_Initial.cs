@@ -28,6 +28,22 @@ namespace OrderManagement.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArticleGroupView",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SuperiorArticleId = table.Column<int>(type: "int", nullable: true),
+                    TreeLevel = table.Column<int>(type: "int", nullable: true),
+                    TreePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleGroupView", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customer",
                 columns: table => new
                 {
@@ -76,7 +92,7 @@ namespace OrderManagement.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: true),
                     InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -87,7 +103,7 @@ namespace OrderManagement.Data.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -142,6 +158,10 @@ namespace OrderManagement.Data.Migrations
                 name: "IX_Position_OrderId",
                 table: "Position",
                 column: "OrderId");
+
+            migrationBuilder.Sql("CREATE SCHEMA History");
+            migrationBuilder.AddTemporalTableSupport("Customer", "History");
+            migrationBuilder.AddTemporalTableSupport("Article", "History");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

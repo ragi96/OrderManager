@@ -8,15 +8,14 @@ namespace OrderManagement.Data.Model
     public class Order : Base
     {
         private readonly double _tax = 1.079;
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; }
 
         [ForeignKey("Customer")] 
-        public int? CustomerId { get; set; } = null;
+        public int? CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        public DateTime? InvoiceDate { get; set; } = null;
-
-        public virtual List<Position> Positions { get; set; } = null;
+        public DateTime? InvoiceDate { get; set; } 
+        public virtual List<Position> Positions { get; set; } 
 
         public string CustomerName
         {

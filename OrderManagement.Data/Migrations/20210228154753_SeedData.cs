@@ -9,6 +9,7 @@ namespace OrderManagement.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             #region Article Groups
 
             // Main Groups
@@ -193,22 +194,6 @@ namespace OrderManagement.Data.Migrations
 
             #endregion
 
-            #region Customers
-            string[] prenames = new string[] { "Bernd", "Thomas", "Tracie", "Beatrice", "Chantal", "Gerald", "Bartli", "Fridolin" };
-            string[] lastnames = new string[] { "Müller", "Kaiser", "Mengol", "Cost", "Wagner", "Riwa", "Kuhfuerst", "Langfinger" };
-            string[] street = new string[] { "Hauptstrasse", "Steigstrasse", "Paradeplatz", "Bahnhofstrasse", "Steigstrasse", "Hauptstrasse", "Hauptstrasse", "Bahnhofstrasse" };
-            string[] nr = new string[] { "12", "4", "5", "5", "1", "77", "2", "5" };
-            string[] zip = new string[] { "5345", "2342", "2355", "3455", "2324", "1123", "9594", "2383" };
-            string[] city = new string[] { "St. Gallen", "Bern", "Zürich", "Kreuzlingen", "Wil", "Wattwil", "Genf", "Lausanne" };
-            string[] countryCode = new string[] { "CH", "CH", "CH", "CH", "CH", "CH", "CH", "CH" };
-
-            for (var i = 0; i < 8; i++)
-            {
-                migrationBuilder.Sql($"INSERT INTO Customer (Prename, Lastname, Street, StreetNr, Zip, City, CountryCode)" +
-                                     $"VALUES ('{prenames[i]}', '{lastnames[i]}', '{street[i]}', '{nr[i]}', '{zip[i]}', '{city[i]}', '{countryCode[i]}')");
-            }
-            #endregion
-
             #region Orders
 
             var orders = new List<Order>();
@@ -245,7 +230,63 @@ namespace OrderManagement.Data.Migrations
 
             foreach (var order in orders)
             {
-                migrationBuilder.Sql($"INSERT INTO [dbo].[Order] ([Date],[CustomerId],[InvoiceDate]) VALUES ('{order.Date.ToString("u")}','{order.CustomerId}', '{order.InvoiceDate?.ToString("u")}')");
+                migrationBuilder.Sql($"INSERT INTO [dbo].[Order] ([Date],[CustomerId],[InvoiceDate]) VALUES ('{order.Date:u}','{order.CustomerId}', '{order.InvoiceDate}')");
+            }
+            #endregion
+
+            #region Positions
+            var articlePrices = new string[] { "419,9", "570,9", "870,9", "498,9", "19,9", "53", "39,9", "39,9", "29,9", "19,9", "279,9", "199,9", "259,9", "249,9", "149", "329", "3959,9", "459,9", "1212", "1709", "1399,15", "119,9", "29,9", "149,9", "39,9", "819,9", "99,9" };
+            var positions = new List<Position>();
+
+            for (var i = 1; i < 201; i++)
+            {
+                var index = new Random().Next(0, articlePrices.Length);
+
+                var position = new Position
+                {
+                    OrderId = i,
+                    ArticleId = index,
+                    Amount = new Random().Next(1, 11)
+                };
+
+                if (index == 0)
+                {
+                    position.ArticlePrice = float.Parse(articlePrices[index]) + (float.Parse(articlePrices[index]) * 0.079);
+                }
+                else
+                {
+                    position.ArticlePrice = float.Parse(articlePrices[index - 1]) + (float.Parse(articlePrices[index - 1]) * 0.079);
+                }
+
+                positions.Add(position);
+            }
+
+            for (var i = 1; i < 100; i++)
+            {
+                var index = new Random().Next(0, articlePrices.Length);
+
+                var position = new Position
+                {
+                    OrderId = new Random().Next(1, 200),
+                    ArticleId = index,
+                    Amount = new Random().Next(1, 11)
+                };
+
+                if (index == 0)
+                {
+                    position.ArticlePrice = float.Parse(articlePrices[index]) + (float.Parse(articlePrices[index]) * 0.079);
+                }
+                else
+                {
+                    position.ArticlePrice = float.Parse(articlePrices[index - 1]) + (float.Parse(articlePrices[index - 1]) * 0.079);
+                }
+
+                positions.Add(position);
+            }
+
+            foreach (var pos in positions)
+            {
+                migrationBuilder.Sql($"INSERT INTO [Position] ([ArticleId],[OrderId],[ArticlePrice],[Amount]) VALUES ('{pos.ArticleId}','{pos.OrderId}',{pos.ArticlePrice},'{pos.Amount}')");
             }
             #endregion
         }
