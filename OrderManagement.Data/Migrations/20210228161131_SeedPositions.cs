@@ -47,7 +47,7 @@ namespace OrderManagement.Data.Migrations
                 var position = new Position
                 {
                     OrderId = new Random().Next(1, 200),
-                    ArticleId = index,
+                    ArticleId = new Random().Next(1, 27),
                     Amount = new Random().Next(1, 11)
                 };
 
