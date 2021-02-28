@@ -47,7 +47,7 @@ namespace OrderManagement.View
 
         private void CmdYearCompare_Click(object sender, EventArgs e)
         {
-            var view = new YearlyCompareView(_articleRepo);
+            var view = new YearlyCompareView(_articleRepo, _customerRepo);
             view.Show();
         }
 
