@@ -10,8 +10,8 @@ using OrderManagement.Data.Context;
 namespace OrderManagement.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210228154637_Initial")]
-    partial class Initial
+    [Migration("20210228161131_SeedPositions")]
+    partial class SeedPositions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -164,8 +164,8 @@ namespace OrderManagement.Data.Migrations
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<double>("ArticlePrice")
-                        .HasColumnType("float");
+                    b.Property<float>("ArticlePrice")
+                        .HasColumnType("real");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
