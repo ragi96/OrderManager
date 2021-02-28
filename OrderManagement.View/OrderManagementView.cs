@@ -114,12 +114,16 @@ namespace OrderManagement.View
             if (currentOrder.Id == 0)
             {
                 await _orderRepo.Create(currentOrder);
+                var allOrders = await _orderRepo.GetAll();
+                _orders = allOrders.Where(o => o.InvoiceDate == null).ToList();
             }
             else
             {
                 if (currentOrder.Customer != null) return;
                 
                 await _orderRepo.Update(currentOrder);
+                var allOrders = await _orderRepo.GetAll();
+                _orders = allOrders.Where(o => o.InvoiceDate == null).ToList();
             }
         }
 
@@ -131,7 +135,7 @@ namespace OrderManagement.View
             }
         }
 
-        private async void GrdOrder_SelectionChanged(object sender, EventArgs e)
+        private void GrdOrder_SelectionChanged(object sender, EventArgs e)
         {
             GrdPosition.Enabled = false;
             GrdPosition.DataSource = null;
@@ -139,7 +143,7 @@ namespace OrderManagement.View
             if (selectedOrder == null) return;
             if (selectedOrder.Id == 0) return;
 
-            var selectedPos = await _positionRepo.GetAll();
+            var selectedPos = _positions;
             selectedPos = selectedPos.Where(p => p.OrderId == selectedOrder.Id).ToList();
             GrdPosition.Enabled = true;
             GrdPosition.DataSource = new BindingList<Position>(selectedPos);
@@ -174,6 +178,7 @@ namespace OrderManagement.View
             {
                 currentPosition.OrderId = (int)GrdOrder.CurrentRow.Cells["id"].Value;
                 await _positionRepo.Create(currentPosition);
+                _positions = await _positionRepo.GetAll();
             }
             else
             {
@@ -182,20 +187,30 @@ namespace OrderManagement.View
                 if (currentPosition.Amount == 0) return;
 
                 await _positionRepo.Update(currentPosition);
+                _positions = await _positionRepo.GetAll();
             }
+            
         }
 
         private async void TxtSearchOrder_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(TxtSearchOrder.Text))
             {
-                GrdOrder.DataSource = await _orderRepo.GetAll();
+                var orders = await _orderRepo.GetAll();
+                GrdOrder.DataSource = _orders.Where(o => o.InvoiceDate == null).ToList();
             }
             else { 
                 var searchString = TxtSearchOrder.Text;
-                // Prüfen auf Customer Fullname und All articles?
-                var foundArticle = _orders.Where(o => o.Id == 1).ToList();
-                GrdOrder.DataSource = foundArticle;
+                var foundCustomers = _customers.Where(c => c.Fullname.Contains(searchString)).ToList();
+                var allFoundOrders = new List<Order>();
+                foreach (var customer in foundCustomers)
+                {
+                    var foundOrders = _orders.Where(o => o.CustomerId == customer.Id && o.InvoiceDate == null).ToList();
+                    if (foundOrders != null) {
+                        allFoundOrders.AddRange(foundOrders);
+                    }
+                }
+                GrdOrder.DataSource = allFoundOrders;
             }
         }
 
@@ -204,6 +219,7 @@ namespace OrderManagement.View
             if ((int) e.Row.Cells["id"].Value > 0)
             {
                 await _positionRepo.DeleteById((int)e.Row.Cells["id"].Value);
+                _positions = await _positionRepo.GetAll();
             }
         }
 
@@ -221,7 +237,7 @@ namespace OrderManagement.View
                 }
                 else
                 {
-                    MessageBox.Show("Auftrage hat keine Auftragspositionen und kann deshalb nicht zu Rechnung werden!");
+                    MessageBox.Show("Auftrag hat keine Auftragspositionen und kann deshalb nicht zur Rechnung werden!");
                 }
             }
         }
@@ -233,6 +249,7 @@ namespace OrderManagement.View
             GrdPosition.DataSource = null;
             var orders = await _orderRepo.GetAll();
             var activeOrders = orders.Where(o => o.InvoiceDate == null).ToList();
+            _orders = activeOrders;
             GrdOrder.DataSource = activeOrders;
         }
     }
