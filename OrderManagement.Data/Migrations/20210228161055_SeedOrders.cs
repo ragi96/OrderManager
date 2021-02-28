@@ -14,7 +14,7 @@ namespace OrderManagement.Data.Migrations
 
             for (var i = 0; i < 200; i++)
             {
-                var year = random.Next(2019, 2022);
+                var year = random.Next(2018, 2021);
                 var month = random.Next(1, 13);
                 var day = random.Next(1, 26);
                 var hour = random.Next(1, 24);
