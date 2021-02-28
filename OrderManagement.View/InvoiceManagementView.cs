@@ -40,6 +40,29 @@ namespace OrderManagement.View
                 _invoices = context.Order.Include(o => o.Customer).Include(o => o.Positions).ThenInclude(p => p.Article).ToList();
             }
 
+
+            // set temporal stuff (Customer & Article)
+            /*foreach (var invoice in _invoices)
+            {
+                var invoiceDate = invoice.InvoiceDate;
+                var customerId = invoice.Customer.Id;
+                await using (var context = new DataContext())
+                {
+                    invoice.Customer = context.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME AS OF '{invoiceDate?.ToString("u")}' WHERE Id = {customerId}").AsNoTracking().First();
+                }
+
+                foreach (var position in invoice.Positions)
+                {
+                    var positionId = position.Article.Id;
+                    await using (var context = new DataContext())
+                    {
+                        position.Article = context.Article.FromSqlRaw($"SELECT * FROM [Article] FOR SYSTEM_TIME AS OF '{invoiceDate?.ToString("u")}' WHERE Id = {positionId}").AsNoTracking().First();
+                    }
+                }
+
+            }*/
+
+
             _customers = new List<Customer>();
             _customers = await _customerRepo.GetAll();
 
@@ -62,8 +85,8 @@ namespace OrderManagement.View
             var colCustomerZip = new DataGridViewTextBoxColumn { HeaderText = "PLZ", Name = "customerZip", DataPropertyName = "CustomerZip" };
             var colCustomerCity = new DataGridViewTextBoxColumn { HeaderText = "City", Name = "customerCity", DataPropertyName = "CustomerCity" };
             var colCustomerCountry = new DataGridViewTextBoxColumn { HeaderText = "Land", Name = "customerCountry", DataPropertyName = "CustomerCountry" };
-            var colCustomerPriceNetto = new DataGridViewTextBoxColumn { HeaderText = "Netto", Name = "priceNetto", DataPropertyName = "PriceNetto", DefaultCellStyle = { Format = "N2" }};
-            var colCustomerPriceBrutto = new DataGridViewTextBoxColumn { HeaderText = "Brutto", Name = "priceBrutto", DataPropertyName = "PriceBrutto", DefaultCellStyle = { Format = "N2" } };
+            var colCustomerPriceNetto = new DataGridViewTextBoxColumn { HeaderText = "Netto", Name = "priceNetto", DataPropertyName = "PriceNetto", DefaultCellStyle = { Format = "##############.00\\ CHF" }};
+            var colCustomerPriceBrutto = new DataGridViewTextBoxColumn { HeaderText = "Brutto", Name = "priceBrutto", DataPropertyName = "PriceBrutto", DefaultCellStyle = { Format = "##############.00\\ CHF" } };
 
             GrdInvoice.Columns.Add(colCustomerId);
             GrdInvoice.Columns.Add(colCustomerName);

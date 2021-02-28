@@ -61,8 +61,8 @@ namespace OrderManagement.View
 
             var colName = new DataGridViewTextBoxColumn { HeaderText = "Name", Name = "name", DataPropertyName = "name" };
 
-            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = { Format = "N2" } };
-            var colMwst = new DataGridViewTextBoxColumn { HeaderText = "Mehrwertsteuer", Name = "mwst", DataPropertyName = "mwst", DefaultCellStyle = { Format = "N2" } };
+            var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis", Name = "price", DataPropertyName = "price", DefaultCellStyle = { Format = "##############.00\\ CHF" } };
+            var colMwst = new DataGridViewTextBoxColumn { HeaderText = "Mehrwertsteuer", Name = "mwst", DataPropertyName = "mwst", DefaultCellStyle = { Format = "#0.00\\%" } };
 
             GrdArticle.Columns.Add(colId);
             GrdArticle.Columns.Add(colNum);
