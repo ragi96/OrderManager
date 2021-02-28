@@ -10,8 +10,8 @@ namespace OrderManagement.Data.Model
         private readonly double _tax = 1.079;
         public DateTime Date { get; set; } = DateTime.Now;
 
-        [ForeignKey("Customer")]
-        public int CustomerId { get; set; }        
+        [ForeignKey("Customer")] 
+        public int? CustomerId { get; set; } = null;
         public Customer Customer { get; set; }
 
         public DateTime? InvoiceDate { get; set; } = null;

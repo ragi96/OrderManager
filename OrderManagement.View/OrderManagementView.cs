@@ -55,7 +55,7 @@ namespace OrderManagement.View
         private async void SetOrderGridColumns()
         {
             var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
-            var colDate = new DataGridViewTextBoxColumn { HeaderText = "Datum", Name = "date", DataPropertyName = "Date", ReadOnly = true, DefaultCellStyle = {Format = "dd.MM.yyyy"}};
+            var colDate = new DataGridViewTextBoxColumn { HeaderText = "Datum", Name = "date", DataPropertyName = "Date", DefaultCellStyle = {Format = "dd.MM.yyyy"}};
             GrdOrder.Columns.Add(colId);
             GrdOrder.Columns.Add(colDate);
             AddCustomerCombo();
@@ -88,7 +88,7 @@ namespace OrderManagement.View
                 DataPropertyName = "CustomerId",
                 DataSource = _customers,
                 DisplayMember = "Fullname",
-                ValueMember = "id",
+                ValueMember = "id"
             };
             GrdOrder.Columns.Add(combo);
         }
@@ -117,9 +117,9 @@ namespace OrderManagement.View
             }
             else
             {
-              /*  if (currentOrder.Customer != null) return;
+                if (currentOrder.Customer != null) return;
                 
-                await _orderRepo.Update(currentOrder); */
+                await _orderRepo.Update(currentOrder);
             }
         }
 
