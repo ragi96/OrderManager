@@ -43,6 +43,7 @@ namespace OrderManagement.View
             _positions = await _positionRepo.GetAll();
             _customers = new List<Customer>();
             _customers = await _customerRepo.GetAll();
+            _customers = _customers.Where(c => c.Deleted == false).ToList();
             _articles = new List<Article>();
             _articles = await _articleRepo.GetAll();
             _articles = _articles.Where(a => a.Deleted == false).ToList();
