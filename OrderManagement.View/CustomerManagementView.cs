@@ -4,6 +4,7 @@ using OrderManagement.Data.Model;
 using Smartive.Core.Database.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -29,7 +30,7 @@ namespace OrderManagement.View
             _customers = new List<Customer>();
             _customers = await _customerRepo.GetAll();
 
-            GrdCustomers.DataSource = _customers;
+            GrdCustomers.DataSource = new BindingList<Customer>(_customers);
             GrdCustomers.Columns["Id"].Visible = false;
             GrdCustomers.Columns["Orders"].Visible = false;
             GrdCustomers.Columns["Deleted"].Visible = false;
@@ -84,7 +85,7 @@ namespace OrderManagement.View
         {
             if(string.IsNullOrEmpty(TxtSearchCustomer.Text))
             {
-                GrdCustomers.DataSource = await _customerRepo.GetAll();
+                GrdCustomers.DataSource = new BindingList<Customer>(await _customerRepo.GetAll());
                 return;
             }
 
@@ -99,7 +100,7 @@ namespace OrderManagement.View
                 }
             }
 
-            GrdCustomers.DataSource = foundCustomers;
+            GrdCustomers.DataSource = new BindingList<Customer>(foundCustomers);
         }
 
         private void CmdSearchCustomer_Click(object sender, EventArgs e)
