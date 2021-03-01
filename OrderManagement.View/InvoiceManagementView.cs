@@ -95,6 +95,7 @@ namespace OrderManagement.View
 
             var colCustomerName = new DataGridViewTextBoxColumn { HeaderText = "Kunde", Name = "customerName", DataPropertyName = "CustomerName" };
             var colCustomerStreet = new DataGridViewTextBoxColumn { HeaderText = "Strasse", Name = "customerStreet", DataPropertyName = "CustomerStreet" };
+            var colCustomerStreetNr = new DataGridViewTextBoxColumn { HeaderText = "Strasse-Nr", Name = "customerStreetNr", DataPropertyName = "CustomerStreetNr" };
             var colCustomerZip = new DataGridViewTextBoxColumn { HeaderText = "PLZ", Name = "customerZip", DataPropertyName = "CustomerZip" };
             var colCustomerCity = new DataGridViewTextBoxColumn { HeaderText = "City", Name = "customerCity", DataPropertyName = "CustomerCity" };
             var colCustomerCountry = new DataGridViewTextBoxColumn { HeaderText = "Land", Name = "customerCountry", DataPropertyName = "CustomerCountry" };
@@ -105,6 +106,7 @@ namespace OrderManagement.View
             GrdInvoice.Columns.Add(colId);
             GrdInvoice.Columns.Add(colCustomerName);
             GrdInvoice.Columns.Add(colCustomerStreet);
+            GrdInvoice.Columns.Add(colCustomerStreetNr);
             GrdInvoice.Columns.Add(colCustomerZip);
             GrdInvoice.Columns.Add(colCustomerCity);
             GrdInvoice.Columns.Add(colCustomerCountry);

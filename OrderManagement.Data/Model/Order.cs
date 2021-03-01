@@ -27,6 +27,11 @@ namespace OrderManagement.Data.Model
             get => Customer.Street;
         }
 
+        public string CustomerStreetNr
+        {
+            get => Customer.StreetNr;
+        }
+
         public string CustomerZip
         {
             get => Customer.Zip;
