@@ -26,6 +26,8 @@ namespace OrderManagement.Data.Model
             get => this.Prename + " " + this.Lastname;
         }
 
+        public bool Deleted { get; set; }
+
         public ICollection<Order> Orders { get; set; }
     }
 }

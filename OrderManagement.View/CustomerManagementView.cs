@@ -30,7 +30,9 @@ namespace OrderManagement.View
             _customers = await _customerRepo.GetAll();
 
             GrdCustomers.DataSource = _customers;
-            GrdCustomers.Columns["Id"].Visible = true;
+            GrdCustomers.Columns["Id"].Visible = false;
+            GrdCustomers.Columns["Orders"].Visible = false;
+            GrdCustomers.Columns["Deleted"].Visible = false;
 
             GrdCustomers.CellEndEdit += new DataGridViewCellEventHandler(GrdCustomers_CellEndEdit);
             TxtSearchCustomer.TextChanged += new EventHandler(TxtSearchCustomer_TextChanged);
@@ -39,12 +41,14 @@ namespace OrderManagement.View
 
         private void GrdCustomers_SelectionChanged(object sender, EventArgs e)
         {
-            var selectedRows = GrdCustomers.CurrentCell.RowIndex;
+            int selectedrowindex = GrdCustomers.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = GrdCustomers.Rows[selectedrowindex];
+            string selectedRows = Convert.ToString(selectedRow.Cells["Id"].Value);
+
             var customerHistory = new List<Customer>();
             using var db = new DataContext();
 
-
-            customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = '{selectedRows+1}'").AsNoTracking().ToList();
+            customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = '{Int32.Parse(selectedRows)}'").AsNoTracking().ToList();
             
 
             if (customerHistory.Count > 0)
@@ -108,9 +112,16 @@ namespace OrderManagement.View
 
         }
 
-        private void GrdCustomers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void GrdCustomers_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
+            int selectedrowindex = GrdCustomers.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = GrdCustomers.Rows[selectedrowindex];
+            string selectedRows = Convert.ToString(selectedRow.Cells["Id"].Value);
+            var id = Int32.Parse(selectedRows);
 
+            var customer = await _customerRepo.GetById(id);
+            customer.Deleted = true;
+            await _customerRepo.Update(customer);
         }
     }
 }
