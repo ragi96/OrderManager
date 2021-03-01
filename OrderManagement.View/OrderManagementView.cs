@@ -45,6 +45,7 @@ namespace OrderManagement.View
             _customers = await _customerRepo.GetAll();
             _articles = new List<Article>();
             _articles = await _articleRepo.GetAll();
+            _articles = _articles.Where(a => a.Deleted == false).ToList();
 
             // GrdPositions
             SetPositionGridColumns();

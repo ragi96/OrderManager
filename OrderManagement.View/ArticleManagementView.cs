@@ -34,6 +34,7 @@ namespace OrderManagement.View
             base.OnLoad(e);
             _articles = new List<Article>();
             _articles = await _articleRepo.GetAll();
+            _articles = _articles.Where(a => a.Deleted == false).ToList();
             _articlesGroups = new List<ArticleGroup>();
             _articlesGroups = await _articleGroupRepo.GetAll();
 
@@ -286,7 +287,12 @@ namespace OrderManagement.View
 
         private async void GrdArticle_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            await _articleRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            var article = await _articleRepo.GetById((int) e.Row.Cells["id"].Value);
+            if (article != null)
+            {
+                article.Deleted = true;
+                await _articleRepo.Update(article);
+            }
         }
 
         private async void TxtSearchArticle_TextChanged(object sender, EventArgs e)
