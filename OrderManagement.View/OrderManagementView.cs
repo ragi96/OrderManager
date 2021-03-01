@@ -54,7 +54,7 @@ namespace OrderManagement.View
 
         private async void SetOrderGridColumns()
         {
-            var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false };
+            var colId = new DataGridViewTextBoxColumn { HeaderText = "Auftragsnummer" ,Name = "id", DataPropertyName = "id", ReadOnly = true };
             var colDate = new DataGridViewTextBoxColumn { HeaderText = "Datum", Name = "date", DataPropertyName = "Date", DefaultCellStyle = {Format = "dd.MM.yyyy"}};
             GrdOrder.Columns.Add(colId);
             GrdOrder.Columns.Add(colDate);
