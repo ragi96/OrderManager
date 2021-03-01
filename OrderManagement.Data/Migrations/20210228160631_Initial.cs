@@ -28,22 +28,6 @@ namespace OrderManagement.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArticleGroupView",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SuperiorArticleId = table.Column<int>(type: "int", nullable: true),
-                    TreeLevel = table.Column<int>(type: "int", nullable: true),
-                    TreePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArticleGroupView", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Customer",
                 columns: table => new
                 {
