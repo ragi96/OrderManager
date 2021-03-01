@@ -37,7 +37,7 @@ namespace OrderManagement.View
             _invoices = new List<Order>();
             await using (var context = new DataContext())
             {
-                _invoices = context.Order.Include(o => o.Customer).Include(o => o.Positions).ThenInclude(p => p.Article).ToList();
+                _invoices = context.Order.Where(i => i.InvoiceDate != null).Include(o => o.Customer).Include(o => o.Positions).ThenInclude(p => p.Article).ToList();
             }
 
 
@@ -90,7 +90,8 @@ namespace OrderManagement.View
         private void SetInvoiceGridColumns()
         {
             var colDate = new DataGridViewTextBoxColumn { HeaderText = "Rechnungsdatum", Name = "invoiceDate", DataPropertyName = "InvoiceDate", DefaultCellStyle = { Format = "dd.MM.yyyy" } };
-            var colCustomerId = new DataGridViewTextBoxColumn { HeaderText = "Kunden ID", Name = "customerId", DataPropertyName = "CustomerId" };
+            var colCustomerId = new DataGridViewTextBoxColumn { HeaderText = "Kunden ID", Name = "customerId", DataPropertyName = "CustomerId", Visible = false };
+            var colId = new DataGridViewTextBoxColumn { HeaderText = "Rechnungsnummer", Name = "id", DataPropertyName = "id" };
 
             var colCustomerName = new DataGridViewTextBoxColumn { HeaderText = "Kunde", Name = "customerName", DataPropertyName = "CustomerName" };
             var colCustomerStreet = new DataGridViewTextBoxColumn { HeaderText = "Strasse", Name = "customerStreet", DataPropertyName = "CustomerStreet" };
@@ -101,6 +102,7 @@ namespace OrderManagement.View
             var colCustomerPriceBrutto = new DataGridViewTextBoxColumn { HeaderText = "Brutto", Name = "priceBrutto", DataPropertyName = "PriceBrutto", DefaultCellStyle = { Format = "##############.00\\ CHF" } };
 
             GrdInvoice.Columns.Add(colCustomerId);
+            GrdInvoice.Columns.Add(colId);
             GrdInvoice.Columns.Add(colCustomerName);
             GrdInvoice.Columns.Add(colCustomerStreet);
             GrdInvoice.Columns.Add(colCustomerZip);
