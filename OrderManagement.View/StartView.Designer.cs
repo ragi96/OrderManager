@@ -99,7 +99,7 @@
             this.CmdInvoice.Name = "CmdInvoice";
             this.CmdInvoice.Size = new System.Drawing.Size(206, 27);
             this.CmdInvoice.TabIndex = 5;
-            this.CmdInvoice.Text = "Rechnungserwaltung";
+            this.CmdInvoice.Text = "Rechnungsverwaltung";
             this.CmdInvoice.UseVisualStyleBackColor = true;
             this.CmdInvoice.Click += new System.EventHandler(this.CmdInvoice_Click);
             // 
@@ -114,7 +114,9 @@
             this.Controls.Add(this.CmdYearlyCompare);
             this.Controls.Add(this.CmdOrderManagement);
             this.Controls.Add(this.CmdCustomerManagement);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
             this.Name = "StartView";
             this.Text = "Start";
             this.ResumeLayout(false);

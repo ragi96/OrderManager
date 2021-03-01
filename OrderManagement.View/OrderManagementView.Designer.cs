@@ -181,7 +181,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 549);
             this.Controls.Add(this.TabArticle);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
             this.Name = "OrderManagementView";
             this.Text = "OrderManagmentView";
             this.TabArticle.ResumeLayout(false);

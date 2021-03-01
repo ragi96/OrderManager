@@ -115,6 +115,8 @@ namespace OrderManagement.View
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 549);
             this.Controls.Add(this.TabInvoice);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "InvoiceManagementView";
             this.Text = "InvoiceManagementView";
             this.TabInvoice.ResumeLayout(false);
