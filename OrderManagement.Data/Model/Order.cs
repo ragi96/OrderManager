@@ -8,7 +8,7 @@ namespace OrderManagement.Data.Model
 {
     public class Order : Base
     {
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
 
         [ForeignKey("Customer")] 
         public int? CustomerId { get; set; }

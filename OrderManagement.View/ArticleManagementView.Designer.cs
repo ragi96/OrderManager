@@ -32,7 +32,6 @@
             this.TbpArticle = new System.Windows.Forms.TabPage();
             this.GrdArticle = new System.Windows.Forms.DataGridView();
             this.TxtSearchArticle = new System.Windows.Forms.TextBox();
-            this.CmdSaveArticle = new System.Windows.Forms.Button();
             this.LblArticle = new System.Windows.Forms.Label();
             this.TbpArticleGroupe = new System.Windows.Forms.TabPage();
             this.TxtArticleGroupSearch = new System.Windows.Forms.TextBox();
@@ -61,7 +60,6 @@
             // 
             this.TbpArticle.Controls.Add(this.GrdArticle);
             this.TbpArticle.Controls.Add(this.TxtSearchArticle);
-            this.TbpArticle.Controls.Add(this.CmdSaveArticle);
             this.TbpArticle.Controls.Add(this.LblArticle);
             this.TbpArticle.Location = new System.Drawing.Point(4, 24);
             this.TbpArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -78,7 +76,7 @@
             this.GrdArticle.Location = new System.Drawing.Point(9, 103);
             this.GrdArticle.Name = "GrdArticle";
             this.GrdArticle.RowTemplate.Height = 25;
-            this.GrdArticle.Size = new System.Drawing.Size(906, 374);
+            this.GrdArticle.Size = new System.Drawing.Size(906, 409);
             this.GrdArticle.TabIndex = 6;
             this.GrdArticle.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdArticle_CellEndEdit);
             this.GrdArticle.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.GrdArticle_CellValidating);
@@ -93,16 +91,6 @@
             this.TxtSearchArticle.Size = new System.Drawing.Size(206, 23);
             this.TxtSearchArticle.TabIndex = 5;
             this.TxtSearchArticle.TextChanged += new System.EventHandler(this.TxtSearchArticle_TextChanged);
-            // 
-            // CmdSaveArticle
-            // 
-            this.CmdSaveArticle.Location = new System.Drawing.Point(827, 483);
-            this.CmdSaveArticle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CmdSaveArticle.Name = "CmdSaveArticle";
-            this.CmdSaveArticle.Size = new System.Drawing.Size(88, 27);
-            this.CmdSaveArticle.TabIndex = 2;
-            this.CmdSaveArticle.Text = "Speichern";
-            this.CmdSaveArticle.UseVisualStyleBackColor = true;
             // 
             // LblArticle
             // 
@@ -147,7 +135,7 @@
             this.GrdArticleGroups.Location = new System.Drawing.Point(9, 100);
             this.GrdArticleGroups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GrdArticleGroups.Name = "GrdArticleGroups";
-            this.GrdArticleGroups.Size = new System.Drawing.Size(447, 384);
+            this.GrdArticleGroups.Size = new System.Drawing.Size(447, 412);
             this.GrdArticleGroups.TabIndex = 7;
             this.GrdArticleGroups.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GrdArticleGroup_CellEndEdit);
             this.GrdArticleGroups.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.GrdArticleGroups_UserDeletingRow);
@@ -157,7 +145,7 @@
             this.TrvArticlegroups.Location = new System.Drawing.Point(496, 100);
             this.TrvArticlegroups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.TrvArticlegroups.Name = "TrvArticlegroups";
-            this.TrvArticlegroups.Size = new System.Drawing.Size(418, 384);
+            this.TrvArticlegroups.Size = new System.Drawing.Size(418, 412);
             this.TrvArticlegroups.TabIndex = 6;
             // 
             // LblArticlegroups
@@ -198,7 +186,6 @@
         private System.Windows.Forms.TabControl TabArticle;
         private System.Windows.Forms.TabPage TbpArticle;
         private System.Windows.Forms.TabPage TbpArticleGroupe;
-        private System.Windows.Forms.Button CmdSaveArticle;
         private System.Windows.Forms.Label LblArticle;
         private System.Windows.Forms.Label LblArticlegroups;
         private System.Windows.Forms.TreeView TrvArticlegroups;
