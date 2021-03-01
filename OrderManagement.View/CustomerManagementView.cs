@@ -55,6 +55,10 @@ namespace OrderManagement.View
             if (customerHistory.Count > 0)
             {
                 GrdAdressHistory.DataSource = customerHistory;
+                foreach (DataGridViewColumn column in GrdAdressHistory.Columns)
+                {
+                    column.ReadOnly = true;
+                }
             }
             else
             {
