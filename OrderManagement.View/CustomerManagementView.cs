@@ -44,31 +44,33 @@ namespace OrderManagement.View
         private void GrdCustomers_SelectionChanged(object sender, EventArgs e)
         {
             var currentRow = GrdCustomers.CurrentCell.RowIndex;
-            var currentCustomer = _customers[currentRow];
-             
-            var customerHistory = new List<Customer>();
-            using var db = new DataContext();
-
-            customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = '{currentCustomer.Id}'").AsNoTracking().ToList();
-
-            if (customerHistory.Count > 0)
+            var currentCustomer = GrdCustomers.CurrentRow.DataBoundItem as Customer;
+            if (currentCustomer != null)
             {
-                GrdAdressHistory.DataSource = customerHistory;
-                foreach (DataGridViewColumn column in GrdAdressHistory.Columns)
+                var customerHistory = new List<Customer>();
+                using var db = new DataContext();
+
+                customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = '{currentCustomer.Id}'").AsNoTracking().ToList();
+
+                if (customerHistory.Count > 0)
                 {
-                    column.ReadOnly = true;
+                    GrdAdressHistory.DataSource = customerHistory;
+                    foreach (DataGridViewColumn column in GrdAdressHistory.Columns)
+                    {
+                        column.ReadOnly = true;
+                    }
                 }
-            }
-            else
-            {
-                GrdAdressHistory.DataSource = null;
+                else
+                {
+                    GrdAdressHistory.DataSource = null;
+                }
             }
         }
 
         private async void GrdCustomers_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var currentRow = e.RowIndex;
-            var currentCustomer = _customers[e.RowIndex];
+            var currentCustomer = GrdCustomers.CurrentRow.DataBoundItem as Customer;
 
             if(currentCustomer.Id == 0)
             {
