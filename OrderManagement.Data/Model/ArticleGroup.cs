@@ -11,6 +11,8 @@ namespace OrderManagement.Data.Model
         [ForeignKey("SuperiorArticleGroup")]
         public int? SuperiorArticleId { get; set; }
         public virtual ArticleGroup SuperiorArticleGroup { get; set; }
+
+        public bool Deleted { get; set; } = false;
     }
 
     public class ArticleGroupView : Base

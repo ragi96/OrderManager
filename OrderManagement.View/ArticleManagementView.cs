@@ -37,6 +37,7 @@ namespace OrderManagement.View
             _articles = _articles.Where(a => a.Deleted == false).ToList();
             _articlesGroups = new List<ArticleGroup>();
             _articlesGroups = await _articleGroupRepo.GetAll();
+            _articlesGroups = _articlesGroups.Where(ag => ag.Deleted == false).ToList();
 
             // GroupListCombo
             _groupListCombo = await _articleGroupRepo.GetAll();
@@ -186,7 +187,21 @@ namespace OrderManagement.View
 
         private async void GrdArticleGroups_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            await _articleGroupRepo.DeleteById((int)e.Row.Cells["id"].Value);
+            var articleGroup = await _articleGroupRepo.GetById((int)e.Row.Cells["id"].Value);
+            if (articleGroup != null)
+            {
+                articleGroup.Name = "--- GELÖSCHT ---" + articleGroup.Name;
+                articleGroup.Deleted = true;
+                await _articleGroupRepo.Update(articleGroup);
+            }
+            _articlesGroups = new List<ArticleGroup>();
+            _articlesGroups = await _articleGroupRepo.GetAll();
+            _articlesGroups = _articlesGroups.Where(ag => ag.Deleted == false).ToList();
+
+            // GroupListCombo
+            _groupListCombo = await _articleGroupRepo.GetAll();
+            _groupListCombo.Insert(0, new ArticleGroup());
+
             // Run the tree load in the background
             await Task.Run(() => LoadTree());
         }

@@ -157,6 +157,13 @@ namespace OrderManagement.Data.Migrations
                 nullable: false,
                 defaultValue: false);
 
+            migrationBuilder.AddColumn<bool>(
+                name: "Deleted",
+                table: "ArticleGroup",
+                type: "bit",
+                nullable: false,
+                defaultValue: false);
+
             migrationBuilder.Sql("CREATE SCHEMA History");
             migrationBuilder.AddTemporalTableSupport("Customer", "History");
             migrationBuilder.AddTemporalTableSupport("Article", "History");

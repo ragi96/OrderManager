@@ -7,9 +7,9 @@ namespace OrderManagement.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             // Main Groups
-            migrationBuilder.Sql("INSERT INTO ArticleGroup VALUES ('Elektronik', null)");
-            migrationBuilder.Sql("INSERT INTO ArticleGroup VALUES ('Haushaltswaren', null)");
-            migrationBuilder.Sql("INSERT INTO ArticleGroup VALUES ('Möbel', null)");
+            migrationBuilder.Sql("INSERT INTO ArticleGroup (Name) VALUES ('Elektronik')");
+            migrationBuilder.Sql("INSERT INTO ArticleGroup (Name) VALUES ('Haushaltswaren')");
+            migrationBuilder.Sql("INSERT INTO ArticleGroup (Name) VALUES ('Möbel')");
 
             // Sub Groups Elektronik
             var parentGroupName = "Elektronik";
