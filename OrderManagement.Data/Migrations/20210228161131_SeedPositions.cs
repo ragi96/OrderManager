@@ -30,11 +30,11 @@ namespace OrderManagement.Data.Migrations
 
                 if (index == 0)
                 {
-                    position.ArticlePrice = (Double.Parse(articlePrices[index]) * 1.079);
+                    position.ArticlePrice = (Double.Parse(articlePrices[index]));
                 }
                 else
                 {
-                    position.ArticlePrice = (Double.Parse(articlePrices[index - 1]) * 1.079);
+                    position.ArticlePrice = (Double.Parse(articlePrices[index - 1]));
                 }
 
                 positions.Add(position);
@@ -53,11 +53,11 @@ namespace OrderManagement.Data.Migrations
 
                 if (index == 0)
                 {
-                    position.ArticlePrice = (Double.Parse(articlePrices[index]) * 1.079);
+                    position.ArticlePrice = (Double.Parse(articlePrices[index]));
                 }
                 else
                 {
-                    position.ArticlePrice = (Double.Parse(articlePrices[index - 1]) * 1.079);
+                    position.ArticlePrice = (Double.Parse(articlePrices[index - 1]));
                 }
 
                 positions.Add(position);
@@ -65,7 +65,7 @@ namespace OrderManagement.Data.Migrations
 
             foreach (var pos in positions)
             {
-                migrationBuilder.Sql($"INSERT INTO [Position] ([ArticleId],[OrderId],[ArticlePrice],[Amount]) VALUES ('{pos.ArticleId}','{pos.OrderId}',CAST('{pos.ArticlePrice}' AS float),'{pos.Amount}')");
+                migrationBuilder.Sql($"INSERT INTO [Position] ([ArticleId],[OrderId],[ArticlePrice],[Amount],[Number]) VALUES ('{pos.ArticleId}','{pos.OrderId}',CAST('{pos.ArticlePrice}' AS float),'{pos.Amount}', '1')");
             }
         }
 

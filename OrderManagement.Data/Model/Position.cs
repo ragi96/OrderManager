@@ -5,6 +5,8 @@ namespace OrderManagement.Data.Model
 {
     public class Position : Base
     {
+        public int Number { get; set; }
+
         [ForeignKey("Article")]
         public int? ArticleId { get; set; }
         public virtual Article Article { get; set; }

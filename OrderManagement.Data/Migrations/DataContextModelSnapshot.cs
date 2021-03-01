@@ -162,8 +162,11 @@ namespace OrderManagement.Data.Migrations
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<float>("ArticlePrice")
-                        .HasColumnType("real");
+                    b.Property<double>("ArticlePrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");

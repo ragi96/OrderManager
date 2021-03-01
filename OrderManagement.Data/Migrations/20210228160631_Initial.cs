@@ -159,6 +159,13 @@ namespace OrderManagement.Data.Migrations
                 table: "Position",
                 column: "OrderId");
 
+            migrationBuilder.AddColumn<int>(
+                name: "Number",
+                table: "Position",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.Sql("CREATE SCHEMA History");
             migrationBuilder.AddTemporalTableSupport("Customer", "History");
             migrationBuilder.AddTemporalTableSupport("Article", "History");

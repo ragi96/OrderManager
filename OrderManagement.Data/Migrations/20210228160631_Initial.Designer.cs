@@ -160,6 +160,9 @@ namespace OrderManagement.Data.Migrations
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
+                    
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");

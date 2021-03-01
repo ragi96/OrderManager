@@ -69,10 +69,12 @@ namespace OrderManagement.View
         {
             var colId = new DataGridViewTextBoxColumn { Name = "id", DataPropertyName = "id", Visible = false};
             var colOId = new DataGridViewTextBoxColumn { Name = "orderId", DataPropertyName = "orderId", Visible = false};
+            var colONumber = new DataGridViewTextBoxColumn { HeaderText = "Positionsnummer", Name = "number", DataPropertyName = "number" };
             var colAmount = new DataGridViewTextBoxColumn { HeaderText = "Menge", Name = "amount", DataPropertyName = "amount", DefaultCellStyle = { Format = "N0" }};
             var colPrice = new DataGridViewTextBoxColumn { HeaderText = "Preis pro Stück", Name = "articlePrice", DataPropertyName = "articlePrice" };
             GrdPosition.Columns.Add(colId);
             GrdPosition.Columns.Add(colOId);
+            GrdPosition.Columns.Add(colONumber);
             AddArticleCombo();
             GrdPosition.Columns.Add(colAmount);
             GrdPosition.Columns.Add(colPrice);
