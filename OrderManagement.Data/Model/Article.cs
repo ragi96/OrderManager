@@ -12,6 +12,8 @@ namespace OrderManagement.Data.Model
         public double Price { get; set; }
         public double Mwst { get; set; }
 
+        public bool Deleted { get; set; } = false;
+
         [ForeignKey("ArticleGroup")]
         public int? ArticleGroupId { get; set; }
         public virtual ArticleGroup ArticleGroup { get; set; }

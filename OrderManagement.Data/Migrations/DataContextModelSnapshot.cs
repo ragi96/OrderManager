@@ -29,6 +29,9 @@ namespace OrderManagement.Data.Migrations
                     b.Property<int?>("ArticleGroupId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
                     b.Property<double>("Mwst")
                         .HasColumnType("float");
 
