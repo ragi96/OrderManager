@@ -29,8 +29,9 @@ namespace OrderManagement.View
 
             _customers = new List<Customer>();
             _customers = await _customerRepo.GetAll();
+            var notDeletedCustomers = _customers.Where(elem => elem.Deleted != true).ToList();
 
-            GrdCustomers.DataSource = new BindingList<Customer>(_customers);
+            GrdCustomers.DataSource = new BindingList<Customer>(notDeletedCustomers);
             GrdCustomers.Columns["Id"].Visible = false;
             GrdCustomers.Columns["Orders"].Visible = false;
             GrdCustomers.Columns["Deleted"].Visible = false;
@@ -42,15 +43,13 @@ namespace OrderManagement.View
 
         private void GrdCustomers_SelectionChanged(object sender, EventArgs e)
         {
-            int selectedrowindex = GrdCustomers.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = GrdCustomers.Rows[selectedrowindex];
-            string selectedRows = Convert.ToString(selectedRow.Cells["Id"].Value);
-
+            var currentRow = GrdCustomers.CurrentCell.RowIndex;
+            var currentCustomer = _customers[currentRow];
+             
             var customerHistory = new List<Customer>();
             using var db = new DataContext();
 
-            customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = '{Int32.Parse(selectedRows)}'").AsNoTracking().ToList();
-            
+            customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = '{currentCustomer.Id}'").AsNoTracking().ToList();
 
             if (customerHistory.Count > 0)
             {
@@ -69,27 +68,120 @@ namespace OrderManagement.View
         private async void GrdCustomers_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var currentRow = e.RowIndex;
+            var currentCustomer = _customers[e.RowIndex];
 
-            var selectedCustomer = GrdCustomers.Rows[currentRow].Cells;
-            var currentCustomer = _customers[currentRow];
+            if(currentCustomer.Id == 0)
+            {
+                var valid = true;
+                if (string.IsNullOrEmpty(currentCustomer.Prename))
+                {
+                    valid = false;
+                    // error number
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Vorname darf nicht leer sein!";
+                }
 
-            currentCustomer.Prename = (string)selectedCustomer["Prename"].Value;
-            currentCustomer.Lastname = (string)selectedCustomer["Lastname"].Value;
-            currentCustomer.Street = (string)selectedCustomer["Street"].Value;
-            currentCustomer.StreetNr = (string)selectedCustomer["StreetNr"].Value;
-            //currentCustomer.ValidFrom = (DateTime)selectedCustomer["ValidFrom"].Value;
-            currentCustomer.Zip = (string)selectedCustomer["Zip"].Value;
-            currentCustomer.CountryCode = (string)selectedCustomer["CountryCode"].Value;
-            currentCustomer.City = (string)selectedCustomer["City"].Value;
+                if (string.IsNullOrEmpty(currentCustomer.Lastname))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Nachname darf nicht leer sein!";
+                }
 
-            await _customerRepo.Update(_customers);
+                if (string.IsNullOrEmpty(currentCustomer.Street))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Strasse darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.StreetNr))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Strassen-Nr. darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.City))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Stadt darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.Zip))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "ZIP darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.CountryCode))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Länderkürzel darf nicht leer sein!";
+                }
+
+                if (valid)
+                {
+                    await _customerRepo.Create(currentCustomer);
+                }
+                
+            } else
+            {
+                var valid = true;
+                if (string.IsNullOrEmpty(currentCustomer.Prename))
+                {
+                    valid = false;
+                    // error number
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Vorname darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.Lastname))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Nachname darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.Street))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Strasse darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.StreetNr))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Strassen-Nr. darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.City))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Stadt darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.Zip))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "ZIP darf nicht leer sein!";
+                }
+
+                if (string.IsNullOrEmpty(currentCustomer.CountryCode))
+                {
+                    valid = false;
+                    GrdCustomers.Rows[e.RowIndex].ErrorText = "Länderkürzel darf nicht leer sein!";
+                }
+
+                if (valid)
+                {
+                    await _customerRepo.Update(currentCustomer);
+                }
+            }
+
+            GrdCustomers.Rows[currentRow].ErrorText = String.Empty;
         }
 
         private async void TxtSearchCustomer_TextChanged(object sender, EventArgs e)
         {
             if(string.IsNullOrEmpty(TxtSearchCustomer.Text))
             {
-                GrdCustomers.DataSource = new BindingList<Customer>(await _customerRepo.GetAll());
+                GrdCustomers.ClearSelection();
+                GrdCustomers.DataSource = new BindingList<Customer>((await _customerRepo.GetAll()).Where(elem => elem.Deleted != true).ToList());
                 return;
             }
 
