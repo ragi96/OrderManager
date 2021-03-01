@@ -30,7 +30,7 @@ namespace OrderManagement.View
             _customers = await _customerRepo.GetAll();
 
             GrdCustomers.DataSource = _customers;
-            //GrdCustomers.Columns["Id"].Visible = false;
+            GrdCustomers.Columns["Id"].Visible = true;
 
             GrdCustomers.CellEndEdit += new DataGridViewCellEventHandler(GrdCustomers_CellEndEdit);
             TxtSearchCustomer.TextChanged += new EventHandler(TxtSearchCustomer_TextChanged);
@@ -39,11 +39,13 @@ namespace OrderManagement.View
 
         private void GrdCustomers_SelectionChanged(object sender, EventArgs e)
         {
-            var selectedRows = GrdCustomers.SelectedRows;
-            var currentCustomer = selectedRows[0].Cells[8].Value;
-
+            var selectedRows = GrdCustomers.CurrentCell.RowIndex;
+            var customerHistory = new List<Customer>();
             using var db = new DataContext();
-            var customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = {currentCustomer}").AsNoTracking().ToList();
+
+
+            customerHistory = db.Customer.FromSqlRaw($"SELECT * FROM [Customer] FOR SYSTEM_TIME ALL WHERE Id = '{selectedRows+1}'").AsNoTracking().ToList();
+            
 
             if (customerHistory.Count > 0)
             {
