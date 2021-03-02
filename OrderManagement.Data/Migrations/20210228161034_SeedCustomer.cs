@@ -23,7 +23,7 @@ namespace OrderManagement.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.Sql("DELETE FROM Customer DBCC CHECKIDENT('Customer',RESEED, 0)");
         }
     }
 }

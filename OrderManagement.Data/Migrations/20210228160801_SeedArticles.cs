@@ -107,7 +107,7 @@ namespace OrderManagement.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.Sql("DELETE FROM Article DBCC CHECKIDENT('Article',RESEED, 0)");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace OrderManagement.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.Sql("DROP PROCEDURE getArticleGroupTree");
         }
     }
 }

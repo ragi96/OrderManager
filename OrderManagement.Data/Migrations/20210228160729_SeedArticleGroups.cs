@@ -86,7 +86,7 @@ namespace OrderManagement.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
+            migrationBuilder.Sql("DELETE FROM ArticleGroup DBCC CHECKIDENT('ArticleGroup',RESEED, 0)");
         }
     }
 }
