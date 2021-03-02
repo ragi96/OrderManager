@@ -136,6 +136,10 @@ namespace OrderManagement.View
             if ((int) e.Row.Cells["id"].Value > 0)
             {
                 await _orderRepo.DeleteById((int) e.Row.Cells["id"].Value);
+                var allOrders = await _orderRepo.GetAll();
+                _orders = allOrders.Where(o => o.InvoiceDate == null).ToList();
+
+                GrdOrder.DataSource = new BindingList<Order>(_orders);
             }
         }
 
