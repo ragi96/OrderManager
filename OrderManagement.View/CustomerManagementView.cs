@@ -55,6 +55,9 @@ namespace OrderManagement.View
                 if (customerHistory.Count > 0)
                 {
                     GrdAdressHistory.DataSource = customerHistory;
+                    GrdAdressHistory.Columns["Id"].Visible = false;
+                    GrdAdressHistory.Columns["Orders"].Visible = false;
+                    GrdAdressHistory.Columns["Deleted"].Visible = false;
                     foreach (DataGridViewColumn column in GrdAdressHistory.Columns)
                     {
                         column.ReadOnly = true;
